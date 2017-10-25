@@ -7,9 +7,7 @@ These are not official Google products.
 
 ## How to use
 
-First, enable your project, enable the Container Builder API, and initialize the
-Cloud SDK following the instructions in the [Docker
-Quickstart](https://cloud.google.com/container-builder/docs/quickstart-docker).
+First, [select or create a project](https://console.cloud.google.com/cloud-resource-manager), [enable billing](https://support.google.com/cloud/answer/6293499#enable-billing), [enable the Container Builder API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com), and [install and initialize the Cloud SDK](https://cloud.google.com/sdk/docs/).
 
 Then, download the source code and build your builder.  For example, to setup
 the `packer` builder using a Linux or Mac OS X workstation:
@@ -45,7 +43,7 @@ We welcome your contributions enthusiastically.  See [CONTRIBUTING](CONTRIBUTING
 
 ## License
 
-This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
+This source code is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
 
 File issues here or e-mail `gcr-contact@google.com` if you have questions about
 the usage of these build steps or the Cloud Container Builder API in general.
