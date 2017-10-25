@@ -9,8 +9,11 @@ These are not official Google products.
 
 First, [select or create a project](https://console.cloud.google.com/cloud-resource-manager), [enable billing](https://support.google.com/cloud/answer/6293499#enable-billing), [enable the Container Builder API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com), and [install and initialize the Cloud SDK](https://cloud.google.com/sdk/docs/).
 
-Then, download the source code and build your builder.  For example, to setup
-the `packer` builder using a Linux or Mac OS X workstation:
+Then, download the source code and build your builder.
+
+### Example: using the `packer builder`
+
+To use the `packer` builder on a Linux or Mac OS X workstation:
 
 ```sh
 $ git clone http://github.com/GoogleCloudPlatform/cloud-builders-community
@@ -24,7 +27,7 @@ View the builder image in Google Container Registry:
 $ gcloud container images list --filter packer
 ```
 
-Then, use the builder in your own project's `cloudbuild.yaml`:
+Use the builder in your project's `cloudbuild.yaml`:
 
 ```yaml
 - name: 'gcr.io/$PROJECT_ID/packer'
@@ -35,7 +38,7 @@ Then, use the builder in your own project's `cloudbuild.yaml`:
   - packer.json
 ```
 
-Examples of use are included in each tool's `examples` directory.
+Examples of use are included in each tool's `examples` directory. [View a complete `packer` example](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/packer/examples/gce).
 
 ## Contributing
 
