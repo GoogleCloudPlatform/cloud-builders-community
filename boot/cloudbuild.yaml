@@ -6,11 +6,12 @@ steps:
 - name: 'gcr.io/cloud-builders/wget'
   args: ['https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/boot', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/boot', '-t', 'gcr.io/$PROJECT_ID/boot:latest', '.']
 
 # Test Boot Version
 - name: 'gcr.io/$PROJECT_ID/boot'
-  args: ['-v']
+  args: ['-V']
 
 images:
 - 'gcr.io/$PROJECT_ID/boot:latest'
+- 'gcr.io/$PROJECT_ID/boot'
