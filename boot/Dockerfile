@@ -17,4 +17,4 @@ ENV BOOT_CLOJURE_VERSION 1.8.0
 # download & install deps, cache REPL deps
 RUN /usr/bin/boot repl -e '(System/exit 0)'
 
-ENTRYPOINT [“boot”]
+ENTRYPOINT ["/usr/bin/boot”]
