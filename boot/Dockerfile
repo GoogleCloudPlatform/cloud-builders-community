@@ -2,8 +2,8 @@ FROM gcr.io/cloud-builders/java/mvn:3.5.0-jdk-8
 
 # Install Boot
 
-RUN wget -O /usr/bin/boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh \
- && chmod +x /usr/bin/boot
+COPY boot.sh /usr/bin/boot
+RUN chmod +x /usr/bin/boot
 
 # Boot ENV
 
@@ -15,6 +15,6 @@ ENV BOOT_VERSION 2.7.2
 ENV BOOT_CLOJURE_VERSION 1.8.0
 
 # download & install deps, cache REPL deps
-RUN /usr/bin/boot repl -e '(System/exit 0)' && rm -rf target
+RUN /usr/bin/boot repl -e '(System/exit 0)'
 
-ENTRYPOINT [“/usr/bin/boot”]
+ENTRYPOINT [“boot”]
