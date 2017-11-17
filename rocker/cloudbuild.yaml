@@ -4,10 +4,8 @@
 # See Rocker documentation at https://github.com/grammarly/rocker
 
 steps:
-# TODO: use the standard go builder.
-#- name: 'gcr.io/cloud-builders/go:debian'
 # Build rocker.
-- name: 'gcr.io/bendory-argo/go:debian'
+- name: 'gcr.io/cloud-builders/go:debian'
   args: ['get', 'github.com/grammarly/rocker']
   env: ['GOPATH=.', 'GO15VENDOREXPERIMENT=1']
 # Package it into a docker image.
