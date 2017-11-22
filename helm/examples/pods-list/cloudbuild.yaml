@@ -1,5 +1,5 @@
 steps:
-- name: 'gcr.io/cloud-builders/helm'
+- name: 'gcr.io/$PROJECT_ID/helm'
   args: ['list']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
