@@ -1,5 +1,5 @@
 steps:
-- name: 'gcr.io/$PROJECT_ID/scala/sbt'
+- name: 'gcr.io/$PROJECT_ID/scala-sbt'
   args: ['clean', 'stage']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/play2', '.']
