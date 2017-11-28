@@ -4,7 +4,6 @@
 function cleanup {
     gcloud compute instances delete ${INSTANCE_NAME}
 }
-trap cleanup EXIT
 
 # Configurable parameters
 USERNAME=${USERNAME:-admin}
@@ -28,6 +27,8 @@ gcloud compute instances create \
        ${INSTANCE_ARGS} ${INSTANCE_NAME} \
        --metadata block-project-ssh-keys=TRUE \
        --metadata-from-file ssh-keys=ssh-keys
+
+trap cleanup EXIT
 
 gcloud compute scp --compress --recurse \
        ./ ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
