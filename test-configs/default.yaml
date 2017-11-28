@@ -1,0 +1,4 @@
+steps:
+- name: gcr.io/cloud-solutions-images/remote-builder:v0.3.0
+  env:
+    - COMMAND=ps aux
