@@ -14,7 +14,7 @@ about builds and build steps.
 ### Before you begin
 
 1.  Select or create a [Google Cloud project](https://console.cloud.google.com/cloud-resource-manager).
-2.  Enable [billing] for your project(https://support.google.com/cloud/answer/6293499#enable-billing).
+2.  Enable [billing for your project](https://support.google.com/cloud/answer/6293499#enable-billing).
 3.  Enable [the Container Builder API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com).
 4.  Install and initialize [the Cloud SDK](https://cloud.google.com/sdk/docs/).
 
