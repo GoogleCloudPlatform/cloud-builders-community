@@ -8,7 +8,7 @@ This Container Builder build step runs the [`glide`](https://glide.sh) tool.
 The `gcr.io/cloud-builders/glide` build step should be used when you want to run
 the [`glide`](https://glide.sh) tool on your source.
 
-### Related: [`gcr.io/cloud-builders/go`](../go/README.md)
+### Related: [`gcr.io/cloud-builders/go`](https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/go/README.md)
 
 The related build step, `gcr.io/cloud-builders/go`, defines the conventions used
 to manage a Go workspace.
@@ -19,7 +19,7 @@ to manage a Go workspace.
 [`glide`](https://glide.sh) source from its
 [GitHub repository](https://github.com/Masterminds/glide), uses `glide install`
 to pull in the correct versions of all dependencies, and the
-[`go`](../go/README.md) builder to build the `glide` binary.
+[`go`](https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/go/README.md) builder to build the `glide` binary.
 
 ## Building this builder
 
