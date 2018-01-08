@@ -7,7 +7,7 @@ steps:
   args: [
     '-O',
     'example.jsonnet',
-    'https://raw.githubusercontent.com/DazWilkin/cloud-builders-community/master/jsonnet/examples/example.jsonnet'
+    'https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-builders-community/master/jsonnet/examples/example.jsonnet'
   ]
 # Transform the example.jsonnet using the Jsonnet builder into example.yaml
 - name: gcr.io/${PROJECT_ID}/jsonnet
