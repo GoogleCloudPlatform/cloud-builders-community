@@ -6,7 +6,7 @@
 
 ### What?
 
-![Architecture Diagram](/docs/arch.png)
+![Architecture Diagram](docs/arch.png)
 
 Some continuous integration workloads require special builder types. You may
 require things like:
