@@ -1,2 +1,0 @@
-#!/bin/bash -xe
-true
