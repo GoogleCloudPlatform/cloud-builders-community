@@ -6,7 +6,7 @@ steps:
 - name: gcr.io/cloud-builders/wget
   args: [
     "--output-document", "helloworld.js",
-    "https://raw.githubusercontent.com/DazWilkin/cloud-builders-google-closure-compiler/master/google-closure-compiler/examples/helloworld.js"
+    "https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-builders-community/master/google-closure-compiler/examples/helloworld.js"
   ]
 # Apply Google Closure Compiler to helloworld.js producing an optimized helloworld.out.js
 - name: gcr.io/${PROJECT_ID}/google-closure-compiler
