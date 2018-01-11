@@ -3,6 +3,8 @@
 This Container Builder build step runs
 [`kubectl_wait_for_job`](https://kubernetes.io/docs/user-guide/kubectl-overview/).
 
+If you're looking to run a job but actually block execution until that job is complete on the cluster, this wraps the kubectl command to do that. For instance if you need run database migrations prior to deploying the code that utilizes them, you can use this command to execute a job, wait for it to complete, and then update your deployment with the image that utilizes those migrations.  
+
 ## Using this builder with Google Container Engine
 
 To use this builder, your
