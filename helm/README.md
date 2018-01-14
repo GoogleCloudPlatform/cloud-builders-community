@@ -1,4 +1,4 @@
-# [Helm] tool builder(https://docs.helm.sh/)
+# [Helm](https://docs.helm.sh/) tool builder
 
 ## Using this builder with Google Container Engine
 
