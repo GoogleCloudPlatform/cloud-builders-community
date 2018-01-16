@@ -28,7 +28,7 @@ The example below shows how to download and build the image for the `packer` bui
 1. Clone the `cloud-builders-community` repo:
 
    ```sh
-   $ git clone http://github.com/GoogleCloudPlatform/cloud-builders-community
+   $ git clone https://github.com/GoogleCloudPlatform/cloud-builders-community
    ```
 
 2. Go to the directory that has the source code for the `packer` Docker image:
@@ -73,6 +73,21 @@ Each build step's `examples` directory has an example of how you can use the bui
 We welcome contributions!  See [CONTRIBUTING](CONTRIBUTING.md) for more information on how to get started.
 Please include a `cloudbuild.yaml` and at least one working example in your
 [pull request](https://help.github.com/articles/about-pull-requests/).
+
+### Contribution Requirements
+
+In order to accept your contribution, it must:
+
+* make clear that the builder image is pushed to the builder's project's registry.
+  E.g., it specifies `images: ['gcr.io/$PROJECT_ID/the-tool']`. The builder will
+  not be pushed to the `gcr.io/cloud-builders` registry.
+* include a simple sanity test in the `cloudbuild.yaml` config that builds and
+  pushes the image. This can be as simple as invoking the tool with `--help`, and
+  it ensures the tool is installed correctly and in the expected location within
+  the image.
+* include some basic example describing how to use it. This helps new users get
+  acquainted with the builder, and helps us ensure the builder continues to work
+  as intended.
 
 ## License
 
