@@ -1,7 +1,4 @@
-# Tool builder: `gcr.io/cloud-builders/helm`
-
-This Container Builder build step runs
-[`helm`](https://docs.helm.sh/).
+# [Helm](https://docs.helm.sh/) tool builder
 
 ## Using this builder with Google Container Engine
 

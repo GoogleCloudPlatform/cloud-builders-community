@@ -6,10 +6,10 @@ See [docs](https://cloud.google.com/container-builder/docs/concepts/custom-build
 
 ```
 steps:
-- name: gcr.io/cloud-builders/fsharp
+- name: gcr.io/$PROJECT_ID/fsharp
   id: fsharp-version
   args: ['fsharpc', '--help']
-- name: gcr.io/cloud-builders/fsharp
+- name: gcr.io/$PROJECT_ID/fsharp
   id: fsharp-build
   args: ['msbuild', '/p:Configuration=Release', 'src/App.sln']
 ```
