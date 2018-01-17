@@ -4,7 +4,7 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/container-diff'
   args:
   - 'diff'
-  - 'remote://gcr.io/$PROJECT_ID/diff-test'
+  - 'remote://launcher.gcr.io/google/ubuntu16_04'
   - 'daemon://gcr.io/$PROJECT_ID/diff-test'
   - '--type=file'
 
