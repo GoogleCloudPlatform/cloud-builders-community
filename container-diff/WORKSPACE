@@ -1,0 +1,35 @@
+workspace(name = "bazel_docker")
+
+git_repository(
+    name = "io_bazel_rules_docker",
+    remote = "https://github.com/bazelbuild/rules_docker.git",
+    tag = "v0.3.0",
+)
+
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+    container_repositories = "repositories",
+)
+
+# Consumers shouldn't need to do this themselves once WORKSPACE is
+# instantiated recursively.
+container_repositories()
+
+# Ubuntu base image.
+container_pull(
+    name = "base_image",
+    digest = "sha256:c81e8f6bcbab8818fdbe2df6d367990ab55d85b4dab300931a53ba5d082f4296",
+    registry = "launcher.gcr.io",
+    repository = "google/ubuntu16_04",
+)
+
+http_file(
+    name = "static_binary",
+    executable = True,
+    # Don't set sha256 since the latest release can change without notice.
+    # When container-diff makes stable releases, pick one and install it.
+    urls = [
+        "https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64",
+    ],
+)
