@@ -66,7 +66,16 @@ In the following example, you will run a script inside of containers on two inst
 parallel. You will use the Container Optimized OS image to provide an image with Docker
 pre-installed. The build request runs the `test/no-op.sh` script from this directory.
 
-1. Create the build request:
+1. Add the Cloud Build service account as a ServiceAccountUser:
+
+```shell
+export PROJECT=$(gcloud info --format='value(config.project)')
+export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
+export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
+gcloud projects add-iam-policy-binding $PROJECT --member=$CB_SA_EMAIL --role='roles/iam.serviceAccountUser'
+```
+
+2. Create the build request:
 
 ```shell
 cat > cloudbuild.yaml <<EOF
@@ -92,13 +101,13 @@ steps:
 EOF
 ```
 
-2. Submit the build with the local context as the workspace. 
+3. Submit the build with the local context as the workspace. 
 
 ```shell
 gcloud container builds submit --config cloudbuild.yaml .
 ```
 
-3. You should now see 2 instances being provisioned in parallel then the `test/no-op.sh` being
+4. You should now see 2 instances being provisioned in parallel then the `test/no-op.sh` being
 run inside containers based on the `ubuntu:16.04` Docker image.
 
 ## Trade-offs
