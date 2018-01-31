@@ -66,14 +66,14 @@ In the following example, you will run a script inside of containers on two inst
 parallel. You will use the Container Optimized OS image to provide an image with Docker
 pre-installed. The build request runs the `test/no-op.sh` script from this directory.
 
-1. Add the Cloud Build service account as a ServiceAccountUser:
+1. Add the Cloud Build service account as a serviceAccountUser and instanceAdmin:
 
 ```shell
 export PROJECT=$(gcloud info --format='value(config.project)')
 export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
 export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
 gcloud services enable cloudbuild.googleapis.com
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser'
+gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/compute.instanceAdmin'
 ```
 
 2. Create the build request:
