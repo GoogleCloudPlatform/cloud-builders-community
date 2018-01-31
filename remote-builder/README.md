@@ -72,7 +72,8 @@ pre-installed. The build request runs the `test/no-op.sh` script from this direc
 export PROJECT=$(gcloud info --format='value(config.project)')
 export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
 export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
-gcloud projects add-iam-policy-binding $PROJECT --member=$CB_SA_EMAIL --role='roles/iam.serviceAccountUser'
+gcloud services enable cloudbuild.googleapis.com
+gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser'
 ```
 
 2. Create the build request:
