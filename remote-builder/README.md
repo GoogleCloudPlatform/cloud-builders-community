@@ -73,7 +73,7 @@ export PROJECT=$(gcloud info --format='value(config.project)')
 export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
 export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
 gcloud services enable cloudbuild.googleapis.com
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/compute.instanceAdmin'
+gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/compute.instanceAdmin' --role='roles/iam.serviceAccountActor'
 ```
 
 2. Create the build request:
