@@ -1,1 +1,1 @@
-FROM fsharp:4.1.25
+FROM fsharp:4.1.34
