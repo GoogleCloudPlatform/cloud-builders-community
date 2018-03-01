@@ -1,0 +1,23 @@
+steps:
+# Add some checks around example, readme, etc...
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    # Create a temp directory where we will store the status of each build.
+    d=$(mktemp -d)
+    tmpfile=${d}/exitcodes.log
+    touch $tmpfile
+
+    # Loop through the builders, and build independently.
+    for d in */; do
+      echo Build $d
+      ( gcloud container builds submit $d --config=${d}cloudbuild.yaml > /dev/null 2>&1 ; echo "$d : $?" >> "$tmpfile" ) &
+    done
+    wait
+
+    cat $tmpfile
+
+timeout: 1200s
