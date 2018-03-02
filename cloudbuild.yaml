@@ -24,9 +24,8 @@ steps:
     wait
 
     # Check if there is any failure.
-    num_failures=$(wc -l < "${failure_file}")
-    if [[ $num_failures > 0 ]]; then
-      echo "Some builds failed"
+    if [[ -s ${failure_file} ]]; then
+      echo "Some builds failed:"
       cat ${failure_file}
       echo "Exiting."
       exit 1
@@ -34,3 +33,4 @@ steps:
 
     echo "All builds succeeded."
 
+tags: ['$_TAG']
