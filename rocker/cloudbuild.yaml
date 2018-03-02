@@ -5,7 +5,7 @@
 
 steps:
 # Build rocker.
-- name: 'gcr.io/cloud-builders/go:debian'
+- name: 'gcr.io/cloud-builders/go:1.9.4'
   args: ['get', 'github.com/grammarly/rocker']
   env: ['GOPATH=.', 'GO15VENDOREXPERIMENT=1']
 # Package it into a docker image.
