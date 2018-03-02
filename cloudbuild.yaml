@@ -34,5 +34,3 @@ steps:
 
     echo "All builds succeeded."
 
-
-timeout: 1200s
