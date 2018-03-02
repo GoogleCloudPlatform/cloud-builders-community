@@ -11,7 +11,7 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/container-diff'
   args: ['help']
 - name: 'gcr.io/$PROJECT_ID/container-diff'
-  args: ['diff', 'remote://launcher.gcr.io/google/ubuntu16_04', 'daemon://gcr.io/$PROJECT_ID/container-diff']
+  args: ['diff', '--type=file', 'remote://launcher.gcr.io/google/ubuntu16_04', 'daemon://gcr.io/$PROJECT_ID/container-diff']
 
 images:
 - 'gcr.io/$PROJECT_ID/container-diff'
