@@ -1,0 +1,7 @@
+FROM gcr.io/cloud-builders/go:alpine
+COPY hero.ash /builder/bin/
+
+RUN go get github.com/shiyanhui/hero/hero golang.org/x/tools/cmd/goimports
+RUN cp -a /root/go/bin/* /builder/bin/
+
+ENTRYPOINT ["hero.ash"]

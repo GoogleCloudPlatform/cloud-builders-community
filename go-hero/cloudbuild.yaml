@@ -1,0 +1,13 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud container builds submit . --config=cloudbuild.yaml
+
+steps:
+# Build the alpine and wheezy versions.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'Dockerfile.alpine', '--tag=gcr.io/$PROJECT_ID/go-hero:alpine', '.']
+
+# The alpine version is our default.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/go-hero:alpine', 'gcr.io/$PROJECT_ID/go-hero']
+
+images: ['gcr.io/$PROJECT_ID/go-hero', 'gcr.io/$PROJECT_ID/go-hero:alpine']
