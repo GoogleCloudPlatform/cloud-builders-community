@@ -6,11 +6,33 @@ steps:
   args:
   - '-c'
   - |
+    # File that contains failures.
+    failure_file=failure.log
+    touch ${failure_file}
+
     # Loop through the builders, and build independently.
-    # TODO(philmod): make these calls in parallel.
     for d in */; do
-      echo Build $d
-      gcloud container builds submit $d --config=${d}cloudbuild.yaml > /dev/null 2>&1
+      echo "Building $d ... "
+      (
+        gcloud container builds submit $d --config=${d}cloudbuild.yaml > /dev/null 2>&1
+        if [[ $? -ne 0 ]]; then
+          echo "$d failed" >> ${failure_file}
+        fi
+      ) &
     done
+
+    wait
+
+    # Check if there is any failure.
+    num_failures=$(wc -l < "${failure_file}")
+    if [[ $num_failures > 0 ]]; then
+      echo "Some builds failed"
+      cat ${failure_file}
+      echo "Exiting."
+      exit 1
+    fi
+
+    echo "All builds succeeded."
+
 
 timeout: 1200s
