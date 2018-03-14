@@ -18,6 +18,15 @@ steps:
         if [[ $? -ne 0 ]]; then
           echo "$d failed" >> ${failure_file}
         fi
+        # Then builds the subdirectories.
+        for d in `find ${d} -mindepth 2 -depth -type f -name "cloudbuild.yaml" -print`; do
+          directory=$(dirname $d)
+          echo "Building ${d} in ${directory} ... "
+          gcloud container builds submit $directory --config=${d} > /dev/null 2>&1
+          if [[ $? -ne 0 ]]; then
+            echo "$directory failed" >> ${failure_file}
+          fi
+        done
       ) &
     done
 
