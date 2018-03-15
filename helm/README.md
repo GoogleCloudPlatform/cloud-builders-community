@@ -14,8 +14,17 @@ for details.
 For most use, kubectl will need to be configured to point to a specific GKE
 cluster. You can configure the cluster by setting environment variables.
 
+    # Set region for regional GKE clusters or Zone for Zonal clusters
+    CLOUDSDK_COMPUTE_REGION=<your cluster's region>
+    or
     CLOUDSDK_COMPUTE_ZONE=<your cluster's zone>
+
+    # Name of GKE cluster
     CLOUDSDK_CONTAINER_CLUSTER=<your cluster's name>
+
+    # (Optional) Project of GKE Cluster, only if you want helm to authenticate
+    # to a GKE cluster in another project (requires IAM Service Accounts are properly setup)
+    GCLOUD_PROJECT=<destination cluster's GCP project>
 
 Setting the environment variables above will cause this step's entrypoint to
 first run a command to fetch cluster credentials as follows.

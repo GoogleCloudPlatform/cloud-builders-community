@@ -1,5 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '.']
+  args: ['build', '--tag=gcr.io/$_PROJECT_ID/helm', 'helm']
 
-images: ['gcr.io/$PROJECT_ID/helm']
+images: ['gcr.io/$_PROJECT_ID/helm']
+
+substitutions:
+  _PROJECT_ID: '$PROJECT_ID'
