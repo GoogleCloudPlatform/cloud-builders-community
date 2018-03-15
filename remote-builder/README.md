@@ -78,3 +78,8 @@ To give it a try, see the `examples` directory.
 
 This is not an official Google product.
 
+## Trade-offs
+
+1. Paying for builder + VM
+2. Spin up time of VM increases build time
+

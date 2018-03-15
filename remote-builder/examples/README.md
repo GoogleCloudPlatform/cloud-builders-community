@@ -1,10 +1,12 @@
-# Remote Builder Examples
+# Remote Builder Example
 
 ## Quick Start
 
 In this simple example, you will run a script inside of containers on two instances in
 parallel. You will use the Container Optimized OS image to provide an image with Docker
 pre-installed. The build request runs the `test/no-op.sh` script from this directory.
+
+Follow instructions at [Usage](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/remote-builder#usage) to build the builder first.
 
 To run, execute this command:
 
