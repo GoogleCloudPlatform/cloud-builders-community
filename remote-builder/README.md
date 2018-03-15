@@ -1,10 +1,6 @@
 # Container Builder Remote Build Step
 
-## THIS IS NOT AN OFFICIAL GOOGLE PRODUCT
-
-## Intro
-
-### What?
+## Introduction
 
 ![Architecture Diagram](docs/arch.png)
 
@@ -22,7 +18,7 @@ In these cases you can leverage Container Builder to trigger your builds and
 manage their workflow but run the actual build steps on an instance with
 exactly the configuration you need.
 
-### How?
+## How?
 
 When using the remote-builder image, the following will happen:
 
@@ -34,11 +30,29 @@ When using the remote-builder image, the following will happen:
 
 ## Usage
 
-In order to use this step you can configure your build step as follows:
+In order to use this step, first build the builder:
+
+```
+gcloud container builds submit --config=cloudbuild.yaml .
+```
+
+Then, create an appropriate IAM role with permissions to create and destroy
+Compute Engine instances in this project:
+
+```
+export PROJECT=$(gcloud info --format='value(config.project)')
+export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
+export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
+gcloud services enable cloudbuild.googleapis.com
+gcloud services enable compute.googleapis.com
+gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/compute.instanceAdmin.v1' --role='roles/iam.serviceAccountActor'
+```
+
+Then, configure your build step as follows:
 
 ```
 steps:
-- name: gcr.io/cloud-solutions-images/remote-builder:v0.3.0
+- name: gcr.io/$PROJECT_ID/remote-builder
   env:
     - COMMAND=ls -la
 ```
@@ -60,58 +74,7 @@ build step in the `env` parameter:
 | ZONE  | Compute zone to launch the instance in | `us-central1-f` |
 | INSTANCE_ARGS| Parameters to the instance creation command. For a full list run `gcloud compute instances create --help`| `--preemptible` |
 
-## Quick Start
+To give it a try, see the `examples` directory.
 
-In the following example, you will run a script inside of containers on two instances in
-parallel. You will use the Container Optimized OS image to provide an image with Docker
-pre-installed. The build request runs the `test/no-op.sh` script from this directory.
+This is not an official Google product.
 
-1. Add the Cloud Build service account as a serviceAccountUser and instanceAdmin:
-
-```shell
-export PROJECT=$(gcloud info --format='value(config.project)')
-export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
-export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
-gcloud services enable cloudbuild.googleapis.com
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/compute.instanceAdmin' --role='roles/iam.serviceAccountActor'
-```
-
-2. Create the build request:
-
-```shell
-cat > cloudbuild.yaml <<EOF
-steps:
-- name: gcr.io/cloud-solutions-images/remote-builder:v0.3.1
-  waitFor: ["-"]
-  env:
-    # Use Container Optimized OS
-    # https://cloud.google.com/container-optimized-os/docs/
-    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
-    - USERNAME=cloud-user
-    # Run a script from the local build context in a Docker container
-    - COMMAND=docker run -v /home/cloud-user/workspace:/workspace ubuntu:16.04 bash -xe /workspace/test-scripts/no-op.sh
-- name: gcr.io/cloud-solutions-images/remote-builder:v0.3.1
-  waitFor: ["-"]
-  env:
-    # Use Container Optimized OS
-    # https://cloud.google.com/container-optimized-os/docs/
-    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
-    - USERNAME=cloud-user
-    # Run a script from the local build context in a Docker container
-    - COMMAND=docker run -v /home/cloud-user/workspace:/workspace ubuntu:16.04 bash -xe /workspace/test-scripts/no-op.sh
-EOF
-```
-
-3. Submit the build with the local context as the workspace. 
-
-```shell
-gcloud container builds submit --config cloudbuild.yaml .
-```
-
-4. You should now see 2 instances being provisioned in parallel then the `test/no-op.sh` being
-run inside containers based on the `ubuntu:16.04` Docker image.
-
-## Trade-offs
-
-1. Paying for builder + VM
-1. Spin up time of VM increases build time
