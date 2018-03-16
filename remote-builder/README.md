@@ -74,7 +74,7 @@ build step in the `env` parameter:
 | ZONE  | Compute zone to launch the instance in | `us-central1-f` |
 | INSTANCE_ARGS| Parameters to the instance creation command. For a full list run `gcloud compute instances create --help`| `--preemptible` |
 
-To give it a try, see the `examples` directory.
+To give it a try, see the [examples directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/remote-builder/examples).
 
 This is not an official Google product.
 
