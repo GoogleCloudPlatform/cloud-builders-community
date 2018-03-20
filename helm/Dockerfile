@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VERSION v2.8.1
+ENV VERSION v2.8.2
 
 COPY helm.bash /builder/helm.bash
 
