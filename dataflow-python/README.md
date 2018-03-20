@@ -5,7 +5,7 @@
 [Google Cloud Dataflow](https://cloud.google.com/dataflow/), based on [Apache Beam](https://beam.apache.org/), is a fully-managed service for transforming and enriching data in stream (real time) and batch (historical) modes with equal reliability and expressiveness.  Developers and Data Scientists use Dataflow to process large amounts of data without managing complex cluster infrastructure.
 
 [Google Container Builder](https://cloud.google.com/container-builder/) offers a number of advantages for Cloud Dataflow developers:
-* Small workloads (which run in a `n1-standard-1` virtual machine) can take advantage of the [free tier](https://cloud.google.com/container-builder/pricing), which provides 120 free build-minutes per day
+* Small workloads which run in a `n1-standard-1` virtual machine can take advantage of the [free tier](https://cloud.google.com/container-builder/pricing), which provides 120 free build-minutes per day
 * Workflows start very quickly, typically within a few seconds (depending on the size of your container)
 * Pipelines get all the benefits of containerization, including a consistent environment and integration with your CI/CD flow
 * Container Builder supports automatic triggering from Github, Bitbucket and Google Cloud
@@ -46,7 +46,7 @@ export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
 gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/iam.serviceAccountActor' --role='roles/dataflow.admin’
 # Enable Dataflow API
 gcloud services enable dataflow.googleapis.com
-# Setup GCS buckets
+# Setup GCS bucket
 gsutil mb gs://cloudbuild-dataflow-$PROJECT
 ```
 
@@ -55,7 +55,7 @@ gsutil mb gs://cloudbuild-dataflow-$PROJECT
 Python has several different dependency management tools, which interact in
 different ways with containers.  In this case we use `virtualenv` to setup an
 isolated folder inside the container with the libraries we need.  As a result of
-this, be sure that your first build step sets up the virtualenv environment.
+this, be sure that your first build step loads the `virtualenv` environment.
 See examples for details.
 
 Additional libraries can be added by creating another container based on this
