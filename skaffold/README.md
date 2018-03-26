@@ -1,4 +1,4 @@
-# `gcr.io/cloud-builders-community/skaffold:alpha`
+# Skaffold (alpha)
 
 This Container Builder build step runs
 [`skaffold`](https://github.com/GoogleCloudPlatform/skaffold/) for Google
@@ -20,7 +20,7 @@ correct Kubernetes Engine cluster name and compute zone:
 
 ```
 steps:
-- name: gcr.io/cloud-builders-community/skaffold:alpha
+- name: gcr.io/$PROJECT_ID/skaffold:alpha
   args: ['run', '-f=skaffold.yaml']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
@@ -29,6 +29,8 @@ steps:
 
 ## Building this builder
 
-To build this builder, run the following command in this directory.
+To build this builder and push the resulting image to the Container Registry
+in your project, run the following command in this directory:
 
     $ gcloud container builds submit . --config=cloudbuild.yaml
+
