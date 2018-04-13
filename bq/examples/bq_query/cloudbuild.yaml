@@ -1,6 +1,6 @@
 steps:
 # Query and write the results to a destination table.
-- name: 'gcr.io/cloud-builders/bq'
+- name: 'gcr.io/community-builders/bq'
   args:
   - query
   - --use_legacy_sql=false

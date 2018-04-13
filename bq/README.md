@@ -29,7 +29,7 @@ build's workspace.
 
 ```
 steps:
-- name: gcr.io/cloud-builders/bq
+- name: gcr.io/community-builders/bq
   args: ['load', 'my_dataset.my_table', 'local-file.csv', 'local-schema.json']
 ```
 
@@ -40,7 +40,7 @@ a BigQuery table.
 
 ```
 steps:
-- name: gcr.io/cloud-builders/bq
+- name: gcr.io/community-builders/bq
   args:
   - query
   - --use_legacy_sql=false
@@ -51,3 +51,11 @@ steps:
     WHERE name = 'Bob'
     GROUP BY year
 ```
+
+## Building this builder
+
+To build and test this builder the [builder service
+account](https://cloud.google.com/container-builder/docs/permissions) must
+have permissions to create BigQuery query jobs for the project, such as with
+the [BigQuery User
+Role](https://cloud.google.com/bigquery/docs/access-control#permissions_and_roles).
