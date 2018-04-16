@@ -27,7 +27,6 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	//TODO: Check for header X-Appengine-Cron: true
 	ctx := appengine.NewContext(r)
 	str, err := submitBuild(ctx)
 	if err != nil {

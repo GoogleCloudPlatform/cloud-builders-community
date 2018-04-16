@@ -12,4 +12,4 @@ steps:
   args: ['-q', 'app', 'deploy', 'appengine/app.yaml']
   env: ['GOPATH=.']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['-q', 'app', 'deploy', 'appengine/cron.yaml', '--project', '$PROJECT_ID']
+  args: ['-q', 'app', 'deploy', 'appengine/cron.yaml']

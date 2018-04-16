@@ -27,7 +27,7 @@ func main() {
 	y := new(YAMLWrapper)
 	dat, err := ioutil.ReadFile("cloudbuild.yaml")
 	if err != nil {
-		panic(fmt.Sprintf("Cannot load cloudbuild.yaml:: %q", err))
+		panic(fmt.Sprintf("Cannot load cloudbuild.yaml: %q", err))
 	}
 	y.Value = string(dat)
 	if _, err := dsClient.Put(ctx, k, y); err != nil {

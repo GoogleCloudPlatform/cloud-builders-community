@@ -1,6 +1,6 @@
 # cron-builder
 
-This builder sets up scheduled builds, using the [Google App Engine Cron Service](https://cloud.google.com/appengine/docs/standard/go/config/cron).  This takes advantage of App Engine Standard's ability to "scale to zero" when unused.
+This builder sets up scheduled builds using the [Google App Engine Cron Service](https://cloud.google.com/appengine/docs/standard/go/config/cron).  This takes advantage of App Engine Standard's ability to "scale to zero" when unused.
 
 ## Getting started
 
@@ -22,6 +22,8 @@ source:
     object: source.tar.gz
 ```
 
+This builder is a special case and the `source:` tag is not normally valid in YAML configuration.  For more information, see the [Container Builder documentation](https://cloud.google.com/container-builder/docs/build-config#source_code_location).
+
 ## Installing the builder
 
 To begin, select (or create) a project, enable billing, and [install the Cloud SDK](https://cloud.google.com/sdk/downloads).
@@ -30,18 +32,18 @@ Download this code and copy your Container Builder `cloudbuild.yaml` into this d
 
 Next, edit `appengine/cron.yaml` to reflect how often your want your build to occur.  The full syntax reference can be found [here](https://cloud.google.com/appengine/docs/standard/go/config/cronref).  The default configuration provided will run a build once every 24 hours.
 
-Then, grant App Engine permissions to run builds; grant your Container Builder service account permissions to deploy to App Engine, write config to App Engine Datastore, and schedule cron jobs; and enable the necessary APIs:
+Then enable the APIs necessary; grant App Engine permissions to run builds; grant your Container Builder service account permissions to deploy to App Engine, write config to App Engine Datastore, and schedule cron jobs:
 
 ```
+gcloud services enable cloudbuild.googleapis.com
+gcloud services enable appengine.googleapis.com
+
 export PROJECT=$(gcloud info --format='value(config.project)')
 export AE_SA_EMAIL=$PROJECT@appspot.gserviceaccount.com
 export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
 
 gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$AE_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/iam.serviceAccountActor' --role='roles/cloudbuild.builds.editor'
 gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/iam.serviceAccountActor' --role='roles/datastore.owner'  --role='roles/appengine.appAdmin' --role='roles/cloudscheduler.admin'
-
-gcloud services enable cloudbuild.googleapis.com
-gcloud services enable appengine.googleapis.com
 ```
 
 Then, to install the builder:
@@ -56,6 +58,6 @@ Builds will now run at the frequency you specified.  To view your job or start i
 
 `cron-builder` currently uses the default service in App Engine standard.  If you already have an App Engine application installed in your project, you will need to adjust the configuration to install as a different service and avoid overwriting your app.
 
-The App Engine endpoint requires Admin permissions, which prevents an attacker from maliciously triggering repeated builds.  However, if you want to test the endpoint, you must login.  See [Securing URLs for Cron](https://cloud.google.com/appengine/docs/standard/go/config/cron#securing_urls_for_cron).
+The App Engine endpoint requires Admin permissions, which prevents an attacker from maliciously triggering repeated builds.  However, if you want to trigger the endpoint using command-line tools you must authenticate first.  See [Securing URLs for Cron](https://cloud.google.com/appengine/docs/standard/go/config/cron#securing_urls_for_cron).
 
 At present App Engine submits builds within its own project.  You could extend this code to submit builds to other projects by editing the App Engine code slightly and granting appropriate IAM privileges.
