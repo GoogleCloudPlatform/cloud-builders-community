@@ -59,6 +59,7 @@ func submitBuild(ctx context.Context) (string, error) {
 		return "", err
 	}
 	log.Infof(ctx, "Got build config from Datastore: %q", b)
+	b.Tags = []string{"cron-helper"}
 
 	//
 	transport := &oauth2.Transport{
