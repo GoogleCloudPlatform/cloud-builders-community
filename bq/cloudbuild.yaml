@@ -8,7 +8,8 @@ steps:
   args: ['version']
 
 # Invoke a command that requires auth, to check that it gets piped through
-# correctly.
+# correctly. Requires that the Container Builder service account has at
+# least the BigQuery User IAM role.
 - name: 'gcr.io/$PROJECT_ID/bq'
   args: ['query', '--use_legacy_sql=false', 'SELECT AVG(weight_pounds) FROM `bigquery-public-data.samples.natality`']
 
