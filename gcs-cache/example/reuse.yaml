@@ -1,0 +1,20 @@
+# Subsequent builds can pull the cache, potentially change it, and save it again
+# for later re-use.
+steps:
+# At build start time, the cache is not present.
+- name: "ubuntu"
+  args: ["bash", "-c", "[[ ! -e foo ]]"]
+# Pull down the cache.
+- name:       'gcr.io/$PROJECT_ID/gcs-cache'
+  entrypoint: "pull"
+  args:       ["gs://${PROJECT_ID}_cloudbuild/mycache.tgz", "."]
+# Confirm that the cache is now present.
+- name: "ubuntu"
+  args: ["bash", "-c", "[[ -e foo ]]"]
+- name: "ubuntu"
+  args: ["bash", "-c", "[[ -f foo/expensive ]]"]
+# A bunch of new operations that use and/or change the cache can happen here.
+# Then we save the cache back up to GCS for the next build.
+- name:       'gcr.io/$PROJECT_ID/gcs-cache'
+  entrypoint: "push"
+  args:       ["foo", "gs://${PROJECT_ID}_cloudbuild/mycache.tgz"]
