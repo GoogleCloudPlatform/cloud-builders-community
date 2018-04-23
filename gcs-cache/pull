@@ -10,8 +10,6 @@ fi
 TMP=$(mktemp -d)
 localfile="${TMP}/tmp.tgz"
 gsutil cp "$1" "${localfile}" || exit
-mkdir -p "$2"
-cd "$2" || exit
-tar -xzvf "${localfile}" . || exit
+tar -xzvf "${localfile}" "${2}" || exit
 
 rm -rf "${TMP}"
