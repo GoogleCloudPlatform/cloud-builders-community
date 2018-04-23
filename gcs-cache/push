@@ -7,10 +7,9 @@ if [[ $# -ne 2 ]]; then
   exit 1
 fi
 
-cd "$1" || exit
 TMP=$(mktemp -d)
 localfile="${TMP}/tmp.tgz"
-tar -czvf "${localfile}" . || exit
+tar -czvf "${localfile}" "$1" || exit
 gsutil cp "${localfile}" "$2" || exit
 
 rm -rf ${TMP}
