@@ -7,7 +7,7 @@ steps:
 # Pull down the cache.
 - name:       'gcr.io/$PROJECT_ID/gcs-cache'
   entrypoint: "pull"
-  args:       ["gs://${PROJECT_ID}_cloudbuild/mycache.tgz", "."]
+  args:       ["gs://${PROJECT_ID}_cloudbuild/mycache.tgz"]
 # Confirm that the cache is now present.
 - name: "ubuntu"
   args: ["bash", "-c", "[[ -e foo ]]"]
