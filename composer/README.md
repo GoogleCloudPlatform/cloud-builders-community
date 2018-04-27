@@ -6,9 +6,6 @@
 
 ```
 steps:
-- name: 'gcr.io/cloud-community-builders/composer
-  args:
-    - '-c'
-    - |
-      composer install
+- name: 'gcr.io/$PROJECT_ID/composer
+  args: ['install']
 ```
