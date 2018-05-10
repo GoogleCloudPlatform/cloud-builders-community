@@ -1,0 +1,30 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud container builds submit . --config=cloudbuild.yaml
+steps:
+- name: 'gcr.io/${PROJECT_ID}/terraform' # Remove this step after the first run. TODO: Track down optional steps documentation
+  entrypoint: 'gsutil'
+  args: ['mb', '-l', 'us-east1', 'gs://${_BUCKET}']
+- name: 'gcr.io/${PROJECT_ID}/terraform'
+  args: ['init',
+    '-backend-config=project=${PROJECT_ID}',
+    '-backend-config=bucket=${_BUCKET}']
+  env:
+    - "TF_VAR_project-name=${PROJECT_ID}"
+- name: 'gcr.io/${PROJECT_ID}/terraform'
+  args: ['plan']
+  env:
+    - "TF_VAR_project-name=${PROJECT_ID}"
+- name: 'gcr.io/${PROJECT_ID}/terraform'
+  args: ['apply', '-auto-approve']
+  env:
+    - "TF_VAR_project-name=${PROJECT_ID}"
+- name: 'gcr.io/${PROJECT_ID}/terraform'
+  args: ['destroy', '-auto-approve']
+  env:
+    - "TF_VAR_project-name=${PROJECT_ID}"
+substitutions:
+    _BUCKET: 'builder-example-terraform-state-unspecified-life' # Provide your own unique bucket name
+
+
+
+
