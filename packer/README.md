@@ -1,6 +1,6 @@
 # Packer
 
-This build step invokes `packer` commands in [Google Cloud Container Builder](cloud.google.com/container-builder/).
+This build step invokes `packer` commands in [Google Cloud Container Builder](https://cloud.google.com/container-builder).
 
 Arguments passed to this builder will be passed to `packer` directly, allowing
 callers to run [any Packer
