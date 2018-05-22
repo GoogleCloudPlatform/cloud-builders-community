@@ -1,4 +1,4 @@
-# Tool builder: `gcr.io/cloud-builders/yarn-puppeteer`
+# Tool builder: `gcr.io/$PROJECT_ID/yarn-puppeteer`
 
 This Container Builder build step runs the `yarn` tool but with the necessary dependencies for puppeteer.
 
