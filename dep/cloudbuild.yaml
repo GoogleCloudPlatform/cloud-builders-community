@@ -1,0 +1,22 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud container builds submit . --config=cloudbuild.yaml
+
+steps:
+# Build the alpine and debian versions.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'Dockerfile.alpine', '--tag=gcr.io/$PROJECT_ID/dep:alpine', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'Dockerfile.debian', '--tag=gcr.io/$PROJECT_ID/dep:debian', '.']
+
+# The alpine version is our default.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/dep:alpine', 'gcr.io/$PROJECT_ID/dep']
+
+# Run version to make sure that everything is working properly.
+- name: 'gcr.io/$PROJECT_ID/dep'
+  args: ['version']
+
+images:
+- 'gcr.io/$PROJECT_ID/dep'
+- 'gcr.io/$PROJECT_ID/dep:alpine'
+- 'gcr.io/$PROJECT_ID/dep:debian'
