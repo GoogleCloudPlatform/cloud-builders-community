@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  args: ['list']
+  secretEnv: ['FIREBASE_TOKEN']
+secrets:
+- kmsKeyName: 'projects/[PROJECT_ID]/locations/global/keyRings/cloudbuilder/cryptoKeys/firebase-token'
+  secretEnv:
+    FIREBASE_TOKEN: '<ENCRYPTED_TOKEN>'
