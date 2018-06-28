@@ -1,7 +1,0 @@
-cloudbuild.yaml
-CONTRIBUTING.md
-LICENSE
-README.md
-**/README.md
-.gcloudignore
-.gitignore
