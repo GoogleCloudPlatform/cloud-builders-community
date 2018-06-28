@@ -1,0 +1,8 @@
+# Run a build that does something expensive, and save that expensive output into
+# a cache file for later re-use.
+steps:
+- name: 'ubuntu'
+  args: ["bash", "-c", "mkdir foo && touch foo/expensive"]
+- name:       'gcr.io/$PROJECT_ID/gcs-cache'
+  entrypoint: "push"
+  args:       ["foo", "gs://${PROJECT_ID}_cloudbuild/mycache.tgz"]
