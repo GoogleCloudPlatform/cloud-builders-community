@@ -10,13 +10,21 @@ steps:
     failure_file=failure.log
     touch ${failure_file}
 
+
     # Loop through the builders, and build independently.
     for d in */; do
+      # The android builder assumes a local installation of Android SDK which is
+      # not a valid assumption.
+      if [[ "${d}" == "android/" ]]; then
+        echo "Skipping $d."
+        continue
+      fi
+
       echo "Building $d ... "
       (
         gcloud container builds submit $d --config=${d}cloudbuild.yaml > /dev/null 2>&1
         if [[ $? -ne 0 ]]; then
-          echo "$d failed" >> ${failure_file}
+          echo "$d failed" | tee -a ${failure_file}
         fi
       ) &
     done
