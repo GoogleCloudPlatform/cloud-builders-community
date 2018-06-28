@@ -55,4 +55,4 @@ steps:
 
     echo "All builds succeeded."
 
-#tags: ['$_PR_NUMBER', '$_REPO_OWNER', '$_REPO', '$_SHA']
+tags: ['$_PR_NUMBER', '$_REPO_OWNER', '$_REPO', '$_SHA']
