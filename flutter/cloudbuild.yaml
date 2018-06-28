@@ -1,0 +1,17 @@
+steps:
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'flutter'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/flutter', '.' ]
+
+images: [ 'gcr.io/$PROJECT_ID/flutter' ]
+
+# Examples:
+
+# Build an Android APK in release mode:
+# - name: 'gcr.io/$PROJECT_ID/flutter'
+#   args: [ 'build', 'apk', '--release' ]
+
+# To run tests.
+# - name: 'gcr.io/$PROJECT_ID/flutter'
+#   args: [ 'test' ]
