@@ -68,7 +68,7 @@ build step in the `env` parameter:
 | Options       | Description   | Default |
 | ------------- | ------------- | ------- |
 | COMMAND | Command to run inside the remote workspace | None, must be set |
-| USERNAME  | Username to use when logging into the instance via SSH  | `cloud-user` |
+| USERNAME  | Username to use when logging into the instance via SSH  | `admin` |
 | REMOTE_WORKSPACE  | Location on remote host to use as workspace | `/home/${USERNAME}/workspace/` |
 | INSTANCE_NAME  | Name of the instance that is launched  | `builder-$UUID` |
 | ZONE  | Compute zone to launch the instance in | `us-central1-f` |
