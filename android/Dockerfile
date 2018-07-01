@@ -5,12 +5,12 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ARG ANDROID_SDK_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip"
 ARG ANDROID_SDK_LICENSE
 ARG ANDROID_BUILD_CACHE
-ARG GRADLE_DISTRIBUTION="https://services.gradle.org/distributions/gradle-4.3-bin.zip"
+ARG GRADLE_DISTRIBUTION="https://services.gradle.org/distributions/gradle-4.4-bin.zip"
 
 ENV GRADLE_BUILD_CACHE=${ANDROID_BUILD_CACHE}
 ENV DOCKER_ANDROID_DISPLAY_NAME mobileci-docker
 ENV GRADLE_TARGETS="assembleDebug"
-ENV GRADLE_HOME=/usr/local/gradle-4.3
+ENV GRADLE_HOME=/usr/local/gradle-4.4
 
 ENV ANDROID_HOME /android-sdk
 ENV PATH ${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:/bin:$PATH
@@ -38,8 +38,8 @@ RUN apt-get update && \
     --no-install-recommends && \
     # Install gradle
     wget --quiet $GRADLE_DISTRIBUTION && \
-    unzip -qq  gradle-4.3-bin.zip -d /usr/local/ && \
-    ln -s /usr/local/gradle-4.3/bin/gradle /usr/local/bin/gradle && \
+    unzip -qq  gradle-4.4-bin.zip -d /usr/local/ && \
+    ln -s /usr/local/gradle-4.4/bin/gradle /usr/local/bin/gradle && \
     # Install android sdk
     mkdir -p /root/.android && touch /root/.android/repositories.cfg && \
     wget --quiet --output-document=android-sdk.zip ${ANDROID_SDK_TOOLS_URL} && \
