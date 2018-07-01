@@ -44,5 +44,7 @@ fi
 echo "Running: helm repo update"
 helm repo update
 
-echo "Running: helm $@"
+if [ "$DEBUG" = true ]; then
+    echo "Running: helm $@"
+fi
 helm "$@"
