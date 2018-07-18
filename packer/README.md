@@ -1,7 +1,7 @@
 # Packer
 
 This build step invokes `packer` commands in
-[Google Cloud Cloud Build](https://cloud.google.com/cloud-build).
+[Google Cloud Build](https://cloud.google.com/cloud-build).
 
 Arguments passed to this builder will be passed to `packer` directly, allowing
 callers to run

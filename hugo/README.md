@@ -3,7 +3,7 @@
 [Hugo](https://gohugo.io/) is a popular open-source static site generator.
 
 This build step invokes `hugo` commands in
-[Google Cloud Cloud Build](cloud.google.com/container-builder/).
+[Google Cloud Build](http://cloud.google.com/cloud-build/).
 
 Arguments passed to this builder will be passed to `hugo` directly, allowing
 callers to run [any Hugo command](https://gohugo.io/commands/).

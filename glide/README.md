@@ -1,17 +1,14 @@
-# Tool builder: `gcr.io/cloud-builders/glide`
+# glide
 
 This Cloud Build build step runs the [`glide`](https://glide.sh) tool.
 [`glide`](https://glide.sh) is used to manage Go source dependencies.
 
 ### When to use this builder
 
-The `gcr.io/cloud-builders/glide` build step should be used when you want to run
+This build step should be used when you want to run
 the [`glide`](https://glide.sh) tool on your source.
 
-### Related: [`gcr.io/cloud-builders/go`](https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/go/README.md)
-
-The related build step, `gcr.io/cloud-builders/go`, defines the conventions used
-to manage a Go workspace.
+`gcr.io/cloud-builders/go` is used to build a go workspace.
 
 ## Examples
 

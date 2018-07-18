@@ -10,15 +10,21 @@ use Dataflow to process large amounts of data without managing complex cluster
 infrastructure.
 
 [Google Cloud Build](https://cloud.google.com/cloud-build/) offers a number of
-advantages for Cloud Dataflow developers: * Small workloads which run in a
+advantages for Cloud Dataflow developers: 
+
+* Small workloads which run in a
 `n1-standard-1` virtual machine can take advantage of the
 [free tier](https://cloud.google.com/cloud-build/pricing), which provides 120
-free build-minutes per day * Workflows start very quickly, typically within a
-few seconds (depending on the size of your container) * Pipelines get all the
+free build-minutes per day 
+* Workflows start very quickly, typically within a
+few seconds (depending on the size of your container) 
+* Pipelines get all the
 benefits of containerization, including a consistent environment and integration
-with your CI/CD flow * Cloud Build supports automatic triggering from Github,
+with your CI/CD flow 
+* Cloud Build supports automatic triggering from Github,
 Bitbucket and Google Cloud Source Repositories, so you can configure your data
-warehouse to automatically update when the pipeline code changes * Pipelines can
+warehouse to automatically update when the pipeline code changes 
+* Pipelines can
 be initiated by a simple
 [REST API](https://cloud.google.com/cloud-build/docs/api/reference/rest/).
 

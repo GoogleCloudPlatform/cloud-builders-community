@@ -1,8 +1,8 @@
-# Google Cloud Cloud Build community images
+# Google Cloud Build community images
 
 This repository contains source code for community-contributed Docker images.
 You can use these images as build steps for
-[Google Cloud Cloud Build](https://cloud.google.com/cloud-build/docs/).
+[Google Cloud Build](https://cloud.google.com/cloud-build/docs/).
 
 These are not official Google products.
 
@@ -55,14 +55,14 @@ build step on a Linux or Mac OS X workstation:
     $ gcloud container images list --filter packer
     ```
 
-### Use the build step with Cloud Build build
+### Use the build step with Cloud Build
 
-Once you've built the Docker image, you can use it as a build step in a Cloud
-Build build.
+Once you've built the Docker image, you can use it as a build step with Cloud
+Build.
 
 For example, below is the `packer` build step in a YAML
 [config file](https://cloud.google.com/cloud-build/docs/build-config), ready to
-be used in a Cloud Build build:
+be used in a build:
 
 ```yaml
    - name: 'gcr.io/$PROJECT_ID/packer'
@@ -88,14 +88,14 @@ least one working example in your
 
 In order to accept your contribution, it must:
 
-*   make clear that the builder image is pushed to the builder's project's
+*   Make clear that the builder image is pushed to the builder's project's
     registry. E.g., it specifies `images: ['gcr.io/$PROJECT_ID/the-tool']`. The
     builder will not be pushed to the `gcr.io/cloud-builders` registry.
-*   include a simple sanity test in the `cloudbuild.yaml` config that builds and
+*   Include a simple sanity test in the `cloudbuild.yaml` config that builds and
     pushes the image. This can be as simple as invoking the tool with `--help`,
     and it ensures the tool is installed correctly and in the expected location
     within the image.
-*   include some basic example describing how to use it. This helps new users
+*   Include some basic example describing how to use it. This helps new users
     get acquainted with the builder, and helps us ensure the builder continues
     to work as intended.
 

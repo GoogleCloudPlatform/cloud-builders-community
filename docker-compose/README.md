@@ -1,7 +1,7 @@
 # Docker-compose
 
 This build step invokes `docker-compose` commands in
-[Google Cloud Cloud Build](cloud.google.com/container-builder/).
+[Google Cloud Build](http://cloud.google.com/cloud-build/).
 
 Arguments passed to this builder will be passed to `docker-compose` directly,
 allowing callers to run

@@ -29,12 +29,26 @@ not persisted outside of the build.
 }
 ```
 
-`cloudbuild.yaml`: `steps: - name: gcr.io/cloud-builders/wget args: [ '-O',
-'example.jsonnet',
-'https://raw.githubusercontent.com/DazWilkin/cloud-builders-community/master/jsonnet/examples/example.jsonnet'
-] - name: gcr.io/${PROJECT_ID}/jsonnet args: [ "eval",
-"--output-file","./example.yaml", "./example.jsonnet" ] - name: busybox args:
-["more","./example.yaml"]`
+`cloudbuild.yaml`: 
+
+```
+steps: 
+- name: gcr.io/cloud-builders/wget 
+  args: [ '-O',
+          'example.jsonnet',
+          'https://raw.githubusercontent.com/DazWilkin/cloud-builders-community/master/jsonnet/examples/example.jsonnet'
+  ]
+- name: gcr.io/${PROJECT_ID}/jsonnet 
+  args: [ "eval",
+          "--output-file",
+          "./example.yaml", 
+          "./example.jsonnet" 
+          ] 
+- name: busybox 
+  args:[ "more",
+         "./example.yaml"
+         ]
+```
 
 # Using the Jsonnet builder
 

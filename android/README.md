@@ -21,13 +21,16 @@ recommended that after you generate the packages.txt file you edit it to include
 only those sdk components that you need. Alternatively you can create this file
 manually, for example:
 
-| packages.txt                                                                 |
-| :--------------------------------------------------------------------------- |
-| extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2   |
-: <br/> extras;google;google_play_services <br/> extras;android;gapid;3        :
-: <br/>extras;google;auto <br/> extras;android;m2repository                    :
-: <br/>extras;google;webdriver <br/> platform-tools <br/> platforms;android-26 :
-: <br/>                                                                        :
+| packages.txt |
+| --------------------------------------------------------------------------- |
+| extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2  |
+| extras;google;google_play_services |
+| extras;android;gapid;3  |
+|extras;google;auto 
+|extras;android;m2repository |
+| extras;google;webdriver |
+| platform-tools |
+| platforms;android-26 |
 
 ##### 2. Save your android sdk license to a shell variable.
 

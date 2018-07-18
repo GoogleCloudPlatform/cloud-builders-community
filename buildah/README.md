@@ -11,4 +11,4 @@ This builder can be built and pushed to your GCR repository by running
 gcloud container builds submit --config=cloudbuild.yaml
 ```
 
-in this directory
+in this directory.

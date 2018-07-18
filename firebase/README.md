@@ -1,7 +1,7 @@
 # firebase
 
 This build step invokes `firebase` commands that can be used in
-[Google Cloud Cloud Build](cloud.google.com/container-builder/).
+[Google loud Build](http://cloud.google.com/cloud-build/).
 
 Arguments passed to this builder will be passed to `firebase` directly, allowing
 callers to run

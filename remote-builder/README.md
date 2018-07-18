@@ -14,7 +14,7 @@ require things like:
 1.  Machines in a particular network
 1.  Pre-emptibility
 
-In these cases you can leverage Cloud Build to trigger your builds and manage
+In these cases you can use Cloud Build to trigger your builds and manage
 their workflow but run the actual build steps on an instance with exactly the
 configuration you need.
 
