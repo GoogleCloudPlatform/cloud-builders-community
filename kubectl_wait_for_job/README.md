@@ -1,6 +1,10 @@
 # [`kubectl_wait_for_job`](https://kubernetes.io/docs/user-guide/kubectl-overview) tool builder
 
-If you're looking to run a job but actually block execution until that job is complete on the cluster, this wraps the kubectl command to do that. For instance if you need run database migrations prior to deploying the code that utilizes them, you can use this command to execute a job, wait for it to complete, and then update your deployment with the image that utilizes those migrations.  
+If you're looking to run a job but actually block execution until that job is
+complete on the cluster, this wraps the kubectl command to do that. For instance
+if you need run database migrations prior to deploying the code that utilizes
+them, you can use this command to execute a job, wait for it to complete, and
+then update your deployment with the image that utilizes those migrations.
 
 ## Using this builder with Google Container Engine
 
@@ -31,19 +35,20 @@ cluster. You can configure the cluster by setting environment variables.
     CLOUDSDK_COMPUTE_ZONE=<your cluster's zone>
     CLOUDSDK_CONTAINER_CLUSTER=<your cluster's name>
 
-
 If your GKE cluster is in a different project than Cloud Build, also set:
 
-```CLOUDSDK_CORE_PROJECT=<the GKE cluster project>```
+`CLOUDSDK_CORE_PROJECT=<the GKE cluster project>`
 
-Make sure you also grant the Cloud Build service account permissions in the GKE cluster project.
+Make sure you also grant the Cloud Build service account permissions in the GKE
+cluster project.
 
 Setting the environment variables above will cause this step's entrypoint to
 first run a command to fetch cluster credentials as follows.
 
     gcloud container clusters get-credentials --zone "$CLOUDSDK_COMPUTE_ZONE" "$CLOUDSDK_CONTAINER_CLUSTER"`
 
-Then, `kubectl_wait_for_job` will have the configuration needed to talk to your GKE cluster.
+Then, `kubectl_wait_for_job` will have the configuration needed to talk to your
+GKE cluster.
 
 ## Building this builder
 

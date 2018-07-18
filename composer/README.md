@@ -1,6 +1,7 @@
 # Composer
 
-[Composer](https://getcomposer.org/) is a popular PHP open-source package manager.
+[Composer](https://getcomposer.org/) is a popular PHP open-source package
+manager.
 
 ## Usage:
 

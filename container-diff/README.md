@@ -44,6 +44,6 @@ steps:
 images: ['gcr.io/$PROJECT_ID/image']
 ```
 
-See [the `container-diff`
-documentation](https://github.com/GoogleCloudPlatform/container-diff) for more
-information about additional available options.
+See
+[the `container-diff` documentation](https://github.com/GoogleCloudPlatform/container-diff)
+for more information about additional available options.

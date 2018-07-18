@@ -31,7 +31,8 @@ first run a command to fetch cluster credentials as follows.
 
     gcloud container clusters get-credentials --zone "$CLOUDSDK_COMPUTE_ZONE" "$CLOUDSDK_CONTAINER_CLUSTER"`
 
-Then, `kubectl` and consequently `Helm` will have the configuration needed to talk to your GKE cluster.
+Then, `kubectl` and consequently `Helm` will have the configuration needed to
+talk to your GKE cluster.
 
 ## Building this builder
 

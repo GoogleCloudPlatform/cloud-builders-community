@@ -1,6 +1,7 @@
 # Tool builder: `gcr.io/$PROJECT_ID/yarn-puppeteer`
 
-This Cloud Build build step runs the `yarn` tool but with the necessary dependencies for [puppeteer](https://github.com/GoogleChrome/puppeteer).
+This Cloud Build build step runs the `yarn` tool but with the necessary
+dependencies for [puppeteer](https://github.com/GoogleChrome/puppeteer).
 
 It uses the small alpine-node base.
 

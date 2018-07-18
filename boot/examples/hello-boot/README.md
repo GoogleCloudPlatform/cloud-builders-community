@@ -13,9 +13,8 @@ Inside this directory, run the following command:
 gcloud container builds submit --config=cloudbuild.yaml .
 ```
 
-Build output will be displayed.  At the end you should see the following:
+Build output will be displayed. At the end you should see the following:
 
 ```
 Congratulations! You're running Clojure code via Boot.
 ```
-

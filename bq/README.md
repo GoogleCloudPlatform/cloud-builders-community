@@ -4,12 +4,13 @@ This is a tool builder to simply invoke
 [`bq`](https://cloud.google.com/bigquery/docs/bq-command-line-tool) commands.
 
 Arguments passed to this builder will be passed to `bq` directly, allowing
-callers to run [any `bq`
-command](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
+callers to run
+[any `bq` command](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
 
 When executed in the Cloud Build environment, commands are executed with
-credentials of the [builder service account](https://cloud.google.com/cloud-build/docs/permissions) for the
-project.
+credentials of the
+[builder service account](https://cloud.google.com/cloud-build/docs/permissions)
+for the project.
 
 The latest available version of `bq` is used.
 
@@ -17,9 +18,9 @@ The latest available version of `bq` is used.
 
 The following examples demonstrate build request that use this builder:
 
-For these to work, the builder service account must have [permission to
-create tables](https://cloud.google.com/bigquery/docs/access-control) on the
-test dataset.
+For these to work, the builder service account must have
+[permission to create tables](https://cloud.google.com/bigquery/docs/access-control)
+on the test dataset.
 
 ### Load a BigQuery table from a local file
 
@@ -34,8 +35,8 @@ steps:
 
 ### Save query results to destination table
 
-This `cloudbuild.yaml` invokes `bq query` to run a query and write results to
-a BigQuery table.
+This `cloudbuild.yaml` invokes `bq query` to run a query and write results to a
+BigQuery table.
 
 ```
 steps:
@@ -53,8 +54,8 @@ steps:
 
 ## Building this builder
 
-To build and test this builder the [builder service
-account](https://cloud.google.com/cloud-build/docs/permissions) must
-have permissions to create BigQuery query jobs for the project, such as with
-the [BigQuery User
-Role](https://cloud.google.com/bigquery/docs/access-control#permissions_and_roles).
+To build and test this builder the
+[builder service account](https://cloud.google.com/cloud-build/docs/permissions)
+must have permissions to create BigQuery query jobs for the project, such as
+with the
+[BigQuery User Role](https://cloud.google.com/bigquery/docs/access-control#permissions_and_roles).

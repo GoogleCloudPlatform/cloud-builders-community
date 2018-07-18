@@ -3,8 +3,8 @@
 This example shows the Apache Beam DirectRunner in use, executing a small
 pipeline inside Cloud Build.
 
-To run the example, first build the builder as described [in the
-instructions](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python/README.md).
+To run the example, first build the builder as described
+[in the instructions](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python/README.md).
 
 Then, execute the pipeline:
 

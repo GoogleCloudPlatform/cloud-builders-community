@@ -1,9 +1,10 @@
-This example uses the [Rocker builder](https://github.com/grammarly/rocker) to print some basic build system information.
+This example uses the [Rocker builder](https://github.com/grammarly/rocker) to
+print some basic build system information.
 
 To run this example:
 
     gcloud container builds submit --config=cloudbuild.yaml .
-    
+
 At the bottom of the build output, you'll see something like the following:
 
     Step #1: Already have image: rocker:latest

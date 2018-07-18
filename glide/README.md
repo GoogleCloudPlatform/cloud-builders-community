@@ -16,10 +16,11 @@ to manage a Go workspace.
 ## Examples
 
 -   [Build glide](examples/build-glide) is a basic example that clones the
-[`glide`](https://glide.sh) source from its
-[GitHub repository](https://github.com/Masterminds/glide), uses `glide install`
-to pull in the correct versions of all dependencies, and the
-[`go`](https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/go/README.md) builder to build the `glide` binary.
+    [`glide`](https://glide.sh) source from its
+    [GitHub repository](https://github.com/Masterminds/glide), uses `glide
+    install` to pull in the correct versions of all dependencies, and the
+    [`go`](https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/go/README.md)
+    builder to build the `glide` binary.
 
 ## Building this builder
 

@@ -1,6 +1,7 @@
 # Container for F# as a build step on gcloud
 
-See [docs](https://cloud.google.com/cloud-build/docs/concepts/custom-build-steps)
+See
+[docs](https://cloud.google.com/cloud-build/docs/concepts/custom-build-steps)
 
 ## Usage:
 
@@ -19,4 +20,4 @@ steps:
 This build tool is based on the [official F# docker container][fo]. You can
 browse its README for details on what's included.
 
- [fo]: https://github.com/fsprojects/docker-fsharp
+[fo]: https://github.com/fsprojects/docker-fsharp

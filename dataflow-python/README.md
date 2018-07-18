@@ -2,31 +2,38 @@
 
 ## Introduction
 
-[Google Cloud Dataflow](https://cloud.google.com/dataflow/), based on [Apache Beam](https://beam.apache.org/), is a fully-managed service for transforming and enriching data in stream (real time) and batch (historical) modes with equal reliability and expressiveness.  Developers and Data Scientists use Dataflow to process large amounts of data without managing complex cluster infrastructure.
+[Google Cloud Dataflow](https://cloud.google.com/dataflow/), based on
+[Apache Beam](https://beam.apache.org/), is a fully-managed service for
+transforming and enriching data in stream (real time) and batch (historical)
+modes with equal reliability and expressiveness. Developers and Data Scientists
+use Dataflow to process large amounts of data without managing complex cluster
+infrastructure.
 
-[Google Cloud Build](https://cloud.google.com/cloud-build/) offers a number of advantages for Cloud Dataflow developers:
-* Small workloads which run in a `n1-standard-1` virtual machine can take advantage of the [free tier](https://cloud.google.com/cloud-build/pricing), which provides 120 free build-minutes per day
-* Workflows start very quickly, typically within a few seconds (depending on the size of your container)
-* Pipelines get all the benefits of containerization, including a consistent environment and integration with your CI/CD flow
-* Cloud Build supports automatic triggering from Github, Bitbucket and Google Cloud
-  Source Repositories, so you can configure your data warehouse to automatically
-  update when the pipeline code changes
-* Pipelines can be initiated by a simple [REST
-  API](https://cloud.google.com/cloud-build/docs/api/reference/rest/).
+[Google Cloud Build](https://cloud.google.com/cloud-build/) offers a number of
+advantages for Cloud Dataflow developers: * Small workloads which run in a
+`n1-standard-1` virtual machine can take advantage of the
+[free tier](https://cloud.google.com/cloud-build/pricing), which provides 120
+free build-minutes per day * Workflows start very quickly, typically within a
+few seconds (depending on the size of your container) * Pipelines get all the
+benefits of containerization, including a consistent environment and integration
+with your CI/CD flow * Cloud Build supports automatic triggering from Github,
+Bitbucket and Google Cloud Source Repositories, so you can configure your data
+warehouse to automatically update when the pipeline code changes * Pipelines can
+be initiated by a simple
+[REST API](https://cloud.google.com/cloud-build/docs/api/reference/rest/).
 
-The builder supports both Dataflow execution modes:
-* *DirectRunner* runs your code in-process inside Cloud Build, taking
-  advantage of the fast start and free tier pricing
-* *DataflowRunner* starts workers on Compute Engine, allowing for massive
-  scalability.
+The builder supports both Dataflow execution modes: * *DirectRunner* runs your
+code in-process inside Cloud Build, taking advantage of the fast start and free
+tier pricing * *DataflowRunner* starts workers on Compute Engine, allowing for
+massive scalability.
 
 This builder supports the Cloud Dataflow Python API.
 
 ## Usage
 
-If this is your first time using Cloud Build, follow the [Quickstart for
-Docker](https://cloud.google.com/cloud-build/docs/quickstart-docker) to
-get started.
+If this is your first time using Cloud Build, follow the
+[Quickstart for Docker](https://cloud.google.com/cloud-build/docs/quickstart-docker)
+to get started.
 
 Then, clone this code and build the builder:
 
@@ -53,10 +60,10 @@ gsutil mb gs://cloudbuild-dataflow-$PROJECT
 ## Python notes
 
 Python has several different dependency management tools, which interact in
-different ways with containers.  In this case we use `virtualenv` to setup an
-isolated folder inside the container with the libraries we need.  As a result of
-this, be sure that your first build step loads the `virtualenv` environment.
-See examples for details.
+different ways with containers. In this case we use `virtualenv` to setup an
+isolated folder inside the container with the libraries we need. As a result of
+this, be sure that your first build step loads the `virtualenv` environment. See
+examples for details.
 
 Additional libraries can be added by creating another container based on this
 one, for example:
@@ -70,11 +77,10 @@ RUN pip install my-library
 ...
 ```
 
-This container uses Python 2.  Python 3 is currently under development: see
+This container uses Python 2. Python 3 is currently under development: see
 [BEAM-1251](https://issues.apache.org/jira/browse/BEAM-1251).
 
 ## Examples
 
-For examples, see the [examples
-directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python/examples).
-
+For examples, see the
+[examples directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python/examples).
