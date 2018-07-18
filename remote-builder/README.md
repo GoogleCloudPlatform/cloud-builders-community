@@ -1,4 +1,4 @@
-# Container Builder Remote Build Step
+# Cloud Build Remote Build Step
 
 ## Introduction
 
@@ -14,7 +14,7 @@ require things like:
 1. Machines in a particular network
 1. Pre-emptibility
 
-In these cases you can leverage Container Builder to trigger your builds and
+In these cases you can leverage Cloud Build to trigger your builds and
 manage their workflow but run the actual build steps on an instance with
 exactly the configuration you need.
 
@@ -22,11 +22,11 @@ exactly the configuration you need.
 
 When using the remote-builder image, the following will happen:
 
-1. A temporary SSH key will be created in your Container Builder workspace
+1. A temporary SSH key will be created in your Cloud Build workspace
 1. A instance will be launched with your configured flags
 1. The workpace will be copied to the remote instance
 1. Your command will be run inside that instance's workspace
-1. The workspace will be copied back to your Container Builder workspace
+1. The workspace will be copied back to your Cloud Build workspace
 
 ## Usage
 

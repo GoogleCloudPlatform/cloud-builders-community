@@ -1,6 +1,6 @@
 # Cargo
 
-This Container Builder build step runs the Rust
+This Cloud Build build step runs the Rust
 [`cargo`](https://github.com/rust-lang/cargo) tool.
 
 ## Building this builder

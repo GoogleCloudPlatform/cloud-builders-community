@@ -1,6 +1,6 @@
 # Skaffold (alpha)
 
-This Container Builder build step runs
+This Cloud Build build step runs
 [`skaffold`](https://github.com/GoogleCloudPlatform/skaffold/) for Google
 Kubernetes Engine (GKE) clusters.
 
