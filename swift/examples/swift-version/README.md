@@ -1,4 +1,4 @@
-# Swift-4.2 example
+# Swift example
 
 This `cloudbuild.yaml` invokes a simple `swift --version` command:
 ```

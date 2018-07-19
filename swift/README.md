@@ -1,4 +1,4 @@
-# Swift-4.2
+# Swift
 
 This build step invokes `swift` commands in [Google Cloud Container Builder](cloud.google.com/container-builder/).
 
