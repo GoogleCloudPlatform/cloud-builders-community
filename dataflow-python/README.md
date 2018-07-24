@@ -31,7 +31,7 @@ get started.
 Then, clone this code and build the builder:
 
 ```
-gcloud container builds submit --config=cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```
 
 To access resources on Google Compute Platform from your pipeline - whether

@@ -9,7 +9,7 @@ instructions](https://github.com/GoogleCloudPlatform/cloud-builders-community/tr
 Then, execute the pipeline:
 
 ```
-gcloud container builds submit --config=cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```
 
 This loads the text of Shakespeare's _King Lear_ from Google Cloud Storage and

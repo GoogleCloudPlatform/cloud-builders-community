@@ -40,7 +40,7 @@ The example below shows how to download and build the image for the `packer` bui
 3. Build the Docker image:
 
    ```
-   $ gcloud container builds submit --config cloudbuild.yaml .
+   $ gcloud builds submit --config cloudbuild.yaml .
    ```
 
 4. View the image in Google Container Registry:

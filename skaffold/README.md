@@ -32,5 +32,5 @@ steps:
 To build this builder and push the resulting image to the Container Registry
 in your project, run the following command in this directory:
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+    $ gcloud builds submit . --config=cloudbuild.yaml
 

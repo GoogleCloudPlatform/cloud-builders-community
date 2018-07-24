@@ -26,4 +26,4 @@ To provide proper credentials to the `packer` builder:
 
 Now that you've got `secrets.enc` in place, execute your `packer` build:
 
-    gcloud container builds submit --config=cloudbuild.yaml .
+    gcloud builds submit --config=cloudbuild.yaml .

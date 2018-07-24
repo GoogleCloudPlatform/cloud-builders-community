@@ -49,4 +49,4 @@ Then, `kubectl_wait_for_job` will have the configuration needed to talk to your 
 
 To build this builder, run the following command in this directory.
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+    $ gcloud builds submit . --config=cloudbuild.yaml

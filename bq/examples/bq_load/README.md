@@ -12,5 +12,5 @@ role to [your Container Builder service
 account](https://cloud.google.com/container-builder/docs/securing-builds/set-service-account-permissions)
 and run:
 ```
-gcloud container builds submit --config=cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```

@@ -32,7 +32,7 @@ Steps to use:
 ##### 3. Submit the container build to google cloud. 
 
   ```
-  $ gcloud container builds submit --config cloudbuild.yaml . --substitutions=_ANDROID_SDK_LICENSE=$ANDROID_SDK_LICENSE
+  $ gcloud builds submit --config cloudbuild.yaml . --substitutions=_ANDROID_SDK_LICENSE=$ANDROID_SDK_LICENSE
   ```
 
 ##### 4. Copy the example build configuration to the root directory of your android project. 

@@ -53,7 +53,7 @@ gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_E
 Then, to install the helper:
 
 ```
-gcloud container builds submit --config=upload.yaml .
+gcloud builds submit --config=upload.yaml .
 ```
 
 Builds will now run at the frequency you specified.  To view your job or start it manually, visit the Cloud console [Task Queues page](https://console.cloud.google.com/appengine/taskqueues/cron).  Build logs are available in the [Build History page](https://console.cloud.google.com/gcr/builds).

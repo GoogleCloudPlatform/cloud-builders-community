@@ -34,7 +34,7 @@ steps:
       echo "Building $d ... "
       (
         logfile="${d::-1}.log" # Logfile for "foo/" builder is "foo.log".
-        gcloud container builds submit $d --config=${config} > ${logfile} 2>&1
+        gcloud builds submit $d --config=${config} > ${logfile} 2>&1
         if [[ $? -ne 0 ]]; then
           echo "$d failed" | tee -a ${failure_file}
           cat ${logfile}
