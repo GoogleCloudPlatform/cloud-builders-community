@@ -7,7 +7,7 @@ steps:
 # These steps require authorization. To configure authorization, create a
 # GitHub personal access token[0] and follow instructions at [1] to encrypt it.
 # [0] https://github.com/settings/tokens
-# [1] https://cloud.google.com/container-builder/docs/securing-builds/use-encrypted-secrets-credentials#encrypting_an_environment_variable_using_the_cryptokey
+# [1] https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials#encrypting_an_environment_variable_using_the_cryptokey
 #- name: 'gcr.io/$PROJECT_ID/hub'
 #  args: ['clone', 'github/hub']
 #  secretEnv: ['GITHUB_TOKEN']

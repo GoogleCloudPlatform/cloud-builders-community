@@ -4,18 +4,18 @@
 
 [Google Cloud Dataflow](https://cloud.google.com/dataflow/), based on [Apache Beam](https://beam.apache.org/), is a fully-managed service for transforming and enriching data in stream (real time) and batch (historical) modes with equal reliability and expressiveness.  Developers and Data Scientists use Dataflow to process large amounts of data without managing complex cluster infrastructure.
 
-[Google Container Builder](https://cloud.google.com/container-builder/) offers a number of advantages for Cloud Dataflow developers:
-* Small workloads which run in a `n1-standard-1` virtual machine can take advantage of the [free tier](https://cloud.google.com/container-builder/pricing), which provides 120 free build-minutes per day
+[Google Cloud Build](https://cloud.google.com/cloud-build/) offers a number of advantages for Cloud Dataflow developers:
+* Small workloads which run in a `n1-standard-1` virtual machine can take advantage of the [free tier](https://cloud.google.com/cloud-build/pricing), which provides 120 free build-minutes per day
 * Workflows start very quickly, typically within a few seconds (depending on the size of your container)
 * Pipelines get all the benefits of containerization, including a consistent environment and integration with your CI/CD flow
-* Container Builder supports automatic triggering from Github, Bitbucket and Google Cloud
+* Cloud Build supports automatic triggering from Github, Bitbucket and Google Cloud
   Source Repositories, so you can configure your data warehouse to automatically
   update when the pipeline code changes
 * Pipelines can be initiated by a simple [REST
-  API](https://cloud.google.com/container-builder/docs/api/reference/rest/).
+  API](https://cloud.google.com/cloud-build/docs/api/reference/rest/).
 
 The builder supports both Dataflow execution modes:
-* *DirectRunner* runs your code in-process inside Container Builder, taking
+* *DirectRunner* runs your code in-process inside Cloud Build, taking
   advantage of the fast start and free tier pricing
 * *DataflowRunner* starts workers on Compute Engine, allowing for massive
   scalability.
@@ -24,8 +24,8 @@ This builder supports the Cloud Dataflow Python API.
 
 ## Usage
 
-If this is your first time using Container Builder, follow the [Quickstart for
-Docker](https://cloud.google.com/container-builder/docs/quickstart-docker) to
+If this is your first time using Cloud Build, follow the [Quickstart for
+Docker](https://cloud.google.com/cloud-build/docs/quickstart-docker) to
 get started.
 
 Then, clone this code and build the builder:
@@ -36,7 +36,7 @@ gcloud builds submit --config=cloudbuild.yaml .
 
 To access resources on Google Compute Platform from your pipeline - whether
 Cloud Storage, BigQuery datasets, or Dataflow runners - issue the following
-commands to permission your Container Builder service account:
+commands to permission your Cloud Build service account:
 
 ```
 # Setup IAM bindings

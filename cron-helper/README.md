@@ -4,7 +4,7 @@ This tool sets up scheduled builds using the [Google App Engine Cron Service](ht
 
 ## Getting started
 
-Many people initiate builds on Container Builder using `gcloud`, which uploads sources from the local directory.  However, since App Engine runs within a limited sandbox, cron builds must use either a Git repository or an archive of sources on Google Cloud Storage referenced in your `cloudbuild.yaml`.  For example, to setup a bucket and upload your sources to Google Cloud Storage, run the following:
+Many people initiate builds on Cloud Build using `gcloud`, which uploads sources from the local directory.  However, since App Engine runs within a limited sandbox, cron builds must use either a Git repository or an archive of sources on Google Cloud Storage referenced in your `cloudbuild.yaml`.  For example, to setup a bucket and upload your sources to Google Cloud Storage, run the following:
 
 ```
 export PROJECT=$(gcloud info --format='value(config.project)')
@@ -22,17 +22,17 @@ source:
     object: source.tar.gz
 ```
 
-This is a special case, and the `source:` tag is not normally valid in YAML configuration.  For more information, see the [Container Builder documentation](https://cloud.google.com/container-builder/docs/build-config#source_code_location).
+This is a special case, and the `source:` tag is not normally valid in YAML configuration.  For more information, see the [Cloud Build documentation](https://cloud.google.com/cloud-build/docs/build-config#source_code_location).
 
 ## Installing `cron-helper`
 
 To begin, select (or create) a project, enable billing, and [install the Cloud SDK](https://cloud.google.com/sdk/downloads).  Make sure the [Cloud SDK for Go](https://cloud.google.com/appengine/docs/standard/go/download) is also installed.
 
-Download this code and copy your Container Builder `cloudbuild.yaml` into this directory, making any amendments to support remote sources as described above.
+Download this code and copy your Cloud Build `cloudbuild.yaml` into this directory, making any amendments to support remote sources as described above.
 
 Next, edit `appengine/cron.yaml` to reflect how often your want your build to occur.  The full syntax reference can be found [here](https://cloud.google.com/appengine/docs/standard/go/config/cronref).  The default configuration provided will run a build once every 24 hours.
 
-Then create an App Engine app, enable the APIs necessary, grant App Engine permissions to run builds, and grant your Container Builder service account permissions to deploy to App Engine, write config to App Engine Datastore, and schedule cron jobs:
+Then create an App Engine app, enable the APIs necessary, grant App Engine permissions to run builds, and grant your Cloud Build service account permissions to deploy to App Engine, write config to App Engine Datastore, and schedule cron jobs:
 
 ```
 gcloud -q app create --region=us-central
