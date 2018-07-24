@@ -6,7 +6,7 @@ This build step runs the [sbt](http://www.scala-sbt.org/).
 
 To build this builder, run the following command in this directory.
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+    $ gcloud builds submit . --config=cloudbuild.yaml
 
 ## Examples
 

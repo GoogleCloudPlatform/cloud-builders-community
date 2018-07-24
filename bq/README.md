@@ -7,9 +7,9 @@ Arguments passed to this builder will be passed to `bq` directly, allowing
 callers to run [any `bq`
 command](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
 
-When executed in the Container Builder environment, commands are executed with
+When executed in the Cloud Build environment, commands are executed with
 credentials of the [builder service
-account](https://cloud.google.com/container-builder/docs/permissions) for the
+account](https://cloud.google.com/cloud-build/docs/permissions) for the
 project.
 
 The latest available version of `bq` is used.
@@ -55,7 +55,7 @@ steps:
 ## Building this builder
 
 To build and test this builder the [builder service
-account](https://cloud.google.com/container-builder/docs/permissions) must
+account](https://cloud.google.com/cloud-build/docs/permissions) must
 have permissions to create BigQuery query jobs for the project, such as with
 the [BigQuery User
 Role](https://cloud.google.com/bigquery/docs/access-control#permissions_and_roles).
