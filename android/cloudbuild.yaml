@@ -1,4 +1,11 @@
 steps:
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: "bash"
+  args: 
+  - '-c'
+  - |
+    gsutil rsync -d -r "${_LICENSES_BUCKET}" licenses || exit 0
+  id: copy-licenses
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
@@ -8,5 +15,10 @@ steps:
   - '.'
   - '--cache-from'
   - 'gcr.io/$PROJECT_ID/android-sdk-base'
+  waitFor: 
+  - copy-licenses
 images: ['gcr.io/$PROJECT_ID/android-builder']
 timeout: 2000s
+substitutions:
+  _LICENSES_BUCKET: ''
+  _ANDROID_SDK_LICENSE: ''

@@ -17,12 +17,12 @@ ENV PATH ${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/
 #Install underlying development packages and languages
 ADD packages.txt . 
 COPY gradle-build /bin
+COPY licenses licenses
 
     # Prepare to install packages
 RUN apt-get update && \
     apt-get install -y locales && \
     sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen && \
-    ln -s /etc/locale.alias /usr/share/locale/locale.alias && \ 
     locale-gen && \
     dpkg-reconfigure locales && \
     apt-get install -y apt-utils && \
@@ -44,10 +44,13 @@ RUN apt-get update && \
     mkdir -p /root/.android && touch /root/.android/repositories.cfg && \
     wget --quiet --output-document=android-sdk.zip ${ANDROID_SDK_TOOLS_URL} && \
     unzip -qq android-sdk.zip -d $ANDROID_HOME && \
-    mkdir $ANDROID_HOME/licenses && \
+    cp -r licenses /$ANDROID_HOME/licenses && \
     echo ${ANDROID_SDK_LICENSE} >> $ANDROID_HOME/licenses/android-sdk-license && \
     echo "sdk.dir=${ANDROID_HOME}" > android_local.properties && \
     sdkmanager --package_file=packages.txt && \
     chmod -R +x bin && \ 
-    rm $ANDROID_HOME/licenses/android-sdk-license 
+    rm $ANDROID_HOME/licenses/* && \
+    keytool -genkey -v -keystore /root/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname "CN=Android Debug,O=Android,C=US" && \
+    keytool -list -v -keystore /root/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 CMD ["sh", "-c", "build-debug", "${GRADLE_TARGETS}"]
+

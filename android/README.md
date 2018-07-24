@@ -28,11 +28,22 @@ Steps to use:
   Mac | ~/Library/android/sdk |
   Unix | ~/Android/Sdk |
 
+  As an alternative you can copy the licenses directory to a _LICENSES_BUCKET
+  ```
+  $ gsutil rsync -d [ANDROID_SDK_HOME]/licenses/ gs://[_LICENSES_BUCKET]
+  ```
+  Where _LICENSES_BUCKET is a gs://* URI to a google cloud storage bucket that can be accessed within the project.
+  Be sure to use the _LICENSES_BUCKET as a substitution (see below)
 
 ##### 3. Submit the container build to google cloud. 
 
   ```
   $ gcloud container builds submit --config cloudbuild.yaml . --substitutions=_ANDROID_SDK_LICENSE=$ANDROID_SDK_LICENSE
+  ```
+
+  or 
+  ```
+  gcloud container builds submit --config cloudbuild.yaml . --substitutions=_LICENSES_BUCKET=gs://[_LICENSES_BUCKET]
   ```
 
 ##### 4. Copy the example build configuration to the root directory of your android project. 
@@ -58,9 +69,12 @@ Variable | Value
 ---------------------:|:----------|
 `_ANDROID_BUILD_CACHE`  | `[ANDROID_BUILD_CACHE]`
 `_ANDROID_SDK_LICENSE`  | `$ANDROID_SDK_LICENSE`
+`_LICENSES_BUCKET`      | `[_LICENSES_BUCKET]`
 `_DEBUG_BUILD_BUCKET`        | `[DEBUG_BUILD_BUCKET]`
    
 
+#### 8. Get your keystore hashes
+If you are using the debug build to run tests that use a third party authentication system you may need the hashes of the debug keystore used to sign the build.  Note that these are deliberately output during the docker build.  To find these values review the output from the submission of the Docker build for this builder. 
 
 # What's included with this builder
 ## Android Builder Image 
