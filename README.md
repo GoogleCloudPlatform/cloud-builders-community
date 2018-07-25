@@ -96,4 +96,4 @@ This source code is licensed under Apache 2.0. Full license text is available in
 ## Support
 
 *   File issues here in GitHub about the community build steps.
-*   Email `gcr-contact@google.com` if you have questions about build steps or Google Cloud Build.
+*   Email `cloud-build-contact@google.com` if you have questions about build steps or Google Cloud Build.
