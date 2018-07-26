@@ -11,7 +11,7 @@ Follow instructions at [Usage](https://github.com/GoogleCloudPlatform/cloud-buil
 To run, execute this command:
 
 ```shell
-gcloud container builds submit --config cloudbuild.yaml .
+gcloud builds submit --config cloudbuild.yaml .
 ```
 
 You should now see 2 instances being provisioned in parallel then the `test/no-op.sh` being

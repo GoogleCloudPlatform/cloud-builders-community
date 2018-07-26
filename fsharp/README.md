@@ -1,6 +1,6 @@
 # Container for F# as a build step on gcloud
 
-See [docs](https://cloud.google.com/container-builder/docs/concepts/custom-build-steps)
+See [docs](https://cloud.google.com/cloud-build/docs/concepts/custom-build-steps)
 
 ## Usage:
 

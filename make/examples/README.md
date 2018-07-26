@@ -12,7 +12,7 @@ This assumes you have already built the `make` build step and pushed it to
 Inside this directory, run the following command:
 
 ```
-gcloud container builds submit --config=cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```
 
 Build output will be displayed.  At the end you should see the following:

@@ -1,5 +1,5 @@
 steps:
-# Add some checks around example, readme, etc...
+# Add some checks around examples.
 
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
@@ -12,11 +12,32 @@ steps:
 
     # Loop through the builders, and build independently.
     for d in */; do
+      readme="${d}README.md"
+      if [[ ! -f "${readme}" ]]; then
+        # Note the error but try to build anyway.
+        echo "${d}: ${readme} not found." | tee -a ${failure_file}
+      fi
+
+      config="${d}cloudbuild.yaml"
+      if [[ ! -f "${config}" ]]; then
+        echo "${d} failed: ${config} not found." | tee -a ${failure_file}
+        continue
+      fi
+
+      # The android builder assumes a local installation of Android SDK which is
+      # not a valid assumption.
+      if [[ "${d}" == "android/" ]]; then
+        echo "Skipping $d"
+        continue
+      fi
+
       echo "Building $d ... "
       (
-        gcloud container builds submit $d --config=${d}cloudbuild.yaml > /dev/null 2>&1
+        logfile="${d::-1}.log" # Logfile for "foo/" builder is "foo.log".
+        gcloud builds submit $d --config=${config} > ${logfile} 2>&1
         if [[ $? -ne 0 ]]; then
-          echo "$d failed" >> ${failure_file}
+          echo "$d failed" | tee -a ${failure_file}
+          cat ${logfile}
         fi
       ) &
     done
@@ -25,6 +46,7 @@ steps:
 
     # Check if there is any failure.
     if [[ -s ${failure_file} ]]; then
+      echo
       echo "Some builds failed:"
       cat ${failure_file}
       echo "Exiting."

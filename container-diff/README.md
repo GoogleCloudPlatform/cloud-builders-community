@@ -13,7 +13,7 @@ To build this image and push it to your project's registry, run the following
 command from within the `container-diff` directory:
 
 ```
-gcloud container builds submit . --config=cloudbuild.yaml
+gcloud builds submit . --config=cloudbuild.yaml
 ```
 
 This image is built using the

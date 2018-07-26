@@ -4,6 +4,11 @@ The Rocker [README](https://github.com/grammarly/rocker/blob/master/README.md) h
 
 This build step can be built and pushed to your GCP repository by running
 
-    gcloud container builds submit --config=cloudbuild.yaml .
+    gcloud builds submit --config=cloudbuild.yaml .
     
 in this directory.
+
+# Notice: `rocker` is unsupported
+
+As of early 2018, Grammarly has discontinued open source support for rocker. As of June 2018, this rocker-builder repository
+still builds and functions, but there will be no future development or support of this repo.

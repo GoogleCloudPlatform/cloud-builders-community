@@ -9,7 +9,7 @@ instructions](https://github.com/GoogleCloudPlatform/cloud-builders-community/tr
 Then, execute the pipeline:
 
 ```
-gcloud container builds submit --config=cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```
 
 This small example counts the words in `/etc/hosts`, a Linux system file, and
