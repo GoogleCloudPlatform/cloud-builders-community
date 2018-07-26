@@ -2,13 +2,13 @@
 
 If you're looking to run a job but actually block execution until that job is complete on the cluster, this wraps the kubectl command to do that. For instance if you need run database migrations prior to deploying the code that utilizes them, you can use this command to execute a job, wait for it to complete, and then update your deployment with the image that utilizes those migrations.  
 
-## Using this builder with Google Container Engine
+## Using this builder with Google Kubernetes Engine
 
 To use this builder, your
 [builder service account](https://cloud.google.com/cloud-build/docs/how-to/service-account-permissions)
 will need IAM permissions sufficient for the operations you want to perform. For
-typical read-only usage, the "Container Engine Viewer" role is sufficient. To
-deploy container images on a GKE cluster, the "Container Engine Developer" role
+typical read-only usage, the "Kubernetes Engine Viewer" role is sufficient. To
+deploy container images on a GKE cluster, the "Kubernetes Engine Developer" role
 is sufficient. Check the
 [GKE IAM page](https://cloud.google.com/container-engine/docs/iam-integration)
 for details.
