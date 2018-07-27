@@ -15,6 +15,7 @@ steps:
 # Run version to make sure that everything is working properly.
 - name: 'gcr.io/$PROJECT_ID/dep'
   args: ['version']
+  env: ['GOPATH=.']
 
 images:
 - 'gcr.io/$PROJECT_ID/dep'
