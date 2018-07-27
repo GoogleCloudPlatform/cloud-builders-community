@@ -2,8 +2,6 @@
 
 The Dockerfile and scripts here help you use Google Cloud Builder to launch the **go dep** tool.
 
-You can choose between the **Alpine** and the **Debian** version.
-
 ## Building this builder
 
 To build this builder, run the following command in this directory.
