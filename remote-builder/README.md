@@ -33,7 +33,7 @@ When using the remote-builder image, the following will happen:
 In order to use this step, first build the builder:
 
 ```
-gcloud container builds submit --config=cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```
 
 Then, create an appropriate IAM role with permissions to create and destroy

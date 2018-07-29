@@ -1,21 +1,21 @@
-# Google Cloud Container Builder community images
+# Google Cloud Build community images
 
 This repository contains source code for community-contributed Docker images. You can use these images as build steps for
-[Google Cloud Container Builder](https://cloud.google.com/container-builder/docs/).
+[Google Cloud Build](https://cloud.google.com/cloud-build/docs/).
 
 These are not official Google products.
 
 ## How to use a community-contributed build step
 
-Google Container Builder executes a build as a series of build steps. Each build step is run in a Docker container. See
-the [Container Builder documentation](https://cloud.google.com/container-builder/docs/overview) for more details
+Google Cloud Build executes a build as a series of build steps. Each build step is run in a Docker container. See
+the [Cloud Build documentation](https://cloud.google.com/cloud-build/docs/overview) for more details
 about builds and build steps.
 
 ### Before you begin
 
 1.  Select or create a [Google Cloud project](https://console.cloud.google.com/cloud-resource-manager).
 2.  Enable [billing for your project](https://support.google.com/cloud/answer/6293499#enable-billing).
-3.  Enable [the Container Builder API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com).
+3.  Enable [the Cloud Build API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com).
 4.  Install and initialize [the Cloud SDK](https://cloud.google.com/sdk/docs/).
 
 ### Build the build step from source
@@ -40,7 +40,7 @@ The example below shows how to download and build the image for the `packer` bui
 3. Build the Docker image:
 
    ```
-   $ gcloud container builds submit --config cloudbuild.yaml .
+   $ gcloud builds submit --config cloudbuild.yaml .
    ```
 
 4. View the image in Google Container Registry:
@@ -49,12 +49,12 @@ The example below shows how to download and build the image for the `packer` bui
    $ gcloud container images list --filter packer
    ```
 
-### Use the build step with Container Builder build
+### Use the build step with Cloud Build build
 
-Once you've built the Docker image, you can use it as a build step in a Container Builder build.
+Once you've built the Docker image, you can use it as a build step in a Cloud Build build.
 
 For example, below is the `packer` build step in a YAML
-[config file](https://cloud.google.com/container-builder/docs/build-config), ready to be used in a Container Builder build:
+[config file](https://cloud.google.com/cloud-build/docs/build-config), ready to be used in a Cloud Build build:
 
    ```yaml
    - name: 'gcr.io/$PROJECT_ID/packer'
@@ -96,4 +96,4 @@ This source code is licensed under Apache 2.0. Full license text is available in
 ## Support
 
 *   File issues here in GitHub about the community build steps.
-*   Email `gcr-contact@google.com` if you have questions about build steps or Google Cloud Container Builder.
+*   Email `cloud-build-contact@google.com` if you have questions about build steps or Google Cloud Build.
