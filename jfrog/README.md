@@ -1,17 +1,18 @@
 ## Google Cloud Build integration with JFrog Artifactory
 
-There are times when you’ll want to use Cloud Builder with a private repository such as JFrog Artifactory, the universal artifact manger. Here are few use cases and there will certainly be more -
+There are times when you’ll want to use Google Cloud Build with a private repository such as JFrog Artifactory, the universal artifact manger. Here are few use cases and there will certainly be more -
 * Containerize an existing application that’s stored in a private repository?
 * Containerize an application that relies on both private and public dependencies?
-* Quicken the build and deployment time by caching dependencies?
+* Improve build and deployment time by caching dependencies?
 
-This readme walks through the steps required to configure CloudBuild to work with JFrog Artifactory.
+This readme walks through the steps required to configure Cloud Build to work with JFrog Artifactory.
 
 #### Step 1: Security
 
-Since credentials are involved to authenticate with Artifactory, it is extremely important to ensure that credentials are passed in a secure manner in the cloudbuild.yaml file.
+Since credentials are involved to authenticate with Artifactory, it is extremely important to ensure that credentials are passed in a secure manner in the `cloudbuild.yaml` file.
 
-It is recommended to encrypt Artifactory API keys to make sure that encrypted credentials are used in Google Cloud Build. 
+It is recommended to encrypt Artifactory API keys to make sure that encrypted credentials are used in Google Cloud Build.
+For background understanding, see [Using Encrypted Resources in Cloud Build](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials)
 
 In order to do so, first create a Cloud KMS KeyRing and CryptoKey 
 
@@ -38,7 +39,7 @@ This command will output an encrypted version of API KEY that will be referred a
 
 #### Step 2: Build a project with JFrog Artifactory as a source of truth for all types of binaries
 
-`gcloud container builds submit --config=cloudbuild.yaml .`
+`gcloud builds submit --config=cloudbuild.yaml .`
 
 NOTE: Make sure that the builder image exists before running the above step.
 
