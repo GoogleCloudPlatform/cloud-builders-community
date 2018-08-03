@@ -26,12 +26,20 @@ cluster. You can configure the cluster by setting environment variables.
     # to a GKE cluster in another project (requires IAM Service Accounts are properly setup)
     GCLOUD_PROJECT=<destination cluster's GCP project>
 
-Setting the environment variables above will cause this step's entrypoint to
+Setting the environment variables above will cause this step's `entrypoint` to
 first run a command to fetch cluster credentials as follows.
 
     gcloud container clusters get-credentials --zone "$CLOUDSDK_COMPUTE_ZONE" "$CLOUDSDK_CONTAINER_CLUSTER"`
 
-Then, `kubectl` and consequently `Helm` will have the configuration needed to talk to your GKE cluster.
+Then, `kubectl` and consequently `helm` will have the configuration needed to talk to your GKE cluster.
+
+## Using Helm
+
+This builder supports two install options of helm:
+* The default one when the `tiller` gets installed into your GKE cluster (oh my god all those `tiller` security issues)
+* `Tillerless Helm`, I wrote a [blog post](https://rimusz.net/tillerless-helm/) of using Helm local [tiller plugin](https://github.com/rimusz/helm-tiller) which solves all those `tiller` security issues, as `tiller` runs outside the GKE cluster.
+
+Check the [examples](examples) folder for examples of using both Helm install options in `Cloud Build` pipelines.
 
 ## Building this builder
 
