@@ -11,7 +11,7 @@ This readme walks through the steps required to configure Cloud Build to work wi
 
 The top level folder includes cloudbuild.yaml file that can be used to build a JFrog cloud-build image. JFrog CLI is package agnostic that means that the same version of CLI can be used to build maven, gradle, npm, Go, Conan, docker projects. 
 
-** Steps to build JFrog builder image **
+**Steps to build JFrog builder image**
 
 `gcloud builds submit --config=cloudbuild.yaml .`
 
