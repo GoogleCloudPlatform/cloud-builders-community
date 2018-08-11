@@ -7,6 +7,30 @@ There are times when you’ll want to use Google Cloud Build with a private repo
 
 This readme walks through the steps required to configure Cloud Build to work with JFrog Artifactory.
 
+### Pre-req: Create a builder that includes JFrog CLI
+
+The top level folder includes cloudbuild.yaml file that can be used to build a JFrog cloud-build image. JFrog CLI is package agnostic that means that the same version of CLI can be used to build maven, gradle, npm, Go, Conan, docker projects. 
+
+* Steps to build JFrog builder image:
+`gcloud builds submit --config=cloudbuild.yaml .`
+
+The current version of cloudbuild.yaml makes the base image configurable so that it's easy to generate a builder for a specific package type that also includes JFrog CLI.
+
+
+```steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=BASE_IMAGE=gcr.io/${PROJECT_ID}/mvn:3.3.9-jdk-8'
+  - '--tag=gcr.io/$PROJECT_ID/java/jfrog:1.17.0'
+  - '.'
+  wait_for: ['-']
+  
+```
+
+Once the builder is created, it can be used to build maven, gradle, npm, Go, docker based projects. The steps to containerize a Java application using Google Cloud Build with JFrog Artifactory as a source of truth is as follows:
+
+
 #### Step 1: Security
 
 Since credentials are involved to authenticate with Artifactory, it is extremely important to ensure that credentials are passed in a secure manner in the `cloudbuild.yaml` file.
@@ -39,34 +63,13 @@ This command will output an encrypted version of API KEY that will be referred a
 
 #### Step 2: Build a project with JFrog Artifactory as a source of truth for all types of binaries
 
-`gcloud builds submit --config=cloudbuild.yaml .`
+`cd examples && gcloud builds submit --config=cloudbuild.yaml .`
 
 NOTE: Make sure that the builder image exists before running the above step.
 
-##### Four key steps that are part of the sample cloudbuild.yaml file:
 
-* ###### Create a builder that includes JFrog CLI
+##### Three key steps that are part of the sample cloudbuild.yaml file:
 
-JFrog CLI is package agnostic that means that the same version of CLI can be used to build maven, gradle, npm, Go, Conan, docker projects. 
-
-This sample makes the base image configurable so that it's easy to generate a builder for a specific package type that also includes JFrog CLI.
-
-
-```steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'build'
-  - '--build-arg=BASE_IMAGE=gcr.io/${PROJECT_ID}/mvn:3.3.9-jdk-8'
-  - '--tag=gcr.io/$PROJECT_ID/java/jfrog:1.17.0'
-  - '.'
-  wait_for: ['-']
-  
-```
-
-Once the builder is created, it can be used to build maven, gradle, npm, Go, docker based projects. 
-
-NOTE: The example project builds a maven project, and hence relies on an existing builder image for maven projects. Make sure that the builder image exists before running the above step.
-The builder image for maven is located at https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/mvn/cloudbuild.yaml
 
 * ###### Configure JFrog CLI to point to Jfrog Artifactory
 
@@ -75,7 +78,7 @@ The builder image for maven is located at https://github.com/GoogleCloudPlatform
   entrypoint: 'bash'
   args: ['-c', 'jfrog rt c rt-mvn-repo --url=https://[ARTIFACTORY-URL]/artifactory --user=[ARTIFACTORY-USER] --password=$$APIKEY']
   secretEnv: ['APIKEY']
-  dir: 'examples/maven-example'
+  dir: 'maven-example'
 ```
 
 **Note:** There is an added step in order to use the encrypted version of APIKEY
@@ -90,7 +93,7 @@ secrets:
 ```
 - name: 'gcr.io/$PROJECT_ID/java/jfrog'
   args: ['rt', 'mvn', "clean install", 'config.yaml', '--build-name=mybuild', '--build-number=$BUILD_ID']
-  dir: 'examples/maven-example'
+  dir: 'maven-example'
 ```
 The step above refers to [config.yaml](./examples/maven-example/config.yaml) that specifies the maven repositories to use in JFrog Artifactory to pulland push snapshot and release maven artifacts. Additional information can be found [here](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-CreatingtheBuildConfigurationFile.1) 
 
@@ -104,7 +107,7 @@ The step above refers to [config.yaml](./examples/maven-example/config.yaml) tha
   - 'build'
   - '--tag=gcr.io/$PROJECT_ID/java-app:${BUILD_ID}'
   - '.'
-  dir: 'examples/maven-example'
+  dir: 'maven-example'
   
 ```
 
