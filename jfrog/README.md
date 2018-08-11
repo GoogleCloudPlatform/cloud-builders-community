@@ -7,11 +7,12 @@ There are times when you’ll want to use Google Cloud Build with a private repo
 
 This readme walks through the steps required to configure Cloud Build to work with JFrog Artifactory.
 
-### Pre-req: Create a builder that includes JFrog CLI
+### Pre-req: Create a cloud builder image that includes JFrog CLI
 
 The top level folder includes cloudbuild.yaml file that can be used to build a JFrog cloud-build image. JFrog CLI is package agnostic that means that the same version of CLI can be used to build maven, gradle, npm, Go, Conan, docker projects. 
 
-* Steps to build JFrog builder image:
+** Steps to build JFrog builder image **
+
 `gcloud builds submit --config=cloudbuild.yaml .`
 
 The current version of cloudbuild.yaml makes the base image configurable so that it's easy to generate a builder for a specific package type that also includes JFrog CLI.
