@@ -1,4 +1,4 @@
-FROM gcr.io/cloud-builders/gsutil
+FROM gcr.io/cloud-builders/gcloud
 
 ENV TERRAFORM_VERSION=0.11.7
 ENV TERRAFORM_VERSION_SHA256SUM=6b8ce67647a59b2a3f70199c304abca0ddec0e49fd060944c26f666298e23418

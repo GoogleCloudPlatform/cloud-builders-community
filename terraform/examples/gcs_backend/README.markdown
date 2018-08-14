@@ -16,6 +16,7 @@ $ gcloud container builds submit . --config=cloudbuild.yaml
    - Have the 'Cloud Container Builder' role
    - The Member ID will be <project ID>@cloudbuild.gserviceaccount.com
 1. Edit the permission for that service account and add the 'Kubernetes Engine Service Agent' role.
+1. Create a GCS bucket for Terraform to hold state.
 1. Clone this project
 1. [Build the Terraform cloud builder](../../README.markdown)
 1. Navigate to this directory
@@ -24,9 +25,11 @@ $ gcloud container builds submit . --config=cloudbuild.yaml
 ## What's it do?
 This builder will create a cluster named 'terraform-builder-gcs-backend' in your project, per main.tf. It will then destroy it. All told this will take around 5 minutes.
 
-This builder will create a bucket to hold data for the Terraform GCS back end. [cloubuild.yaml](cloudbuild.yaml) does this in the first step. The bucket name is configured in cloudbuild.yml on line 26. After this bucket is created, you'll need to remove the first step; it will fail because the bucket already exists.
+This builder uses a bucket to hold data for the Terraform GCS back end. The name of this bucket will be be passed in as a substitution to this example cloudbuild. You can create the bucket using the Google cloud [web console](https://console.cloud.google.com/storage/browser), or using gsutil:
 
-The bucket will persist until you delete it. Don't forget to do that, once you're done with the examples! You can browse GCS storage [here](https://console.cloud.google.com/storage/browser).
+```$ gsutil mb -l us-east1 gs://<SOME BUCKET NAME>```
+
+The bucket will persist until you delete it. Don't forget to do that, once you're done with the examples!
 
 ## Parameterization
 It's worth noting how Terraform passes variables via the command line. In cloudbuild.yaml, the project name is passed into the build steps as an environment variable
