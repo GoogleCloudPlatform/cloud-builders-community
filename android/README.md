@@ -3,7 +3,7 @@ The Dockerfile and scripts here help you use Google Cloud Builder to build Andro
 These instructions assume that you have [Android SDK](https://developer.android.com/studio/index.html) installed and can build the subject Android application locally on your workstation.  
 Steps to use:
 
-##### 1. Create a list of the android sdk packages you need for you builds and save it to the builder directory as 'packages.txt'.  To generate the list from your workstation a script is provided: 
+##### 1. Create a list of the android sdk packages you need for your builds and save it to the builder directory as 'packages.txt'.  To generate the list from your workstation a script is provided: 
 
   ```
   $ ./installed-package-list.sh
