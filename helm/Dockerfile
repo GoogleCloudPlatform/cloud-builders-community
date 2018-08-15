@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VERSION v2.9.0
+ENV VERSION v2.9.1
 
 COPY helm.bash /builder/helm.bash
 
@@ -11,7 +11,6 @@ RUN chmod +x /builder/helm.bash && \
   curl -SL https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz -o helm.tar.gz && \
   tar zxvf helm.tar.gz --strip-components=1 -C /builder/helm linux-amd64/helm && \
   rm helm.tar.gz && \
-  apt-get remove --purge -y curl && \
   apt-get --purge -y autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
