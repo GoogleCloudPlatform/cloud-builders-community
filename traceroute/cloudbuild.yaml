@@ -1,0 +1,11 @@
+steps:
+# Build the image to your GCR using the included Dockerfile
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/traceroute', '.']
+
+# Print version information
+- name: 'gcr.io/$PROJECT_ID/traceroute'
+  args: ['-V']
+
+images:
+- 'gcr.io/$PROJECT_ID/traceroute'
