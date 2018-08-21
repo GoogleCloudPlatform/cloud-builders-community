@@ -3,7 +3,7 @@ The Dockerfile and scripts here help you use Google Cloud Builder to build Andro
 These instructions assume that you have [Android SDK](https://developer.android.com/studio/index.html) installed and can build the subject Android application locally on your workstation.  
 Steps to use:
 
-##### 1. Create a list of the android sdk packages you need for you builds and save it to the builder directory as 'packages.txt'.  To generate the list from your workstation a script is provided: 
+##### 1. Create a list of the android sdk packages you need for your builds and save it to the builder directory as 'packages.txt'.  To generate the list from your workstation a script is provided: 
 
   ```
   $ ./installed-package-list.sh
@@ -29,10 +29,10 @@ Steps to use:
   Unix | ~/Android/Sdk |
 
 
-##### 3. Submit the container build to google cloud. 
+##### 3. Submit the build to Google Cloud Build.
 
   ```
-  $ gcloud container builds submit --config cloudbuild.yaml . --substitutions=_ANDROID_SDK_LICENSE=$ANDROID_SDK_LICENSE
+  $ gcloud builds submit --config cloudbuild.yaml . --substitutions=_ANDROID_SDK_LICENSE=$ANDROID_SDK_LICENSE
   ```
 
 ##### 4. Copy the example build configuration to the root directory of your android project. 
@@ -52,7 +52,7 @@ Steps to use:
   $ gsutil mb gs://[DEBUG_BUILD_BUCKET]
   ```
 
-##### 7. Create the build trigger for your android application and repository following [these instructions](https://cloud.google.com/container-builder/docs/running-builds/automate-builds), *adding the following three Substitution Variables*: 
+##### 7. Create the build trigger for your android application and repository following [these instructions](https://cloud.google.com/cloud-build/docs/running-builds/automate-builds), *adding the following three Substitution Variables*: 
 
 Variable | Value 
 ---------------------:|:----------|
@@ -70,10 +70,10 @@ The Dockerfile contained in this repository builds a an Docker container that in
 The gradle-build scripts wraps the gradle build call with bash that will extract a ".gradle" directory that contains cached depenencies and zip up the same directory after the build completes.  This enables the rest of the cloudbuild to cache the gradle dependencies in a Google Cloud Storage bucket. 
 
 ## android-build-example/simple-cloudbuild.yaml
-This is an example build configuration that uses [Container Builder](https://cloud.google.com/container-builder/) to build an Android application debug APK and make it available via a [Cloud Storage](https://cloud.google.com/storage/docs/) bucket.
+This is an example build configuration that uses [Cloud Build](https://cloud.google.com/cloud-build/) to build an Android application debug APK and make it available via a [Cloud Storage](https://cloud.google.com/storage/docs/) bucket.
 
 ## android-build-example/fabric-beta-dist-cloudbuild.yaml
-This is an example build configuration that uses [Container Builder](https://cloud.google.com/container-builder/) to build and distribute an Android application to beta testers using Fabric's Crashlytics. 
+This is an example build configuration that uses [Cloud Build](https://cloud.google.com/cloud-build/) to build and distribute an Android application to beta testers using Fabric's Crashlytics. 
 
 ## cloudbuild.yaml 
 This file builds the android builder.
@@ -91,5 +91,5 @@ tagged with `google-cloud-container-builder`.
 
 ## More Information
 
-* [Google Cloud Container Builder](https://cloud.google.com/container-builder/docs/)
+* [Google Cloud Build](https://cloud.google.com/cloud-build/docs/)
 

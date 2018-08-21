@@ -70,8 +70,8 @@ steps:
       (
         # collect all build output in a log file just for that builder. If something goes wrong, we'll dump it later.
         logfile=${d::-1}.log # Logfile for "foo/" builder is "foo.log".
-        gcloud container builds submit $d --config=${config} > ${logfile} 2>&1
         # if the build failed, record it in the failure file.
+        gcloud builds submit $d --config=${config} > ${logfile} 2>&1
         if [[ $? -ne 0 ]]; then
           echo "$d failed" | tee -a ${failure_file}
           cat ${logfile}

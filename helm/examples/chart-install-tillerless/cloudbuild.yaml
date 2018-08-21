@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/helm'
+  args: ['test', '--', 'helm', 'install', 'stable/filebeat','--name', 'filebeat', '--namespace', 'filebeat', '--set', 'rbac.create=false']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=kube-cluster1'
+  - 'TILLERLESS=true'

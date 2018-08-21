@@ -6,7 +6,7 @@
 # here and build that before running this example.
 #
 # In this directory, run the following command to build this example:
-# $ gcloud container builds submit --config=cloudbuild.yaml .
+# $ gcloud builds submit --config=cloudbuild.yaml .
 
 steps:
 # Use Rockerfile to Build the image 'rocker:latest'; note that this TAG is
