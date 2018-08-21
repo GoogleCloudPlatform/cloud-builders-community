@@ -10,7 +10,7 @@ This builder can be used to run the terraform tool in the GCE. From the Hashicor
 ### Building this builder
 To build this builder, run the following command in this directory.
 ```sh
-$ gcloud container builds submit . --config=cloudbuild.yaml
+$ gcloud builds submit --config=cloudbuild.yaml
 ```
 
 ## Using this builder
@@ -35,8 +35,8 @@ To use this builder, your [builder service account](https://cloud.google.com/con
 The article [Managing GCP projects with terraform](https://cloud.google.com/community/tutorials/managing-gcp-projects-with-terraform) gives a good strategy for administering projects in GCP with Terraform. If you intend to go beyond the examples, strongly consider an approach that isolates service accounts by function. A service account that can do 'all the things' is risky.
 
 ### Using this builder image anywhere else
-This image can be run on any Docker host, without GCE. Why would you want to do this? It'll let you run Terraform locally, with no environment dependencies other than a Docker host installation. You can use the [local Container Builder](https://cloud.google.com/container-builder/docs/build-debug-locally) for this; but if you're curious or have
-weird / advanced requirements (for example, if you want to run Terraform as a build step on another platform like Travis or Circle CI, and don't want to install the container builder, it is an option).
+This image can be run on any Docker host, without GCE. Why would you want to do this? It'll let you run Terraform locally, with no environment dependencies other than a Docker host installation. You can use the [local Cloud Build](https://cloud.google.com/cloud-build/docs/build-debug-locally) for this; but if you're curious or have
+weird / advanced requirements (for example, if you want to run Terraform as a build step on another platform like Travis or Circle CI, and don't want to use Cloud Build, it is an option).
 
 You'll need to:
  1. Provide a service account key file
