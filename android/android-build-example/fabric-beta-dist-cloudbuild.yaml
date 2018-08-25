@@ -13,11 +13,25 @@ steps:
   volumes:
     - name: 'build_cache'
       path: '/build_cache'
+- name: 'ubuntu'
+  args: ['mkdir', 'licenses']
+  id: licenses-directory
+#Copy whatever licenses we have to the licenses directory 
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: "bash"
+  id: copy_licenses
+  args: 
+  - '-c'
+  - |
+    gsutil rsync -d -r "${_LICENSES_BUCKET}" licenses || exit 0
+  waitFor: 
+  - licenses-directory
 #Android build and distribute with gradle
 - name: 'gcr.io/$PROJECT_ID/android-builder'
   args: ['gradle-build','${_ANDROID_SDK_LICENSE}','-PbetaDistributionGroupAliases=${_EMAIL_DISTRIBUTION_GROUP}','assemble${_BUILD_TYPE_CAPITALIZED}','crashlyticsUploadDistribution${_BUILD_TYPE_CAPITALIZED}']
   id: gradle_build
   waitFor:
+    - copy_licenses
     - copy_build_cache_local
     - copy_signing_files
     - copy_fabric_files
