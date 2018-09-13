@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/wget'
+  args: ['-O', '/builder/kustomize', 'https://github.com/kubernetes-sigs/kustomize/releases/download/v1.0.6/kustomize_1.0.6_linux_amd64']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/kustomize', '.']
+
+images: ['gcr.io/$PROJECT_ID/kustomize']
