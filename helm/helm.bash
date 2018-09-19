@@ -56,7 +56,6 @@ if [ "$TILLERLESS" = true ]; then
       echo "Running: helm $@"
   fi
   helm "$@"
-  sleep 2
   helm tiller stop
 else
   if [ "$DEBUG" = true ]; then
