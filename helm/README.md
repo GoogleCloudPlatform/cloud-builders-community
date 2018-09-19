@@ -3,12 +3,12 @@
 ## Using this builder with Google Container Engine
 
 To use this builder, your
-[builder service account](https://cloud.google.com/cloud-build/docs/how-to/service-account-permissions)
+[Cloud Build Service Account](https://cloud.google.com/cloud-build/docs/securing-builds/set-service-account-permissions)
 will need IAM permissions sufficient for the operations you want to perform. For
 typical read-only usage, the "Kubernetes Engine Viewer" role is sufficient. To
 deploy container images on a GKE cluster, the "Kubernetes Engine Developer" role
 is sufficient. Check the
-[GKE IAM page](https://cloud.google.com/container-engine/docs/iam-integration)
+[GKE IAM page](https://cloud.google.com/kubernetes-engine/docs/concepts/access-control)
 for details.
 
 For most use, kubectl will need to be configured to point to a specific GKE
