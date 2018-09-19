@@ -44,15 +44,20 @@ fi
 echo "Running: helm repo update"
 helm repo update
 
-# check if Tillerless value 'TILLERLESS=true' is provided then install the plugin
-# and run "helm tiller run $@"
+# check if Tillerless value 'TILLERLESS=true' is provided then install and start the plugin
 if [ "$TILLERLESS" = true ]; then
   echo "Installing Tillerless plugin"
   helm plugin install https://github.com/rimusz/helm-tiller
+  echo "Starting Tillerless plugin"
+  helm tiller start-ci "$TILLER_NAMESPACE"
+  echo
+  export HELM_HOST=localhost:44134
   if [ "$DEBUG" = true ]; then
-      echo "Running: helm tiller run $@"
+      echo "Running: helm $@"
   fi
-  helm tiller run "$@"
+  helm "$@"
+  sleep 2
+  helm tiller stop
 else
   if [ "$DEBUG" = true ]; then
       echo "Running: helm $@"
