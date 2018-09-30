@@ -1,7 +1,7 @@
 FROM ubuntu
 
-ARG PACKER_VERSION=1.2.4
-ARG PACKER_VERSION_SHA256SUM=258d1baa23498932baede9b40f2eca4ac363b86b32487b36f48f5102630e9fbb
+ARG PACKER_VERSION=1.3.1
+ARG PACKER_VERSION_SHA256SUM=254cf648a638f7ebd37dc1b334abe940da30b30ac3465b6e0a9ad59829932fa3
 
 RUN apt-get -y update && apt-get -y install ca-certificates && rm -rf /var/lib/apt/lists/*
 
