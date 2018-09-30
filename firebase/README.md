@@ -1,10 +1,10 @@
 # firebase
 
-This build step invokes `firebase` commands that can be used in [Google Cloud Build](cloud.google.com/cloud-build/).
+This build step invokes `firebase` commands that can be used in [Google Cloud Build](https://cloud.google.com/cloud-build/).
 
 Arguments passed to this builder will be passed to `firebase` directly,
 allowing callers to run [any firebase
-command](https://docs.docker.com/compose/reference/overview/).
+command](https://firebase.google.com/docs/cli/#command_reference).
 
 ## Usage
 
@@ -18,7 +18,7 @@ firebase login:ci
 
 **Enable the KMS API**
 
-Click "setup" or "enable API" on https://console.cloud.google.com/security/kms 
+Click "setup" or "enable API" on https://console.cloud.google.com/security/kms
 
 **Create the secret on GCP**
 
