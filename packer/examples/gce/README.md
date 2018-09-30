@@ -20,7 +20,7 @@ To provide proper credentials to the `packer` builder:
     files](https://cloud.google.com/cloud-build/docs/tutorials/using-encrypted-files)
     tutorial for Cloud Build. Note that this `packer` example assumes that
     you have encrypted using a key named `key` in keyring `packer`; this is the
-    key used to decrpyt in `cloudbuild.yaml`.
+    key used to decrypt in `cloudbuild.yaml`.
 
 ## Executing the Packer Builder
 
