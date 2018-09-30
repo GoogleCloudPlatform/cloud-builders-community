@@ -22,7 +22,18 @@ $ gcloud container builds submit . --config=cloudbuild.yaml
 1. Build this builder
 
 ## What's it do?
-This builder will create a cluster named 'terraform-builder-gcs-backend' in your project, per main.tf. It will then destroy it. All told this will take around 5 minutes.
+This example includes tf files for a cluster named 'terraform-builder-gcs-backend' in the current project, per main.tf. As written, the cloudbuild.yaml just initializes terraform and performs a couple of commands to parse the config and examine the current project. If you want to actually implement & destory the cluster, add these steps:
+```yaml
+- name: 'gcr.io/${PROJECT_ID}/terraform'
+  args: ['apply', '-auto-approve']
+  env:
+    - "TF_VAR_project-name=${PROJECT_ID}"
+- name: 'gcr.io/${PROJECT_ID}/terraform'
+  args: ['destroy', '-auto-approve']
+  env:
+    - "TF_VAR_project-name=${PROJECT_ID}"
+```
+All told this will take around 5 minutes.
 
 ## Parameterization
 It's worth noting how Terraform passes variables via the command line. In cloudbuild.yaml, the project name is passed into the build steps as an environment variable
