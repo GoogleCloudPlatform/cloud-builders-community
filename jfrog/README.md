@@ -1,35 +1,35 @@
 ## Google Cloud Build integration with JFrog Artifactory
 
-There are times when you’ll want to use Google Cloud Build with a private repository such as JFrog Artifactory, the universal artifact manger. Here are few use cases and there will certainly be more -
+Here are few use cases of this integration -
 * Containerize an existing application that’s stored in a private repository?
 * Containerize an application that relies on both private and public dependencies?
 * Improve build and deployment time by caching dependencies?
+* Ensure that the third-party libraries come from trusted sources to make the pipeline more robust.
 
 This readme walks through the steps required to configure Cloud Build to work with JFrog Artifactory.
 
 ### Pre-req: Create a cloud builder image that includes JFrog CLI
 
-The top level folder includes cloudbuild.yaml file that can be used to build a JFrog cloud-build image. JFrog CLI is package agnostic that means that the same version of CLI can be used to build maven, gradle, npm, Go, Conan, docker projects. 
+The top level folder includes cloudbuild.yaml file that can be used to build a JFrog cloud-build image. JFrog CLI is package agnostic that means that the same version of CLI can be used to build maven, gradle, npm, Go, Conan, docker projects. We do recommend to build an image for each package type.
 
 **Steps to build JFrog builder image**
 
 `gcloud builds submit --config=cloudbuild.yaml .`
 
-The current version of cloudbuild.yaml makes the base image configurable so that it's easy to generate a builder for a specific package type that also includes JFrog CLI.
-
+The base image is configurable in the current version of cloudbuild.yaml. In this example, one is being built to support mvn packages -
 
 ```steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg=BASE_IMAGE=gcr.io/${PROJECT_ID}/mvn:3.3.9-jdk-8'
+  - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/mvn:3.3.9-jdk-8'
   - '--tag=gcr.io/$PROJECT_ID/java/jfrog:1.17.0'
   - '.'
   wait_for: ['-']
   
 ```
 
-Once the builder is created, it can be used to build maven, gradle, npm, Go, docker based projects. The steps to containerize a Java application using Google Cloud Build with JFrog Artifactory as a source of truth is as follows:
+The steps to containerize a Java application using Google Cloud Build with JFrog Artifactory as a source of truth is as follows:
 
 
 #### Step 1: Security
