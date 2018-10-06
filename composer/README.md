@@ -6,6 +6,6 @@
 
 ```
 steps:
-- name: 'gcr.io/$PROJECT_ID/composer
+- name: 'gcr.io/$PROJECT_ID/composer'
   args: ['install']
 ```
