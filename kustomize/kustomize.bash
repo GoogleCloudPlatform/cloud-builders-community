@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If there is no current context, get one.
-if [[ $(kubectl config current-context 2> /dev/null) == "" ]]; then
+if [[ $(kubectl config current-context 2> /dev/null) == "" || "$FORCE_GET_CREDENTIALS" = true ]]; then
     # This tries to read environment variables. If not set, it grabs from gcloud
     cluster=${CLOUDSDK_CONTAINER_CLUSTER:-$(gcloud config get-value container/cluster 2> /dev/null)}
     region=${CLOUDSDK_COMPUTE_REGION:-$(gcloud config get-value compute/region 2> /dev/null)}
