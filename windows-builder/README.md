@@ -52,7 +52,7 @@ Several example builds are provided:
 * [images/go-windows](images/go-windows) builds a Windows Go builder container
   image
 * [images/go-example](images/go-example) builds a very simple Go application
-  into a deployable Windows container.  This relies on the Windows Go builder 
+  into a deployable Windows container.  This relies on the Windows Go builder
   from the step above.
 * [images/docker-windows](images/docker-windows) builds a Windows container with
   a Docker executable inside - useful for building containers within a
@@ -62,7 +62,7 @@ Several example builds are provided:
 
 Starting an ephemeral VM on Compute Engine takes about 3 min 31 sec, broken down as follows:
 
-| Step | Duration | Elapsed | Fraction | 
+| Step | Duration | Elapsed | Fraction |
 |------|----------|---------|----------|
 | Create new Compute Engine instance | 7 sec | 7 sec | 3% |
 | Wait for password reset | 37 sec | 45 sec | 21% |
@@ -76,7 +76,7 @@ Downloading and expanding archives is a common build step.  While Powershell off
 
 `windows-builder` communicates with the remote server using WinRM over HTTPS.  Basic authentication using username and password is currently supported.
 
-For ephemeral VMs on Compute Engine, the initial password reset is performed [using public key cryptography](https://cloud.google.com/compute/docs/instances/windows/automate-pw-generation).  The cleartext password is never sent over an unencrypted connection, and is stored in memory for the duration of the build.  
+For ephemeral VMs on Compute Engine, the initial password reset is performed [using public key cryptography](https://cloud.google.com/compute/docs/instances/windows/automate-pw-generation).  The cleartext password is never sent over an unencrypted connection, and is stored in memory for the duration of the build.
 
 The latest version of Windows Server 1803 DC Core for Containers (patched 2018-08-02) is currently used.
 
@@ -84,12 +84,23 @@ The latest version of Windows Server 1803 DC Core for Containers (patched 2018-0
 
 Windows supports [two different types](https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/hyperv-container) of containers: "Windows Server containers", similar to the traditional Linux container, and "Hyper-V containers", which rely on Virtual Machines.  This code uses Windows Server containers, and as a result both the major and minor version of Windows must match between container and host.
 
-The package manager in Windows Server 1803 provides Docker 17.06.  However to run a Docker executable inside a Docker container as Cloud Build typically does, version 17.09 or higher is required to bind-mount the named pipe: see [this pull request](https://github.com/StefanScherer/insider-docker-machine/pull/1).
+The package manager in Windows Server 1803 provides Docker 17.06.  However to run a Docker executable inside a Docker container as Cloud Build typically does, version 17.09 or higher is required to bind-mount the named pipe: see [this pull request](https://github.com/StefanScherer/insider-docker-machine/pull/1).  e.g., `docker run -v '\.\pipe\docker_engine:\.\pipe\docker_engine' ...`
 
-Scripts to build the following containers are included:
+## Debugging WinRM
 
-| Location | Container Name | Contents |
-|----------|----------------|----------|
-| `images/docker-windows` | `docker-windows` | A Docker executable inside a Windows container, for building other Docker containers. |
-| `images/go-windows` | `go-windows` | Go 1.10 (and Git) |
+To debug issues with WinRM, Python users may find the [PyWinRM package](https://github.com/diyan/pywinrm) helpful, as follows:
+
+```python
+from winrm.protocol import Protocol
+p = Protocol(
+    endpoint='https://<ip address>:5986/wsman',
+    username=<username>,
+    password=<password>,
+    server_cert_validation='ignore')
+shell_id = p.open_shell()
+command_id = p.run_command(shell_id, 'ipconfig', ['/all'])
+std_out, std_err, status_code = p.get_command_output(shell_id, command_id)
+p.cleanup_command(shell_id, command_id)
+p.close_shell(shell_id)
+```
 
