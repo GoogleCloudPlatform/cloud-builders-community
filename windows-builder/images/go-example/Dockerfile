@@ -1,3 +1,3 @@
-FROM gcr.io/nofranklin-test/go-windows
+FROM gcr.io/<project_id>/go-windows
 
 CMD go run main.go

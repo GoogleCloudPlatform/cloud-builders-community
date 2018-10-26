@@ -44,6 +44,20 @@ steps:
 
 Your server must support Basic Authentication (username and password) and your network must allow access from the internet on TCP port 5986.  Do not submit plaintext passwords in your build configuration: instead, use [encrypted credentials](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials) secured with Cloud KMS.  In addition, you must clear up your workspace directory after use, and take care to manage concurrent builds.
 
+## Examples
+
+Several example builds are provided:
+
+* [images/example](images/example) prints "Hello World!" from Windows
+* [images/go-windows](images/go-windows) builds a Windows Go builder container
+  image
+* [images/go-example](images/go-example) builds a very simple Go application
+  into a deployable Windows container.  This relies on the Windows Go builder 
+  from the step above.
+* [images/docker-windows](images/docker-windows) builds a Windows container with
+  a Docker executable inside - useful for building containers within a
+  Docker context itself.
+
 ## Performance
 
 Starting an ephemeral VM on Compute Engine takes about 3 min 31 sec, broken down as follows:
