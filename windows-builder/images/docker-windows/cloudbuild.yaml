@@ -1,0 +1,3 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/windows-builder'
+  args: [ 'powershell.exe -file build.ps1' ]
