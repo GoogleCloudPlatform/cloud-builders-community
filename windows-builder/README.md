@@ -21,7 +21,7 @@ Clone this repository and build the builder:
 gcloud builds submit --config=builder/cloudbuild.yaml builder/
 ```
 
-Then, refer to the builder in your project's `cloudbuild.yaml`.  To spin up an ephemeral `n1-standard-1` VM on Compute Engine, simply provide the command you wish to execute.  Your Cloud Build workspace is synchronized to `C:\workspace` on the server first.
+Then, refer to the builder in your project's `cloudbuild.yaml`.  To spin up an ephemeral `n1-standard-1` VM on Compute Engine, simply provide the command you wish to execute.  Your Cloud Build workspace is synchronized to `C:\workspace` at server startup.
 
 ```yaml
 steps:
