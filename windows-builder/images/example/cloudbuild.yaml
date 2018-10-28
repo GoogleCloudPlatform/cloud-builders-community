@@ -1,0 +1,3 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/windows-builder'
+  args: [ 'C:\workspace\hello.bat' ]
