@@ -1,6 +1,7 @@
 FROM gcr.io/cloud-builders/npm
 
-RUN npm i firebase-tools
+RUN npm install -g firebase-tools
 COPY firebase.bash .
+RUN chmod +x /firebase.bash
 
 ENTRYPOINT ["/firebase.bash"]
