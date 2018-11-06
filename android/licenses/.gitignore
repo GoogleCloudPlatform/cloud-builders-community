@@ -1,3 +1,0 @@
-# This directory just needs to be present
-# for the gsutil step in cloudbuild.yaml to work
-!.gitignore

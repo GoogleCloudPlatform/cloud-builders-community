@@ -1,0 +1,8 @@
+# we use a gcr.io image and not openjdk:8-jdk-slim because it loads faster in the google Google Cloud Build environment
+ARG project_id
+FROM gcr.io/$project_id/android:base
+
+ARG android_version
+
+# Update 
+RUN sdkmanager "platforms;android-${android_version}"
