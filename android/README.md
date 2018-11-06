@@ -51,6 +51,8 @@ gcloud kms encrypt --plaintext-file=signing/keystore.properties --ciphertext-fil
 gcloud kms encrypt --plaintext-file=signing/google-service-account.json --ciphertext-file=signing/google-service-account.json.enc --location=global --keyring=my-app --key=android-builder
 ```
 
+Be sure to add your plain text files to your `.gitignore` file so they aren't uploaded to your repository.
+
 ### 4. Create the required cloud buckets (Optional)
 
 If you want to store artifacts, configs, or your build cache, you'll need to create the cloud buckets to do so.
@@ -62,8 +64,6 @@ gsutil mb gs://my-build-artifacts
 gsutil mb gs://my-build-config
 gsutil mb gs://my-build-cache
 ```
-
-Be sure to add your plain text files to your `.gitignore` file so they aren't uploaded to your repository.
 
 ### 5. Start Building
 
