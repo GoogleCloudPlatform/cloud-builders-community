@@ -7,16 +7,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg=NODE_VERSION=6.14.1'
-  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-6.14.1'
-  - '.'
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'build'
-  - '--build-arg=NODE_VERSION=8.11.1'
-  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.11.1'
-  # 8.11.1 is tagged :latest
-  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
+  - '--build-arg=NODE_VERSION=8.12.0'
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.12.0'
   - '.'
 - name: 'gcr.io/cloud-builders/docker'
   args:
@@ -27,41 +19,65 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg=NODE_VERSION=10.0.0'
-  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.0.0'
-  # 10.0.0 is tagged :current
-  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:current'
+  - '--build-arg=NODE_VERSION=10.13.0'
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.13.0'
+  # 10.13.0 is tagged :latest
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
   - '--tag=gcr.io/$PROJECT_ID/nodejs/yarn-puppeteer'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=NODE_VERSION=11.1.0'
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-11.1.0'
+  # 11.1.0 is tagged :current
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:current'
   - '.'
 
 # Print for each version
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-6.14.1'
-  args: ['--version']
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.11.1'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.12.0'
   args: ['--version']
 - name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-9.11.1'
   args: ['--version']
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.0.0'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.13.0'
+  args: ['--version']
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-11.1.0'
   args: ['--version']
 
-# Test the examples with :latest
-
-# hello_world
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
+# Test the cloud builder on the example
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.12.0'
   args: ['install']
   dir: 'examples/hello_world'
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
-  args: ['test']
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.12.0'
+  args: ['test:puppeteer']
   dir: 'examples/hello_world'
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '.']
+
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-9.11.1'
+  args: ['install']
+  dir: 'examples/hello_world'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-9.11.1'
+  args: ['test:puppeteer']
+  dir: 'examples/hello_world'
+
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.13.0'
+  args: ['install']
+  dir: 'examples/hello_world'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.13.0'
+  args: ['test:puppeteer']
+  dir: 'examples/hello_world'
+
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-11.1.0'
+  args: ['install']
+  dir: 'examples/hello_world'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-11.1.0'
+  args: ['test:puppeteer']
   dir: 'examples/hello_world'
 
 images:
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:current'
-- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-6.14.1'
-- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.11.1'
+- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-8.12.0'
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-9.11.1'
-- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.0.0'
+- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.13.0'
+- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-11.1.0'
 - 'gcr.io/$PROJECT_ID/nodejs/yarn-puppeteer'
