@@ -4,7 +4,7 @@ An experimental Windows builder for Cloud Build.
 
 ## Getting started
 
-If you are new to Google Cloud Build, we recommend you start by visiting the [manage resources page](https://console.cloud.google.com/cloud-resource-manager) in the Cloud Console, [learn how to enable billing](https://cloud.google.com/billing/docs/how-to/modify-project), [enable the Cloud Build API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com), and [install the Cloud SDK](https://cloud.google.com/sdk/docs/).
+If you are new to Google Cloud Build, we recommend you start by visiting the [manage resources page](https://console.cloud.google.com/cloud-resource-manager) in the Cloud Console, [enable billing](https://cloud.google.com/billing/docs/how-to/modify-project), [enable the Cloud Build API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com), and [install the Cloud SDK](https://cloud.google.com/sdk/docs/).
 
 Grant Compute Engine permissions to your Cloud Build service account:
 
@@ -26,7 +26,7 @@ Then, refer to the builder in your project's `cloudbuild.yaml`.  To spin up an e
 ```yaml
 steps:
 - name: 'gcr.io/$PROJECT_ID/windows-builder'
-  args: [ '<command goes here>' ]
+  args: [ '--command', '<command goes here>' ]
 ```
 
 The VM is configured by the builder and then deleted automatically at the end of the build.  Command is executed by `cmd.exe`; in most cases it will be a build script.
@@ -39,7 +39,7 @@ steps:
   args: [ '--hostname', 'host.domain.net',
           '--username', 'myuser',
           '--password', 's3cret',
-          '<command goes here>' ]
+          '--command', '<command goes here>' ]
 ```
 
 Your server must support Basic Authentication (username and password) and your network must allow access from the internet on TCP port 5986.  Do not submit plaintext passwords in your build configuration: instead, use [encrypted credentials](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials) secured with Cloud KMS.  In addition, you must clear up your workspace directory after use, and take care to manage concurrent builds.
@@ -88,7 +88,7 @@ The package manager in Windows Server 1803 provides Docker 17.06.  However to ru
 
 ## Debugging WinRM
 
-To debug issues with WinRM, Python users may find the [PyWinRM package](https://github.com/diyan/pywinrm) helpful, as follows:
+To debug issues with WinRM, Python users may find the [PyWinRM package](https://github.com/diyan/pywinrm) helpful, for example:
 
 ```python
 from winrm.protocol import Protocol
