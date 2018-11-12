@@ -1,5 +1,5 @@
 steps:
-  
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
@@ -20,7 +20,7 @@ steps:
   - '--cache-from'
   - 'gcr.io/$PROJECT_ID/android:base'
 
-images: 
+images:
   - 'gcr.io/$PROJECT_ID/android:base'
   - 'gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}'
 
