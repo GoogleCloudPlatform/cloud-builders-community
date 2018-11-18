@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '--tag',
+        'gcr.io/$PROJECT_ID/protoc',
+        '--cache-from',
+        'gcr.io/$PROJECT_ID/protoc',
+        '.',
+      ]
+images: ['gcr.io/$PROJECT_ID/protoc']
