@@ -5,7 +5,6 @@ let
     sha256 = "05a3jjcqvcrylyy8gc79hlcp9ik9ljdbwf78hymi5b12zj2vyfh6";
   }) {};
 in pkgs.dockerTools.buildLayeredImage {
-  # TODO: This needs to be an arg that's passed at build-time from the nix-build CLI.
   name = imageName;
   tag = "latest";
   config.Cmd = [ "${pkgs.mysql}/bin/mysqld" ];
