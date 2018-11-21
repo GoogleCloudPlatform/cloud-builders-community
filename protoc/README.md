@@ -1,6 +1,6 @@
 # protoc
 
-This tool defines a custom build step that allowing the Cloud Build worker to
+This tool defines a custom build step that allows the Cloud Build worker to
 run the
 [protocol buffer compiler](https://github.com/protocolbuffers/protobuf), `protoc`.
 
