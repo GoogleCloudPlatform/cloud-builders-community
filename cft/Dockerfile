@@ -4,7 +4,6 @@ RUN apt-get update && apt-get -y install make \
     && pip install setuptools \
     && git clone https://github.com/GoogleCloudPlatform/deploymentmanager-samples \
     && cd deploymentmanager-samples/ \
-    && git checkout cloud-foundation \
     && cd community/cloud-foundation \
     && make prerequisites \
     && make build \
