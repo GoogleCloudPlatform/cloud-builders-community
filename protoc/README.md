@@ -69,22 +69,22 @@ longer needed):
 
 `RUN rm -rf /var/lib/apt/lists/*`
 
-The previous three [RUN][1] instructions can be combined into one:
+The previous three [RUN](https://docs.docker.com/engine/reference/builder/#run) instructions can be combined into one:
 
 `RUN apt-get -qy update && apt-get -qy install python wget unzip && rm -rf /var/lib/apt/lists/*`
 
- - Use the [ENV][2] instruction to update the `PATH` environment to include the
-location of the `protoc` binary in the final environment (image). 
+ - Use the [ENV](https://docs.docker.com/engine/reference/builder/#env) instruction to update the `PATH` environment
+ to include the location of the `protoc` binary in the final environment (image). 
 
 `ENV PATH=$PATH:/protoc/bin/`
 
-Set the [ENTRYPOINT][3] of the image such that the image runs as a `protoc`
-executable. Not, since the previous step added `protoc` to `$PATH`, we need only
-specify the binary to run (not the full path):
+Set the [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint) of the image such that the image runs
+as a `protoc` executable. Not, since the previous step added `protoc` to `$PATH`, we need only specify the binary to run
+(not the full path):
 
 `ENTRYPOINT ["protoc"]`
 
- - Use the [CMD][4] instruction so that if no options are provided when running
-the `protoc` image, `protoc --help` will run:
+ - Use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) instruction so that if no options are provided
+when running the `protoc` image, `protoc --help` will run:
 
 `CMD ["--help]`
