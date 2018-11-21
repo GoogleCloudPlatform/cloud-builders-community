@@ -1,3 +1,4 @@
+{ imageName }:
 let
   pkgs = import (builtins.fetchTarball {
     url = "https://github.com/grahamc/nixpkgs/archive/layered-docker-images.tar.gz";
@@ -5,7 +6,7 @@ let
   }) {};
 in pkgs.dockerTools.buildLayeredImage {
   # TODO: This needs to be an arg that's passed at build-time from the nix-build CLI.
-  name = "gcr.io/$PROJECT_ID/nix-built-mysql";
+  name = imageName;
   tag = "latest";
   config.Cmd = [ "${pkgs.mysql}/bin/mysqld" ];
   maxLayers = 120;

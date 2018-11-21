@@ -5,7 +5,7 @@ steps:
  
 # Use the image to build the Nix build cript.
 - name: gcr.io/$PROJECT_ID/nix-build
-  args: ['default.nix', '--argstr', 'name', 'gcr.io/$PROJECT_ID/nix-built-mysql']
+  args: ['default.nix', '--argstr', 'imageName', 'gcr.io/$PROJECT_ID/nix-built-mysql']
   volumes:
   - name: nix-store
     path: /nix/
