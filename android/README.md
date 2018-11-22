@@ -25,7 +25,7 @@ In order for the script environment to get the branch name from the Cloud Build 
   id: deploy_to_play
   args: ["for_branch", "master", "./gradlew", ":app:publishReleaseApk"]
   env:
-  - 'BRANCH_NAME="$BRANCH_NAME"'
+  - 'BRANCH_NAME=$BRANCH_NAME'
 ```
 
 This step will run `./gradlew :app:publishReleaseApk` only if the build is triggered on the master branch.
