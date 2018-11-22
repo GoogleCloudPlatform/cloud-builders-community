@@ -27,7 +27,7 @@ steps:
   args: 
   - '-c'
   - |
-    cat /config/buildnum | awk '{print $1"+1"}' | bc | tee /config/buildnum | awk '{print "BUILD_NUM="$1 }' | tee build_env
+    cat /config/buildnum | awk '{print $1"+1"}' | bc | tee /config/buildnum | awk '{print "BUILD_NUM="$1 }' | tee .buildnum
   waitFor: ['copy_config']
   volumes:
   - name: 'config'
@@ -98,16 +98,11 @@ steps:
 #
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: build
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      source build_environment.sh
-      ./gradlew --stacktrace -Dtrace :app:assembleRelease :app:assembleDebug assembleAndroidTest
+  args: ["./gradlew", ":app:assembleRelease", ":app:assembleDebug", "assembleAndroidTest"]
   <<: &env
     env:
     - 'TERM=dumb'
-    - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
+    - 'JAVA_TOOL_OPTIONS="-Xmx4g"'
     - 'GRADLE_USER_HOME=/build_cache/.gradle'
     - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
   waitFor:
@@ -124,8 +119,6 @@ steps:
   args: ['-q', 'cp', '-r', 'app/build/outputs/apk', 'gs://${_ARTIFACT_BUCKET}/$BRANCH_NAME-$BUILD_ID/']
   waitFor: ['build']
 
-# TODO Make FTL instrumentation tests work.
-
 #
 # Unit Tests
 #
@@ -133,12 +126,7 @@ steps:
 #
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: unit_tests
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    source build_environment.sh
-    ./gradlew --stacktrace -Dtrace check
+  args: ["./gradlew", "check"]
   <<: *env
   waitFor: ['build']
   volumes:
@@ -168,14 +156,9 @@ steps:
 #
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: deploy_to_play
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    source build_environment.sh
-    [[ "$BRANCH_NAME" == "master" ]] && ./gradlew --stacktrace -Dtrace :app:publishReleaseApk || echo "Skipping Play Store distribution..."
+  args: ["for_branch", "master", "./gradlew", ":app:publishReleaseApk"]
   <<: *env
-  waitFor: ['unit_tests'] # removed 'ftl_tests'
+  waitFor: ['unit_tests']
   volumes:
   - name: 'cache'
     path: '/gradle_cache'
@@ -185,14 +168,9 @@ steps:
 #
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: deploy_to_beta
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    source build_environment.sh
-    [[ "$BRANCH_NAME" != "master" ]] && ./gradlew --stacktrace -Dtrace :app:crashlyticsUploadDistributionDebug || echo "Skipping Crashlytics Beta distribution..."
+  args: ["for_branch", "develop", "./gradlew", ":app:crashlyticsUploadDistributionDebug"]
   <<: *env
-  waitFor: ['unit_tests'] # removed 'ftl_tests'
+  waitFor: ['unit_tests']
   volumes:
   - name: 'cache'
     path: '/gradle_cache'

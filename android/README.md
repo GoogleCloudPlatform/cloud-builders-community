@@ -2,6 +2,30 @@
 
 The Dockerfile and scripts here help you use Google Cloud Builder to build Android applications.  
 These instructions assume that you have [Android SDK](https://developer.android.com/studio/index.html) installed and can build the subject Android application locally on your workstation.  
+
+## Build Environment
+
+To customize the build environment **during the build process**, for instance, to add environment variables for later build steps, create a script in the working directory called `.buildenv`.  
+
+```bash
+#!/usr/bin/env bash
+
+export BUILD_NUM=123
+```
+
+## Run Only On Specific Branch
+
+Some build steps should only be run if the build is triggered from a specific branch, like running a deployment script when run from the master branch.  This image includes a `for_branch` script that allows you to pass a branch name and, if the branch name matches the current branch, runs the rest of the argments as if they were passed directly to Bash.
+
+```yaml
+# Only deploys to Play Stor if we're on the master branch
+- name: 'gcr.io/$PROJECT_ID/android:28'
+  id: deploy_to_play
+  args: ["for_branch", "master", "./gradlew", ":app:publishReleaseApk"]
+```
+
+This step will run `./gradlew :app:publishReleaseApk` only if the build is triggered on the master branch.
+
 # Usage
 
 ### 1. Deploy the builders
