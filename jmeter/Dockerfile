@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:latest
 
 ARG JMETER_VERSION="5.0"
 
@@ -15,11 +15,11 @@ RUN apk update \
 	&& update-ca-certificates \
 	&& apk add --update openjdk8-jre tzdata curl unzip bash \
 	&& rm -rf /var/cache/apk/* \
-	&& mkdir -p /tmp/dependencies  \
-	&& curl -L --silent ${JMETER_DOWNLOAD_URL} >  /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz  \
+	&& mkdir -p /tmp/jmeter  \
+	&& curl -L --silent ${JMETER_DOWNLOAD_URL} >  /tmp/jmeter/apache-jmeter-${JMETER_VERSION}.tgz  \
 	&& mkdir -p /opt  \
-	&& tar -xzf /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz -C /opt  \
-	&& rm -rf /tmp/dependencies
+	&& tar -xzf /tmp/jmeter/apache-jmeter-${JMETER_VERSION}.tgz -C /opt  \
+	&& rm -rf /tmp/jmeter
 
 RUN curl -L --silent ${JMETER_PLUGINS_DOWNLOAD_URL}/jmeter-plugins-dummy/0.2/jmeter-plugins-dummy-0.2.jar -o ${JMETER_PLUGINS_FOLDER}/jmeter-plugins-dummy-0.2.jar
 RUN curl -L --silent ${JMETER_PLUGINS_DOWNLOAD_URL}/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar -o ${JMETER_PLUGINS_FOLDER}/jmeter-plugins-cmn-jmeter-0.5.jar
