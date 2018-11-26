@@ -7,5 +7,9 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/traceroute'
   args: ['-V']
 
+# Example to run a traceroute to google.com
+- name: 'gcr.io/$PROJECT_ID/traceroute'
+  args: ['google.com']
+
 images:
 - 'gcr.io/$PROJECT_ID/traceroute'

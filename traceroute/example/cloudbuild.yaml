@@ -1,4 +1,0 @@
-# Example to run a traceroute to google.com
-steps:
-- name: 'gcr.io/$PROJECT_ID/traceroute'
-  args: ['google.com']
