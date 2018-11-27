@@ -15,3 +15,8 @@ and run:
 ```
     gcloud builds submit . --config=cloudbuild.yaml
 ```
+
+To clean up the resources, run the following:
+```
+    gcloud builds submit . --config=cloudbuild-delete.yaml
+```
