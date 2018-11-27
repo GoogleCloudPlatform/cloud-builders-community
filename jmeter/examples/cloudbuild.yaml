@@ -4,6 +4,3 @@ steps:
     - '-n'
     - '-t'
     - 'sample.jmx'
-
-images:
-- 'gcr.io/$PROJECT_ID/sample-jmeter-tests:${BUILD_ID}'
