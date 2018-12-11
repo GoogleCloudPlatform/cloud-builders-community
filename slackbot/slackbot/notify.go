@@ -45,6 +45,6 @@ func Notify(b *cloudbuild.Build, webhook string) {
 		log.Fatalf("Failed to post to Slack: %v", err)
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, _ := ioutil.ReadAll(resp.Body)
 	log.Printf("Posted message to Slack: [%v], got response [%s]", j, body)
 }
