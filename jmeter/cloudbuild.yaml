@@ -1,0 +1,16 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: 
+  - 'build'
+  - '--build-arg'
+  - 'JMETER_VERSION=5.0'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/jmeter:latest'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/jmeter:5.0'
+  - '.'
+
+images: 
+- 'gcr.io/$PROJECT_ID/jmeter:latest'
+- 'gcr.io/$PROJECT_ID/jmeter:5.0'
+
