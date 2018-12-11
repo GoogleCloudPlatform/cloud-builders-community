@@ -21,7 +21,6 @@ func main() {
 	flag.Parse()
 	ctx := context.Background()
 
-<<<<<<< HEAD
 	if *webhook == "" {
 		log.Fatalf("Slack webhook must be provided.")
 	}
@@ -30,13 +29,10 @@ func main() {
 		log.Fatalf("Build ID must be provided.")
 	}
 
-=======
->>>>>>> c71c184bd14f37cb0dc2cc7f6e948bafacf15483
 	if *mode == "trigger" {
 		// Trigger another build to run the monitor.
 		log.Printf("Starting trigger mode for build %s", *build)
 		slackbot.Trigger(ctx, *build, *webhook)
-<<<<<<< HEAD
 		return
 	}
 	if *mode == "monitor" {
@@ -46,12 +42,4 @@ func main() {
 		return
 	}
 	log.Fatalf("Mode must be provided.")
-=======
-	} else {
-		// Monitor the other build until completion.
-		log.Printf("Starting monitor mode for build %s", *build)
-		slackbot.Monitor(ctx, *build, *webhook)
-	}
-
->>>>>>> c71c184bd14f37cb0dc2cc7f6e948bafacf15483
 }
