@@ -17,7 +17,7 @@ func Monitor(ctx context.Context, build string, webhook string) {
 		log.Fatalf("Failed to get project: %v", err)
 	}
 
-	t := time.Tick(1 * time.Minute)
+	t := time.Tick(20 * time.Second)
 	for {
 		log.Printf("Polling build %s", build)
 		lc := svc.Projects.Builds.Get(project, build)
