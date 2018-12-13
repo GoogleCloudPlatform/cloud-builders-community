@@ -68,12 +68,16 @@ And to list Helm releases.
 
 ### Tillerless Helm setup
 
-`Tillerless Helm` which solves all those `tiller` security issues, as `tiller` runs outside the GKE cluster.
-I wrote a [blog post](https://rimusz.net/tillerless-helm/) how to use Helm local [tiller plugin](https://github.com/rimusz/helm-tiller).
+`Tillerless Helm` solves many `tiller` [security issues](https://docs.helm.sh/using_helm/#securing-your-helm-installation), as `tiller` runs outside the GKE cluster, locally in the container, and stores configs as secrets using the [secrets storage backend](https://docs.helm.sh/using_helm/#storage-backends).
+It is based on the [Tillerless](https://rimusz.net/tillerless-helm/) [plugin](https://github.com/rimusz/helm-tiller), and is available in the image.
+
+#### Enabling Tillerless Helm
+
+Set `TILLERLESS=true` and optionally `TILLER_NAMESPACE=<namespace>`.
 
 You can test e.g. installing a chart via `Tillerless Helm`, running the following command.
 
-    gcloud builds submit . --config=examples/chart-install-tillerless/cloudbuild.yaml
+    $ gcloud builds submit . --config=examples/chart-install-tillerless/cloudbuild.yaml
 
 And to list Helm releases.
 
