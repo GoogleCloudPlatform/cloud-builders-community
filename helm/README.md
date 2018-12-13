@@ -68,23 +68,33 @@ And to list Helm releases.
 
 ### Tillerless Helm setup
 
-`Tillerless Helm` which solves all those `tiller` security issues, as `tiller` runs outside the GKE cluster.
-I wrote a [blog post](https://rimusz.net/tillerless-helm/) how to use Helm local [tiller plugin](https://github.com/rimusz/helm-tiller).
+`Tillerless Helm` solves many `tiller` [security issues](https://docs.helm.sh/using_helm/#securing-your-helm-installation), as `tiller` runs outside the GKE cluster, locally in the container, and stores configs as secrets using the [secrets storage backend](https://docs.helm.sh/using_helm/#storage-backends).
+It is based on the [Tillerless](https://rimusz.net/tillerless-helm/) [plugin](https://github.com/rimusz/helm-tiller), and is available in the image.
+
+#### Enabling Tillerless Helm
+
+Set `TILLERLESS=true` and optionally `TILLER_NAMESPACE=<namespace>`.
 
 You can test e.g. installing a chart via `Tillerless Helm`, running the following command.
 
-    gcloud builds submit . --config=examples/chart-install-tillerless/cloudbuild.yaml
+    $ gcloud builds submit . --config=examples/chart-install-tillerless/cloudbuild.yaml
 
 And to list Helm releases.
 
     $ gcloud builds submit . --config=examples/releases-list-tillerless/cloudbuild.yaml
 
-**Note:** Also if your GKE cluster has `RBAC` enabled, you must grant Cloud Build Service Account `cluster-admin` role (or make it more specific for your use case), but for some reason Cloud Build uses Cloud Build Service Account `uniqueId` to authenticate to the GKE cluster instead of it's email address.
+## RBAC Considerations
 
-Below is example how to set it up with `uniqueId`.
+**Note:** If your GKE cluster has `RBAC` enabled, you must grant Cloud Build Service Account the `cluster-admin` role (or make it more specific for your use case)
 
-    # Get Cloud Build Service Account uniqueId
-    user=$(gcloud iam service-accounts describe your_project_id@cloudbuild.gserviceaccount.com | grep -o 'uniqueId.*' | awk -v FS="('|')" '{print $2}')
+    $ export PROJECT_ID="$(gcloud projects describe $(gcloud config get-value core/project -q) --format='get(projectNumber)')"
+    $ export SERVICE_ACCOUNT="${PROJECT_ID}@cloudbuild.gserviceaccount.com"
 
-    # Grant Cloud Build Service Account `cluster-admin` role
-    kubectl create clusterrolebinding cluster-admin-$user --clusterrole cluster-admin --user $user
+    # Add IAM policy for cloudbuild cluster administration
+    $ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+      --member=serviceAccount:${SERVICE_ACCOUNT} \
+      --role=roles/container.admin
+
+    # and add a clusterrolebinding
+    $ kubectl create clusterrolebinding cluster-admin-${SERVICE_ACCOUNT} \
+      --clusterrole cluster-admin --user ${SERVICE_ACCOUNT}
