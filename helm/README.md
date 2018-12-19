@@ -98,3 +98,15 @@ And to list Helm releases.
     # and add a clusterrolebinding
     $ kubectl create clusterrolebinding cluster-admin-${SERVICE_ACCOUNT} \
       --clusterrole cluster-admin --user ${SERVICE_ACCOUNT}
+
+## Configuration
+
+The following options are configurable via environment variables passed to the build step in the `env` parameter:
+
+| Option        | Description   |
+| ------------- | ------------- |
+| GCS_PLUGIN_VERSION | [GCS plugin](https://github.com/nouney/helm-gcs) version to install, optional |
+| HELM_REPO_NAME | External Helm repository name, optional |
+| HELM_REPO_URL | External Helm repo URL, optional |
+| TILLERLESS | If true, Tillerless Helm is enabled, optional |
+| TILLER_NAMESPACE | Tiller namespace, optional |
