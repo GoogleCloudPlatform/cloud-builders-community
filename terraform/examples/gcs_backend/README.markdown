@@ -5,7 +5,7 @@ This is an example of how to use the Terraform cloud builder, using a GCS backen
 ### Building this builder
 To build this builder, run the following command in this directory.
 ```sh
-$ gcloud container builds submit . --config=cloudbuild.yaml
+$ gcloud builds submit . --config=cloudbuild.yaml
 ```
 
 ## Using this builder
