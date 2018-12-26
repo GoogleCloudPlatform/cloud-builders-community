@@ -12,10 +12,10 @@ The `gcr.io/cloud-builders/flutter` build step should be used when you want to b
 
 You can build the hello world example by running those commands inside the examples directory:
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+    $ gcloud builds submit . --config=cloudbuild.yaml
 
 ## Building this builder
 
 To build this builder, run the following command in this directory.
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+    $ gcloud builds submit . --config=cloudbuild.yaml
