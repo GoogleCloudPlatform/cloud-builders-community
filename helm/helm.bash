@@ -35,6 +35,12 @@ fi
 echo "Running: helm init --client-only"
 helm init --client-only
 
+# if GCS_PLUGIN_VERSION is set, install the plugin
+if [[ -n $GCS_PLUGIN_VERSION ]]; then
+  echo "Installing helm GCS plugin version $GCS_PLUGIN_VERSION "
+  helm plugin install https://github.com/nouney/helm-gcs --version $GCS_PLUGIN_VERSION
+fi
+
 # check if repo values provided then add that repo
 if [[ -n $HELM_REPO_NAME && -n $HELM_REPO_URL ]]; then
   echo "Adding chart helm repo $HELM_REPO_URL "
