@@ -1,14 +1,14 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VERSION v1.0.10
+ENV VERSION v1.0.11
 
 COPY kustomize.bash /builder/kustomize.bash
 
 RUN apt-get update && \
     apt-get install -y wget && \
-    wget https://github.com/kubernetes-sigs/kustomize/releases/download/v1.0.10/kustomize_1.0.10_linux_amd64 && \
+    wget https://github.com/kubernetes-sigs/kustomize/releases/download/v${VERSION}/kustomize_${VERSION}_linux_amd64 && \
     mkdir /builder/kustomize && \
-    mv kustomize_1.0.10_linux_amd64 /builder/kustomize/kustomize && \
+    mv kustomize_${VERSION}_linux_amd64 /builder/kustomize/kustomize && \
     chmod +x /builder/kustomize/kustomize && \
     chmod +x /builder/kustomize.bash && \
     apt-get remove --purge -y curl && \
