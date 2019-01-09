@@ -5,7 +5,7 @@ These instructions assume that you have [Android SDK](https://developer.android.
 
 ## Build Environment
 
-To customize the build environment **during the build process**, for instance, to add environment variables for later build steps, create a script in the working directory called `.buildenv`.  
+To customize the build environment **during the build process**, for instance to add environment variables for later build steps, create a script in the working directory called `.buildenv`.  
 
 ```bash
 #!/usr/bin/env bash
