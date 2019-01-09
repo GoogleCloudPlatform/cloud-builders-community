@@ -69,8 +69,10 @@ if [ "$TILLERLESS" = true ]; then
       echo "Running: helm $@"
   fi
   helm "$@"
+  exitCode=$?
   echo "Stopping local tiller server"
   pkill tiller
+  exit $exitCode
 else
   if [ "$DEBUG" = true ]; then
       echo "Running: helm $@"
