@@ -36,7 +36,7 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: build
   args: ["./gradlew", "assembleDebug"]
-    env:
+  env:
     - 'TERM=dumb'
     - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
     - 'GRADLE_USER_HOME=/build_cache/.gradle'
