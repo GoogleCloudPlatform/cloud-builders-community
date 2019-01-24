@@ -31,6 +31,11 @@ This command will generate a new CI token that will be encrypted by the KMS to b
 ```
 firebase login:ci
 ```
+This will print your token on screen after login. Once done use the below command to set it to $TOKEN variable, which is used by the commands below to encrypt it.
+
+```
+TOKEN=<GENERATED_TOKEN>
+```
 
 **Enable the KMS API**
 
