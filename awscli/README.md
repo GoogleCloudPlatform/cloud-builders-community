@@ -13,7 +13,7 @@ Arguments passed to this builder will be passed to `awscli` directly.
 1. Build this image and add it to your gcr repo
 
 ```
-$ git clone git@github.com:GoogleCloudPlatform/cloud-builders
+$ git clone git@github.com:GoogleCloudPlatform/cloud-builders-community
 $ cd cloud-builders/aws-cli
 $ gcloud builds submit .
 ```
