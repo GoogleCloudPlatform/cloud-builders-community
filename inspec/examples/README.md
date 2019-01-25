@@ -19,7 +19,7 @@ gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$MEMBER 
 
 Update `test-profile/attributes.yml` to point to your GCP project
 ```bash
-sed -i .ori 's/my-gcp-project/'"$PROJECT_ID"'/g' test-profile/attributes.yml 
+sed -i 's/my-gcp-project/'"$PROJECT_ID"'/g' test-profile/attributes.yml 
 ```
 
 To run the InSpec profile, run the following:
