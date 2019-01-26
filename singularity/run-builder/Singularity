@@ -1,0 +1,22 @@
+Bootstrap: docker
+From: ubuntu:16.04
+
+# sudo singularity build greeting.sif Singularity
+
+%post
+    apt-get update && apt-get install -y figlet
+
+
+%runscript
+
+    # If no arguments supplied, print the username in cool text!
+    if [ $# -eq 0 ]
+
+      then
+          exec figlet "${USER}"
+
+      # Otherwise render the provided text for the user
+      else
+          exec figlet "${@}"          
+    fi
+
