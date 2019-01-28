@@ -1,0 +1,35 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/gcs-cache'
+  args: [ '-r',
+          '-c', 'gradle-cache.zip']
+  env:
+  - 'GCS_BUCKET=gs://$PROJECT_ID-cache-repo'
+
+- name: 'java:8'
+  id: 'BUILD'
+  env: ['GRADLE_USER_HOME=/workspace/.gradle']
+  entrypoint: 'bash'
+  args: ['-c', './gradlew bootJar -x test']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build',
+          '-f', 'A-service/Dockerfile',
+          '-t', 'gcr.io/$PROJECT_ID/A-service:$COMMIT_SHA',
+          '.']
+  waitFor: ['BUILD']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build',
+          '-f', 'B-service/Dockerfile',
+          '-t', 'gcr.io/$PROJECT_ID/B-service:$COMMIT_SHA',
+          '.']
+  waitFor: ['BUILD']
+
+- name: 'gcr.io/$PROJECT_ID/gcs-cache'
+  args: [ '-s',
+          '-f', '.gradle',
+          '-c', 'gradle-cache.zip',
+          '-t', '100']
+  env:
+  - 'GCS_BUCKET=gs://$PROJECT_ID-cache-repo'
+  waitFor: ['BUILD']
