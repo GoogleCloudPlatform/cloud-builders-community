@@ -12,7 +12,7 @@ RUN apt-get update && \
     mv kustomize_${VER}_linux_amd64 /builder/kustomize/kustomize && \
     chmod +x /builder/kustomize/kustomize && \
     chmod +x /builder/kustomize.bash && \
-    apt-get remove --purge -y curl && \
+    apt-get remove --purge -y wget && \
     apt-get --purge -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
