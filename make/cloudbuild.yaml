@@ -7,9 +7,7 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/make'
   args: ['-v']
 
-# Test the examples with :latest
-
-# hello_world
+# Test the example with :latest
 - name: 'gcr.io/$PROJECT_ID/make:latest'
   args: ['all']
   dir: 'examples'
