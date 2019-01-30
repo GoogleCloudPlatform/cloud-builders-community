@@ -4,13 +4,15 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/make', '.']
+  dir: 'make'
 - name: 'gcr.io/$PROJECT_ID/make'
   args: ['-v']
+  dir: 'make'
 
 # Test the example with :latest
 - name: 'gcr.io/$PROJECT_ID/make:latest'
   args: ['all']
-  dir: 'examples'
+  dir: 'make/examples'
 
 images:
 - 'gcr.io/$PROJECT_ID/make'
