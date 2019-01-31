@@ -6,9 +6,9 @@ steps:
   args:
   - 'build'
   - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/javac:8'
-  - '--build-arg=SBT_VERSION=1.0.4'
-  - '--build-arg=SHA=27b511fb26f38af4d480bd964da4130a94716302c596fce1d9d1e44fb58cbca2'
-  - '--tag=gcr.io/$PROJECT_ID/scala-sbt:1.0.4-jdk-8'
+  - '--build-arg=SBT_VERSION=1.2.8'
+  - '--build-arg=SHA=f4b9fde91482705a772384c9ba6cdbb84d1c4f7a278fd2bfb34961cd9ed8e1d7'
+  - '--tag=gcr.io/$PROJECT_ID/scala-sbt:1.2.8-jdk-8'
   - '.'
   waitFor: ['-']
 - name: 'gcr.io/cloud-builders/docker'
@@ -25,10 +25,10 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'tag'
-  - 'gcr.io/$PROJECT_ID/scala-sbt:1.0.4-jdk-8'
+  - 'gcr.io/$PROJECT_ID/scala-sbt:1.2.8-jdk-8'
   - 'gcr.io/$PROJECT_ID/scala-sbt'
 
 images:
 - 'gcr.io/$PROJECT_ID/scala-sbt'
-- 'gcr.io/$PROJECT_ID/scala-sbt:1.0.4-jdk-8'
+- 'gcr.io/$PROJECT_ID/scala-sbt:1.2.8-jdk-8'
 - 'gcr.io/$PROJECT_ID/scala-sbt:0.13.15-jdk-8'
