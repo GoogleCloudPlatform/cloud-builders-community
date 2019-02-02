@@ -16,6 +16,6 @@ Example:
   - '$BRANCH_NAME'
   - '-b'
   - '$BUILD_ID'
-  - 'T'
+  - '-T'
   - '$TAG_NAME'
 ```
