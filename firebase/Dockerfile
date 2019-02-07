@@ -1,4 +1,4 @@
-FROM gcr.io/cloud-builders/npm
+FROM node
 
 RUN npm i -g firebase-tools
 ADD firebase.bash /usr/bin
