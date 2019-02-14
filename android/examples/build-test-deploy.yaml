@@ -68,7 +68,7 @@ steps:
   args:
   - '-c'
   - |
-    tar xpzf /build_cache/cache.tgz -C /build_cache || echo "No cache found."
+    tar xpzf /build_cache/cache.tgz -C / || echo "No cache found."
   volumes:
   - name: 'build_cache'
     path: '/build_cache'
