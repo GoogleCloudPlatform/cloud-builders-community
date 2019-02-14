@@ -1,0 +1,51 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: 
+  - 'build'
+  - '--tag=gcr.io/$PROJECT_ID/restore_cache:${_VERSION}'
+  - '--tag=gcr.io/$PROJECT_ID/restore_cache:latest'
+  - '.'
+
+# Test the script
+- name: 'gcr.io/$PROJECT_ID/restore_cache'
+  entrypoint: 'bash'
+  args: 
+  - '-c'
+  - |
+    mkdir -p /cache/folder1 /cache/folder2/subfolder3
+    touch /cache/folder1/file1.txt
+    touch /cache/folder1/file2.txt
+    touch /cache/folder2/ignore.txt
+    touch /cache/folder2/subfolder3/file1.txt
+    tar cpzvf /cache/key-` checksum cloudbuild.yaml `.tgz /cache/folder1 /cache/folder2 -C /
+    gsutil cp /cache/key-` checksum cloudbuild.yaml `.tgz gs://${_CACHE_BUCKET}/
+
+- name: 'gcr.io/$PROJECT_ID/restore_cache'
+  args:
+  - '--bucket=gs://${_CACHE_BUCKET}'
+  - '--key=key-$( checksum cloudbuild.yaml )'
+  volumes:
+  - name: 'cache'
+    path: '/cache'
+
+- name: 'gcr.io/$PROJECT_ID/restore_cache'
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    test -f /cache/folder1/file1.txt
+    test -f /cache/folder1/file2.txt
+    test -f /cache/folder2/ignore.txt
+    test -f /cache/folder2/subfolder3/file1.txt
+  volumes:
+  - name: 'cache'
+    path: '/cache'
+
+
+substitutions:
+  _VERSION: '1.0'
+  _CACHE_BUCKET: ''
+
+images: 
+- 'gcr.io/$PROJECT_ID/restore_cache:${_VERSION}'
+- 'gcr.io/$PROJECT_ID/restore_cache:latest'
