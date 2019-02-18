@@ -3,6 +3,7 @@
 BUCKET=""
 OUT_DIR="."
 KEY="cache"
+THRESHOLD="50M"
 PATHS=()
 
 function print_usage {
@@ -10,10 +11,11 @@ function print_usage {
   echo
   echo "Saves the specified paths to a cache file located in the out directory."
   echo
-  echo "  -b, --bucket   The cloud storage bucket to upload the cache to. [optional]"
-  echo "  -o, --out      The output directory to write the cache to. [optional]"
-  echo "  -k, --key      The cache key used for this cache file."
-  echo "  -p, --path     The files to store in the cache. Can be repeated."
+  echo "  -b, --bucket     The cloud storage bucket to upload the cache to. [optional]"
+  echo "  -o, --out        The output directory to write the cache to. [optional]"
+  echo "  -k, --key        The cache key used for this cache file."
+  echo "  -p, --path       The files to store in the cache. Can be repeated."
+  echo "  -t, --threshold  The parallel composite upload threshold [default: 50M]"
   echo 
 }
 
@@ -27,12 +29,16 @@ for i in "$@"; do
       OUT_DIR="${i#*=}"
       shift
       ;;
-    -k=*|--key=* )
+    -k=*|--key=*)
       KEY="${i#*=}"
       shift
       ;;
-    -p=*|--path=* )
+    -p=*|--path=*)
       PATHS+="${i#*=} "
+      shift
+      ;;
+    -t=*|--threshold=*)
+      THRESHOLD="${i#*=} "
       shift
       ;;
     -h|--help )
@@ -61,5 +67,5 @@ tar cpzf "$CACHE_FILE" ${PATHS[@]} -C /
 
 if [ -n "$BUCKET" ];then
   echo "Uploading cache to Google Cloud Storage..."
-  gsutil -q cp -R "$CACHE_FILE" "$BUCKET"
+  gsutil -o GSUtil:parallel_composite_upload_threshold=${THRESHOLD} cp -R "$CACHE_FILE" "$BUCKET"
 fi
