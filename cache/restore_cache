@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 BUCKET=""
-SRC_DIR="/tmp"
+SRC_DIR="."
 KEY="cache"
 PATHS=()
 
@@ -23,7 +23,7 @@ for i in "$@"; do
       shift
       ;;
     -s=*|--src=* )
-      OUT_DIR="${i#*=}"
+      SRC_DIR="${i#*=}"
       shift
       ;;
     -k=*|--key=* )
@@ -68,5 +68,5 @@ if [ -f "${CACHE_FILE}" ];then
   echo "Restoring cache from file ${CACHE_FILE}..."
   tar xpzf "$CACHE_FILE" -C /
 else
-  echo "No cache file for key ${KEY}."
+  echo "No cache file for key ${KEY} at ${CACHE_FILE}."
 fi

@@ -62,7 +62,7 @@ eval "KEY=$KEY"
 
 CACHE_FILE="${OUT_DIR}/${KEY}.tgz"
 
-echo "Compressing cache..."
+echo "Compressing cache to ${CACHE_FILE}..."
 tar cpzf "$CACHE_FILE" ${PATHS[@]} -C /
 
 if [ -n "$BUCKET" ];then

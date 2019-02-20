@@ -28,7 +28,7 @@ All options use the form `--option=value` or `-o=value` so that they look nice i
 | ------------ | ---------------------------------------------------------------- |
 | -b, --bucket | The cloud storage bucket to download the cache from. [optional]  |
 | -s, --src    | The local directory in which the cache is stored. [optional]     |
-| -k, --key    | The cache key used for this cache file. [optional]               |
+| -k, --key    | The cache key used for this cache file. [optional]           |
 
 One of `--bucket` or `--src` parameters are required.  If `--bucket` then the cache file will be downloaded from the provided GCS bucket path.  If `--src` then the cache file will be read from the directory specified on disk.
 
