@@ -22,7 +22,6 @@ RUN apk update \
 
 
 ENV PATH $PATH:$SONARQUBE_SCANNER_BIN
-RUN echo $PATH
 
 COPY launch.sh /
 
