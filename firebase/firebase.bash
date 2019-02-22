@@ -1,4 +1,8 @@
 #!/bin/bash
 
 # run the original firebase
-firebase "$@" --token $FIREBASE_TOKEN
+if [ $FIREBASE_TOKEN ]; then
+  firebase "$@" --token $FIREBASE_TOKEN
+else
+  firebase "$@"
+fi

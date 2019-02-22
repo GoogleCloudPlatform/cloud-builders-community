@@ -5,7 +5,7 @@ These instructions assume that you have [Android SDK](https://developer.android.
 
 ## Build Environment
 
-To customize the build environment **during the build process**, for instance, to add environment variables for later build steps, create a script in the working directory called `.buildenv`.  
+To customize the build environment **during the build process**, for instance to add environment variables for later build steps, create a script in the working directory called `.buildenv`.  
 
 ```bash
 #!/usr/bin/env bash
@@ -20,7 +20,7 @@ Some build steps should only be run if the build is triggered from a specific br
 In order for the script environment to get the branch name from the Cloud Build environment it must be passed to the step via the `env` parameter.
 
 ```yaml
-# Only deploys to Play Stor if we're on the master branch
+# Only deploys to Play Store if we're on the master branch
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: deploy_to_play
   args: ["for_branch", "master", "./gradlew", ":app:publishReleaseApk"]
