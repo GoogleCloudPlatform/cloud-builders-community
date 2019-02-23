@@ -2,7 +2,7 @@ FROM node:10.15.1-alpine
 
 LABEL maintainer="Ram Gopinathan"
 
-ENV COMPODOC_VER=1.1.8
+ARG COMPODOC_VER=1.1.8
 
 RUN apk update \
   && apk add --update alpine-sdk python bash \
