@@ -6,10 +6,7 @@ Arguments passed to this builder will be passed to `swift` directly,
 allowing callers to run [any swift command](https://swift.org/lldb/).
 
 ## Swift Versions
-
 This build step supports multiple swift versions depending on your needs.
-Each supported swift version is in its own subdirectory where you can still execute the  `gcloud container builds submit` command
-to use the swift version you choose.
 
 ### Available swift versions
 - `gcr.io/cloud-builders/swift:latest` : The latest release branch
