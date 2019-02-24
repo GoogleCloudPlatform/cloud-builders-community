@@ -95,5 +95,7 @@ This source code is licensed under Apache 2.0. Full license text is available in
 
 ## Support
 
-*   File issues here in GitHub about the community build steps.
-*   Email `cloud-build-contact@google.com` if you have questions about build steps or Google Cloud Build.
+To file issues and feature requests against these builder images, the usage of these build steps or the Cloud Build API in general, [create an issue in this repo](https://github.com/GoogleCloudPlatform/cloud-builders-community/issues/new).
+
+If you are experiencing an issue with the Cloud Build service or have a feature request, e-mail google-cloud-dev@googlegroups.com or see our [Getting support](https://cloud.google.com/cloud-build/docs/getting-support) documentation.
+
