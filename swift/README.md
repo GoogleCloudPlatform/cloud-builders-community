@@ -12,6 +12,4 @@ This build step supports multiple swift versions depending on your needs.
 - `gcr.io/cloud-builders/swift:latest` : The latest release branch
 - `gcr.io/cloud-builders/swift` : Same as latest
 - `gcr.io/cloud-builders/swift:latest-dev` : The latest development snapshot for the upcoming next major release.
-- `gcr.io/cloud-builders/swift:4.2.2` :  The 4.2.2 release branch 
-- `gcr.io/cloud-builders/swift:4.2.1` : The 4.2.1 release branch
-- `gcr.io/cloud-builders/swift:4.2` : The 4.2 release branch
+- `gcr.io/cloud-builders/swift:4.2` :  The 4.2.2 release branch 
