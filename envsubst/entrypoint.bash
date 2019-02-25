@@ -39,7 +39,7 @@ fi
 
 # Iterate files/wildcards and pre-process them using envsubst
 for f in $(ls ${files[*]}); do
-    echo "Pre-processing ..." >&2
+    echo "Pre-processing ${f}..." >&2
     cat ${f} | envsubst > ${f}.processed
     mv ${f}.processed ${f}
 done
