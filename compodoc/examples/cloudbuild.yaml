@@ -9,5 +9,3 @@ steps:
       - 'readthedocs'
       - '-p'
       - '/workspace/compodoc-demo-todomvc-angularjs/tsconfig.json'
-  - name: gcr.io/cloud-builders/gsutil
-    args: ['rsync', '-d', '-r', '/workspace/compodoc-demo-todomvc-angularjs/docs', 'gs://compodoc-demo-todomvc-angularjs']
