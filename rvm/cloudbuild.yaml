@@ -1,0 +1,73 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=UBUNTU_VERSION=16.04'
+  - '--build-arg=RUBY_VERSION=2.4.5'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:16.04-2.4.5'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=UBUNTU_VERSION=18.04'
+  - '--build-arg=RUBY_VERSION=2.4.5'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:18.04-2.4.5'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=UBUNTU_VERSION=16.04'
+  - '--build-arg=RUBY_VERSION=2.5.3'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:16.04-2.5.3'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=UBUNTU_VERSION=18.04'
+  - '--build-arg=RUBY_VERSION=2.5.3'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:18.04-2.5.3'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=UBUNTU_VERSION=16.04'
+  - '--build-arg=RUBY_VERSION=2.6.1'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:16.04-2.6.1'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:16.04-latest'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:16.04-current'
+  - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=UBUNTU_VERSION=18.04'
+  - '--build-arg=RUBY_VERSION=2.6.1'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:18.04-2.6.1'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:18.04-latest'
+  - '--tag=gcr.io/$PROJECT_ID/rvm:18.04-current'
+  - '.'
+
+# Print for each version
+- name: 'gcr.io/$PROJECT_ID/rvm:16.04-2.4.5'
+  args: ['--version']
+- name: 'gcr.io/$PROJECT_ID/rvm:18.04-2.4.5'
+  args: ['--version']
+- name: 'gcr.io/$PROJECT_ID/rvm:16.04-2.5.3'
+  args: ['--version']
+- name: 'gcr.io/$PROJECT_ID/rvm:18.04-2.5.3'
+  args: ['--version']
+- name: 'gcr.io/$PROJECT_ID/rvm:16.04-2.6.1'
+  args: ['--version']
+- name: 'gcr.io/$PROJECT_ID/rvm:18.04-2.6.1'
+  args: ['--version']
+
+images:
+- 'gcr.io/$PROJECT_ID/rvm:16.04-latest'
+- 'gcr.io/$PROJECT_ID/rvm:18.04-latest'
+- 'gcr.io/$PROJECT_ID/rvm:16.04-current'
+- 'gcr.io/$PROJECT_ID/rvm:18.04-current'
+- 'gcr.io/$PROJECT_ID/rvm:16.04-2.4.5'
+- 'gcr.io/$PROJECT_ID/rvm:18.04-2.4.5'
+- 'gcr.io/$PROJECT_ID/rvm:16.04-2.5.3'
+- 'gcr.io/$PROJECT_ID/rvm:18.04-2.5.3'
+- 'gcr.io/$PROJECT_ID/rvm:16.04-2.6.1'
+- 'gcr.io/$PROJECT_ID/rvm:18.04-2.6.1'
