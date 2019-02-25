@@ -4,7 +4,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/codecov', '.']
-  dir: 'codecov'
 
 # Example
 - name: 'gcr.io/$PROJECT_ID/codecov'
