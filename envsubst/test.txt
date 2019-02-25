@@ -1,1 +1,1 @@
-test=${TEST}
+Mars is ${MARS_COLOR} and Neptune is ${NEPTUNE_COLOR}

@@ -4,9 +4,11 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/${PROJECT_ID}/envsubst', '.']
 - name: 'gcr.io/${PROJECT_ID}/envsubst'
-  env: ["TEST=value"]
-  args: ['test.txt']
-- name: 'gcr.io/${PROJECT_ID}/envsubst'
+  env: ["MARS_COLOR=Red"]
+  args: ['-e', 'test.env', 'test.txt']
+- name: alpine
+  args: [cat, 'test.txt']
+- name: alpine
   entrypoint: sh
-  args: ['-c', '[[ "$(cat test.txt)" == "test=value" ]]']
+  args: ['-c', '[[ "$(cat test.txt)" == "Mars is Red and Neptune is Blue" ]]']
 images: ['gcr.io/${PROJECT_ID}/envsubst']
