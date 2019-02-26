@@ -41,11 +41,12 @@ steps:
   - '-c'
   - |
     echo "Creating test cache file structure."
-    mkdir -p /original/folder1 /original/folder2/subfolder3
+    mkdir -p /original/folder1 /original/folder2/subfolder3 rel_folder
     touch /original/folder1/file1.txt
     touch /original/folder1/file2.txt
     touch /original/folder2/ignore.txt
     touch /original/folder2/subfolder3/file1.txt
+    touch rel_folder/file3.txt
   volumes:
   - name: original
     path: /original
@@ -57,6 +58,7 @@ steps:
   - '--key=simple-key-$( checksum cloudbuild.yaml )'
   - '--path=/original/folder1'
   - '--path=/original/folder2/subfolder3'
+  - '--path=rel_folder'
   volumes:
   - name: original
     path: /original
@@ -92,6 +94,7 @@ steps:
   - |
     echo "Clearing original files..."
     rm -rf /original/*
+    rm -rf rel_folder/
   volumes:
   - name: original
     path: /original
@@ -117,6 +120,8 @@ steps:
     test -f /original/folder1/file2.txt
     test -f /original/folder2/ignore.txt
     test -f /original/folder2/subfolder3/file1.txt
+    test -f rel_folder/file3.txt
+    test -f /workspace/rel_folder/file3.txt
   volumes:
   - name: original
     path: /original

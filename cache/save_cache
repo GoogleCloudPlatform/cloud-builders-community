@@ -63,7 +63,7 @@ eval "KEY=$KEY"
 CACHE_FILE="${OUT_DIR}/${KEY}.tgz"
 
 echo "Compressing cache to ${CACHE_FILE}..."
-tar cpzf "$CACHE_FILE" ${PATHS[@]} -C /
+tar cpzf "$CACHE_FILE" ${PATHS[@]} -P
 
 if [ -n "$BUCKET" ];then
   echo "Uploading cache to Google Cloud Storage..."

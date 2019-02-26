@@ -66,7 +66,7 @@ CACHE_FILE="${SRC_DIR}/${KEY}.tgz"
 
 if [ -f "${CACHE_FILE}" ];then
   echo "Restoring cache from file ${CACHE_FILE}..."
-  tar xpzf "$CACHE_FILE" -C /
+  tar xpzf "$CACHE_FILE" -P
 else
   echo "No cache file for key ${KEY} at ${CACHE_FILE}."
 fi
