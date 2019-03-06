@@ -21,6 +21,7 @@ RUN sha256sum -c terragrunt_SHA256SUMS --status
 
 
 FROM gcr.io/cloud-builders/gcloud
+LABEL MAINTAINER marcin.niemira@gmail.com
 
 ENV PATH=/builder/terragrunt/:$PATH
 
