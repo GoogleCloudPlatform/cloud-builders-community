@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--pull', '--tag=gcr.io/$PROJECT_ID/gcs-syncer', '.']
+
+images: ['gcr.io/$PROJECT_ID/gcs-syncer']

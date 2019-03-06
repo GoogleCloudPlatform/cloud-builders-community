@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: core-app
+        image: your-core-app-image
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+          readOnly: true
+        - name: secret-volume
+          mountPath: /var/secrets/
+          readOnly: true
+        
+      - name: gcs-syncer
+        image: {{ your-gcs-syncer-image }}
+        args: 
+        - {{ your-source-path }}
+        - {{ your-destination-path }}
+        - "{{ your-waiting-time-in-secs }}"
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/credentials.json
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+        - name: secret-volume
+          mountPath: /var/secrets/
+          readOnly: true
+
+      initContainers:
+      - name: init-data
+        image: google/cloud-sdk:slim
+        command: 
+        - sh 
+        - -c
+        - |
+          mkdir -p /data
+          gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+          gsutil -m rsync -d -r {{ your-source-path }} {{ your-destination-path }}
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/credentials.json
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+        - name: secret-volume
+          mountPath: /var/secrets/
+          readOnly: true
+
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: {{ your-credentials-key }}
+      - name: data-volume
+        emptyDir: {}

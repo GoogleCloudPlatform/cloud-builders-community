@@ -1,0 +1,29 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: "bash"
+  args:
+  - "-c"
+  - |
+    gcloud kms decrypt \
+      --ciphertext-file=credentials.enc \
+      --plaintext-file=/var/credentials.json \
+      --location=${_KMS_LOCATION} \
+      --keyring=${_KMS_KEYRING} \
+      --key=${_KMS_KEY}
+    chmod 600 /var/credentials.json
+  id: "decrypting secrets"
+
+- name: 'gcr.io/$PROJECT_ID/gcs-syncer'
+  args: ['${_SOURCE_PATH}', '${_OUTPUT_PATH}', '${_WAITING_TIME}']
+  env:
+  - 'GOOGLE_APPLICATION_CREDENTIALS=/var/credentials.json'
+  waitFor: ["decrypting secrets"]
+  id: "sync files"
+
+substitutions:
+  _KMS_LOCATION: your-kms-location
+  _KMS_KEYRING: your-kms-keyring
+  _KMS_KEY: your-kms-key
+  _SOURCE_PATH: your-source-path
+  _OUTPUT_PATH: your-destination-path
+  _WAITING_TIME: "5" # in seconds
