@@ -37,7 +37,7 @@ When `gcs-syncer` is run, it will run indefinitely until it receives user signal
 
 There are three ways of running `gcs-syncer`. Before running `gcs-syncer` for docker / kubernetes, ensure that:
 
-1. you've built the gcs-syncer image first using (step 1)
+1. you've built the gcs-syncer image first (step 1)
 2. you've generated a service account key (step 2)
 
 
@@ -52,8 +52,6 @@ GOOGLE_APPLICATION_CREDENTIALS=[Path to credential files]
 ```
 
 To stop the running docker container, you can send kill signals to the process ( hit `ctrl + c` or run `kill -9 [PID_OF_SYNC.SH]`)
-
-Ref: ds.nyu.edu/academics/ms-in-data-science/
 
 ### Running gcs-syncer locally as docker image
 
