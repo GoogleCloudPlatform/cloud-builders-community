@@ -9,6 +9,7 @@ steps:
 # Run version to make sure that everything is working properly.
 - name: 'gcr.io/$PROJECT_ID/dep'
   args: ['version']
+  env: ['PROJECT_ROOT=workspace']
 
 images:
 - 'gcr.io/$PROJECT_ID/dep'
