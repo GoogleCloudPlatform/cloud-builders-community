@@ -15,12 +15,13 @@ Ensure you have the following APIs enabled
 1. [Cloud Resource Manager API](https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com)
 2. [Firebase Management API](https://console.developers.google.com/apis/api/firebase.googleapis.com)
 3. [Firebase Hosting API](https://console.developers.google.com/apis/api/firebasehosting.googleapis.com)
+4. [Cloud Key Management Service (KMS) API](https://console.cloud.google.com/security/kms) (Click "setup" or "enable API")
 
 **Add permission to the cloudbuilder**
 
 - Open GCP IAM menu
 - Find email ending with `@cloudbuild.gserviceaccount.com`
-- Add `Cloud Build Service Account`, `Firebase Admin`, and `API Keys Admin` roles to this account
+- Add `Cloud Build Service Account`, `Firebase Admin`, `Cloud KMS CryptoKey Decrypter`, and `API Keys Admin` roles to this account
 
 ### With Token
 
@@ -36,10 +37,6 @@ This will print your token on screen after login. Once done use the below comman
 ```
 TOKEN=<GENERATED_TOKEN>
 ```
-
-**Enable the KMS API**
-
-Click "setup" or "enable API" on https://console.cloud.google.com/security/kms
 
 **Create the secret on GCP**
 
@@ -73,12 +70,6 @@ secrets:
   secretEnv:
     FIREBASE_TOKEN: '<YOUR_ENCRYPTED_TOKEN>'
 ```
-
-**Add permission to the cloudbuilder**
-
-- Open GCP IAM menu
-- Find email ending with `@cloudbuild.gserviceaccount.com`
-- Add `Cloud KMS CryptoKey Decrypter` role to this account
 
 ## Examples
 
