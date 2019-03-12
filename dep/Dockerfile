@@ -15,4 +15,6 @@ ENV PATH=/builder/bin:$PATH
 # Build the go_workspace for detecting the workspace
 RUN go build -o /builder/go_workspace /builder/go_workspace.go
 
+ENV GOPATH=
+
 ENTRYPOINT ["dep.bash"]
