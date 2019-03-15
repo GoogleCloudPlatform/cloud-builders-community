@@ -11,5 +11,9 @@ steps:
   args: ['version']
   env: ['PROJECT_ROOT=workspace']
 
+- name: 'gcr.io/$PROJECT_ID/dep'
+  args: ['ensure', '-v']
+  env: ['PROJECT_ROOT=hello']
+
 images:
 - 'gcr.io/$PROJECT_ID/dep'
