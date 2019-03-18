@@ -1,4 +1,4 @@
-# $ gcloud builds submit . --config=cloudbuild.yaml
+# gcloud builds submit . --config=cloudbuild.yaml
 ---
 steps:
   - name: 'gcr.io/${PROJECT_ID}/shellcheck'
