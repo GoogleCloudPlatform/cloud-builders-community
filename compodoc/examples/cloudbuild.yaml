@@ -1,0 +1,11 @@
+steps:
+  - name: 'gcr.io/$PROJECT_ID/compodoc:latest'
+    args:
+      - '-d'
+      - '/workspace/compodoc-demo-todomvc-angularjs/docs'
+      - '--language'
+      - 'en-US'
+      - '--theme'
+      - 'readthedocs'
+      - '-p'
+      - '/workspace/compodoc-demo-todomvc-angularjs/tsconfig.json'
