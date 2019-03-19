@@ -1,4 +1,4 @@
-# Bandir
+# Bandit
 
 This is a tool to simply invoke [`bandit`](https://pypi.org/project/bandit/) command.
 Bandit is a tool designed to find common security issues in Python code. Once Bandit has finished scanning all the files it generates a report.
