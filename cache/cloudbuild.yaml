@@ -128,7 +128,7 @@ steps:
 
 
 substitutions:
-  _VERSION: '1.0'
+  _VERSION: '1.1'
 
 images: 
 - 'gcr.io/$PROJECT_ID/cache:${_VERSION}'
