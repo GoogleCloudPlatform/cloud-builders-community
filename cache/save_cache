@@ -11,12 +11,12 @@ function print_usage {
   echo
   echo "Saves the specified paths to a cache file located in the out directory."
   echo
-  echo "  -b, --bucket          The cloud storage bucket to upload the cache to. [optional]"
-  echo "  -o, --out             The output directory to write the cache to. [optional]"
-  echo "  -k, --key             The cache key used for this cache file."
-  echo "  -p, --path            The files to store in the cache. Can be repeated."
-  echo "  -t, --threshold       The parallel composite upload threshold [default: 50M]"
-  echo "  -s, --skip_if_exists  Skips the save if the cache file already exists in GCS."
+  echo "  -b, --bucket      The cloud storage bucket to upload the cache to. [optional]"
+  echo "  -o, --out         The output directory to write the cache to. [optional]"
+  echo "  -k, --key         The cache key used for this cache file."
+  echo "  -p, --path        The files to store in the cache. Can be repeated."
+  echo "  -t, --threshold   The parallel composite upload threshold [default: 50M]"
+  echo "  -n, --no-clobber  Skips the save if the cache file already exists in GCS."
   echo
 }
 
@@ -42,8 +42,8 @@ for i in "$@"; do
       THRESHOLD="${i#*=} "
       shift
       ;;
-    -s|--skip_if_exists)
-      SKIP_IF_EXISTS=true
+    -n|--no-clobber)
+      NO_CLOBBER=true
       shift
       ;;
     -h|--help )
@@ -63,8 +63,8 @@ if [ -z "$KEY" ] || [ -z "$PATHS" ];then
   exit 1
 fi
 
-if [ "$SKIP_IF_EXISTS" = true ] && [ -z "$BUCKET" ];then
-  echo "--bucket must be specified if --skip_if_exists is used"
+if [ "$NO_CLOBBER" = true ] && [ -z "$BUCKET" ];then
+  echo "--bucket must be specified if --no-clobber is used"
   echo
   print_usage
   exit 1
@@ -74,7 +74,7 @@ eval "KEY=$KEY"
 
 CACHE_FILE="${OUT_DIR}/${KEY}.tgz"
 
-if [ "$SKIP_IF_EXISTS" = true ];then
+if [ "$NO_CLOBBER" = true ];then
   BUCKET_FILE="$BUCKET/$KEY.tgz"
   FILE_LS=$(gsutil ls "$BUCKET_FILE")
   if [ "$FILE_LS" == "$BUCKET_FILE" ];then
