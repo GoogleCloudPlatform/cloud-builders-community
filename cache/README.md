@@ -4,21 +4,24 @@ This includes a pair of builders, `save_cache` and `restore_cache`, that work to
 
 ## Using the `save_cache` builder
 
-All options use the form `--option=value` or `-o=value` so that they look nice in Yaml files.
+All options that require a value use the form `--option=value` or `-o=value` so that they look nice in Yaml files.
 
-| Option          | Description                                                 |
-| --------------- | ----------------------------------------------------------- |
-| -b, --bucket    | The cloud storage bucket to upload the cache to. [optional] |
-| -o, --out       | The output directory to write the cache to. [optional]      |
-| -k, --key       | The cache key used for this cache file. [optional]          |
-| -p, --path      | The files to store in the cache. Can be repeated.           |
-| -t, --threshold | The parallel composite upload threshold [default: 50M]      |
+| Option           | Description                                                 |
+| ---------------- | ----------------------------------------------------------- |
+| -b, --bucket     | The cloud storage bucket to upload the cache to. [optional] |
+| -o, --out        | The output directory to write the cache to. [optional]      |
+| -k, --key        | The cache key used for this cache file. [optional]          |
+| -p, --path       | The files to store in the cache. Can be repeated.           |
+| -t, --threshold  | The parallel composite upload threshold [default: 50M]      |
+| -n, --no-clobber | Skips the save if the cache file already exists in GCS.     |
 
 One of `--bucket` or `--out` parameters are required.  If `--bucket` then the cache file will be uploaded to the provided GCS bucket path.  If `--out` then the cache file will be stored in the directory specified on disk.
 
 The key provided by `--key` is used to identify the cache file. Any other cache files for the same key will be overwritten by this one.
 
 The `--path` parameters can be repeated for as many folders as you'd like to cache.  When restored, they will retain folder structure on disk.
+
+The `--no-clobber` flag is used to skip creating and uploading the cache to GCS if the cache file already exists. This will shorten the time for builds when a cache was restored and is not changed by your build process. For example, this flag can be used if you are caching your dependencies and all of your dependencies are pinned to a specific version. This flag is valid only when `--bucket` is used.
 
 ## Using the `restore_cache` builder
 
@@ -63,6 +66,17 @@ This `cloudbuild.yaml` saves the files and folders in the `path` arguments to a 
   - '--key=resources-$( checksum cloudbuild.yaml )'
   - '--path=.cache/folder1'
   - '--path=.cache/folder2/subfolder3'
+```
+
+If your build process only changes the cache contents whenever `cloudbuild.yaml` changes, then you can skip saving the cache again if it already exists in GCS:
+```yaml
+- name: 'gcr.io/$PROJECT_ID/save_cache'
+  args:
+  - '--bucket=gs://$CACHE_BUCKET/'
+  - '--key=resources-$( checksum cloudbuild.yaml )'
+  - '--path=.cache/folder1'
+  - '--path=.cache/folder2/subfolder3'
+  - '--no-clobber'
 ```
 
 ### Saving a cache with checksum to a local file
