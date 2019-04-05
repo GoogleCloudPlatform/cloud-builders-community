@@ -28,6 +28,8 @@ steps:
   args:
   - '-c'
   # Login into pulumi. This will require the PULUMI_ACCESS_TOKEN environment variable.
+  # Here we are using a variable substitution ($_PULUMI_ACCESS_TOKEN) to source its value.
+  # See the example section below for more info on encrypting sensitive values.
   - 'yarn install && pulumi login && pulumi stack select <stack_name> && pulumi preview'
   env: ["PULUMI_ACCESS_TOKEN=$_PULUMI_ACCESS_TOKEN"]
 CTRL-D
@@ -56,9 +58,10 @@ env: ["PULUMI_ACCESS_TOKEN=$_PULUMI_ACCESS_TOKEN"]
 
 ## Example: Run a preview on a stack
 
-[![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new)
+Create a project on Pulumi quickly using one of our examples. Click [![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new) to get started now.
 
-**Be sure to set `_PULUMI_ACCESS_TOKEN` in the build trigger substitutions. The leading `_` is important when you define the substitution.**
+The following example uses build variable substitution as a quickstart example. Substitutions are not treated as sensitive values in Cloud Build.
+Sensitive values such as access tokens, and other secrets should encrypt such environment variables. Learn how to encrypt env variables [here](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials#encrypting_an_environment_variable_using_the_cryptokey).
 
 ```
 steps:
