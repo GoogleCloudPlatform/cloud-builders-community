@@ -10,4 +10,4 @@ else
   echo "No .buildenv file found at `pwd`"
 fi
 
-$@
+"$@"
