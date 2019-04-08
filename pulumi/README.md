@@ -19,6 +19,13 @@ $ gcloud builds submit .
 
 2. Add the steps to your `cloudbuild.yaml`
 
+Create a project on Pulumi quickly using one of our examples. Click [![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new) to get started now.
+
+The following cloud build configuration snippet uses build variable substitution as a quickstart example. [Substitutions](https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values) are not treated as sensitive values in Cloud Build.
+Sensitive values such as access tokens, and other secrets should encrypt such environment variables.
+
+Learn how to encrypt env variables and use them in your build configuration [here](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials#encrypting_an_environment_variable_using_the_cryptokey).
+
 ```
 $ cd my-project
 $ cat >> cloudbuild.yaml
@@ -27,9 +34,6 @@ steps:
   entrypoint: /bin/sh
   args:
   - '-c'
-  # Login into pulumi. This will require the PULUMI_ACCESS_TOKEN environment variable.
-  # Here we are using a variable substitution ($_INSECURE_SUBSTITUTION_PULUMI_ACCESS_TOKEN_FOR_TESTING) to source its value.
-  # See the example section below for more info on encrypting sensitive values.
   - 'yarn install && pulumi login && pulumi stack select <stack_name> && pulumi preview'
   env: ["PULUMI_ACCESS_TOKEN=$_INSECURE_SUBSTITUTION_PULUMI_ACCESS_TOKEN_FOR_TESTING"]
 CTRL-D
@@ -44,32 +48,3 @@ $ gcloud builds submit .
 ```
 
 At this point you can automate the build using triggers via GCP Repos or Github. See [this](https://pulumi.io/reference/cd-google-cloud-build.html) doc on how to integrate Pulumi into your CI/CD setup.
-
-## Authentication
-
-The access token required for a non-interactive login is passed in via an environment variable.
-Instead of hardcoding the value of the access token in your build configuration. You can use [substitutions](https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values).
-
-Since we are defining a custom substitution variable, it must follow the rule of starting an underscore (`_`). The environment variable, however, must _not_ have a leading underscore.
-
-```
-env: ["PULUMI_ACCESS_TOKEN=$_PULUMI_ACCESS_TOKEN"]
-```
-
-## Example: Run a preview on a stack
-
-Create a project on Pulumi quickly using one of our examples. Click [![Deploy](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new) to get started now.
-
-The following example uses build variable substitution as a quickstart example. [Substitutions](https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values) are not treated as sensitive values in Cloud Build.
-Sensitive values such as access tokens, and other secrets should encrypt such environment variables. Learn how to encrypt env variables [here](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials#encrypting_an_environment_variable_using_the_cryptokey).
-
-```
-steps:
-- name: gcr.io/$PROJECT_ID/pulumi-node
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  # Login into pulumi. This will require the PULUMI_ACCESS_TOKEN environment variable.
-  - 'yarn install && pulumi login && pulumi stack select <stack_name> && pulumi preview'
-  env: ["PULUMI_ACCESS_TOKEN=$_INSECURE_SUBSTITUTION_PULUMI_ACCESS_TOKEN_FOR_TESTING"]
-```
