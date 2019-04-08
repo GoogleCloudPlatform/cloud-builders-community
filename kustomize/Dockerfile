@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VER 1.0.11
+ENV VER 2.0.3
 ENV VERSION v${VER}
 
 COPY kustomize.bash /builder/kustomize.bash
