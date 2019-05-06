@@ -1,0 +1,3 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/singularity'
+  args: ['build','lolcow.sif','lolcow.def']
