@@ -6,7 +6,7 @@ The Dockerfile and scripts here help you use Google Cloud Builder to launch the 
 
 To build this builder, run the following command in this directory.
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+    $ gcloud builds submit . --config=cloudbuild.yaml
 
 ## Example
 
