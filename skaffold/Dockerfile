@@ -14,5 +14,5 @@ ENV PATH=/builder/bin/:$PATH
 ENV DOCKER_CONFIG=/builder/home/.docker
 
 COPY skaffold.bash /builder/skaffold.bash
-
+RUN chmod +700 /builder/skaffold.bash
 ENTRYPOINT ["/builder/skaffold.bash"]
