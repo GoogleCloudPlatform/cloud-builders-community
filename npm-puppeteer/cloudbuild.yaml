@@ -1,0 +1,35 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud builds submit . --config=cloudbuild.yaml
+#
+
+steps:
+# Build all supported versions.
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg=NODE_VERSION=10.15.3'
+  - '--tag=gcr.io/$PROJECT_ID/npm-puppeteer:node-10.15.3'
+  # 10.15.3 is tagged :current
+  - '--tag=gcr.io/$PROJECT_ID/npm-puppeteer:current'
+  - '--tag=gcr.io/$PROJECT_ID/nodejs/npm-puppeteer'
+  - '.'
+
+# Print for each version
+- name: 'gcr.io/$PROJECT_ID/npm-puppeteer:node-10.15.3'
+  args: ['--version']
+
+# Test the cloud builder on the example
+- name: 'gcr.io/$PROJECT_ID/npm-puppeteer:node-10.15.3'
+  args: ['install']
+  dir: 'examples/hello_world'
+  # Make sure Chromium is installed correctly...
+- name: 'gcr.io/$PROJECT_ID/npm-puppeteer:node-10.15.3'
+  args: ['install', 'puppeteer']
+  dir: 'examples/hello_world'
+- name: 'gcr.io/$PROJECT_ID/npm-puppeteer:node-10.15.3'
+  args: ['run', 'test:ci']
+  dir: 'examples/hello_world'
+
+images:
+- 'gcr.io/$PROJECT_ID/npm-puppeteer:current'
+- 'gcr.io/$PROJECT_ID/npm-puppeteer:node-10.15.3'

@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/npm-puppeteer'
+  args: ['install']
+- name: 'gcr.io/$PROJECT_ID/npm-puppeteer'
+  args: ['test']

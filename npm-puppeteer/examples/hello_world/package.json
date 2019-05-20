@@ -1,0 +1,23 @@
+{
+    "name": "hello_world",
+    "version": "0.0.1",
+    "description": "Expressjs Hello World",
+    "main": "index.js",
+    "scripts": {
+        "start": "node .",
+        "test:ci": "jest --config=jest-puppeteer.js --runInBand --ci"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.0"
+    },
+    "devDependencies": {
+        "jest": "^24.8.0",
+        "jest-puppeteer": "^4.1.1",
+        "puppeteer": "^1.16.0"
+    },
+    "engines": {
+        "node": ">= 8"
+    }
+}
