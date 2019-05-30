@@ -109,5 +109,6 @@ The following options are configurable via environment variables passed to the b
 | GCS_PLUGIN_VERSION | [GCS plugin](https://github.com/nouney/helm-gcs) version to install, optional |
 | HELM_REPO_NAME | External Helm repository name, optional |
 | HELM_REPO_URL | External Helm repo URL, optional |
+| HELMFILE_VERSION | [Helmfile](https://github.com/roboll/helmfile) version to install, optional
 | TILLERLESS | If true, Tillerless Helm is enabled, optional |
 | TILLER_NAMESPACE | Tiller namespace, optional |
