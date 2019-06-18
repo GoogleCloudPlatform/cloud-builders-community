@@ -13,6 +13,7 @@ var (
 	username = flag.String("username", "", "Username on remote Windows server")
 	password = flag.String("password", "", "Password on remote Windows server")
 	command  = flag.String("command", "", "Command to run on remote Windows server")
+	image    = flag.String("image", "", "Windows image to start the server from")
 )
 
 func main() {
@@ -31,7 +32,7 @@ func main() {
 		log.Printf("Connecting to existing host %s", *r.Hostname)
 	} else {
 		ctx := context.Background()
-		s = builder.NewServer(ctx)
+		s = builder.NewServer(ctx, *image)
 		r = &s.Remote
 	}
 	log.Print("Waiting for server to become available")
