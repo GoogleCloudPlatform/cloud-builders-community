@@ -18,7 +18,7 @@ gcloud builds submit .
 > number, and the checksum of that version's zip archive, as Cloud Build [substitutions](https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values#using_user-defined_substitutions):
 >
 > ```bash
-> gcloud builds submit --substitutions=_ESY_VERSION=1.3.5 .
+> gcloud builds submit --substitutions=_ESY_VERSION=0.5.8 .
 > ```
 
 ## Status

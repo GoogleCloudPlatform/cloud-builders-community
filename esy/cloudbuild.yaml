@@ -6,7 +6,7 @@ steps:
         '.']
 
 substitutions:
-  _ESY_VERSION: 0.4.3
+  _ESY_VERSION: 0.5.8
 
 images:
 - 'gcr.io/$PROJECT_ID/esy:latest'

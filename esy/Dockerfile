@@ -1,6 +1,6 @@
-FROM node:12.3-alpine as build
+FROM node:12.4-alpine as build
 
-ARG ESY_VERSION=0.4.3
+ARG ESY_VERSION
 
 ENV TERM=dumb LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/lib
 
@@ -25,6 +25,6 @@ RUN apk add --no-cache \
 
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-2.29-r0.apk
-RUN apk add --no-cache glibc-2.28-r0.apk
+RUN apk add --no-cache glibc-2.29-r0.apk
 
 ENTRYPOINT ["/esy/bin/esy"]
