@@ -15,7 +15,7 @@ import (
 	"os/exec"
 	"strings"
 	"time"
-	
+
 	"github.com/pborman/uuid"
 
 	"cloud.google.com/go/compute/metadata"
@@ -27,7 +27,8 @@ const (
 	zone               = "us-central1-f"
 	instanceNamePrefix = "windows-builder"
 	prefix             = "https://www.googleapis.com/compute/v1/projects/"
-	imageURL           = prefix + "windows-cloud/global/images/windows-server-1803-dc-core-for-containers-v20180802"
+	defaultImageURL    = prefix +
+		"windows-cloud/global/images/windows-server-1803-dc-core-for-containers-v20180802"
 	winrmport          = 5986
 	startupCmd         = `winrm set winrm/config/Service/Auth @{Basic="true"}`
 )
@@ -67,7 +68,7 @@ func getProject() (string, error) {
 }
 
 // NewServer creates a new Windows server on GCE.
-func NewServer(ctx context.Context) *Server {
+func NewServer(ctx context.Context, imageURL string) *Server {
 	// Get the current project ID.
 	projectID, err := getProject()
 	if err != nil {
@@ -82,7 +83,7 @@ func NewServer(ctx context.Context) *Server {
 		log.Fatalf("Failed to start GCE service: %v", err)
 		return nil
 	}
-	err = s.newInstance()
+	err = s.newInstance(imageURL)
 	if err != nil {
 		log.Fatalf("Failed to start Windows VM: %v", err)
 		return nil
@@ -136,9 +137,12 @@ func (s *Server) newGCEService(ctx context.Context) error {
 }
 
 // newInstance starts a Windows VM on GCE and returns host, username, password.
-func (s *Server) newInstance() error {
+func (s *Server) newInstance(imageURL string) error {
 	scmd := startupCmd // TODO: find better way to take address of const
 	name := "windows-builder-" + uuid.New()
+	if imageURL == "" {
+		imageURL = defaultImageURL
+	}
 	instance := &compute.Instance{
 		Name:        name,
 		MachineType: prefix + s.projectID + "/zones/" + zone + "/machineTypes/n1-standard-1",
@@ -381,7 +385,7 @@ func (s *Server) resetWindowsPassword(username string) (string, error) {
 // waitForComputeOperation waits for a compute operation
 func (s *Server) waitForComputeOperation(op *compute.Operation) error {
 	log.Printf("Waiting for %+v to complete", op.Name)
-	timeout := time.Now().Add(120 * time.Second)
+	timeout := time.Now().Add(300 * time.Second)
 	for time.Now().Before(timeout) {
 		newop, err := s.service.ZoneOperations.Get(s.projectID, zone, op.Name).Do()
 		if err != nil {

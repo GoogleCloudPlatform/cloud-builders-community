@@ -29,6 +29,15 @@ steps:
   args: [ '--command', '<command goes here>' ]
 ```
 
+To use a custom Windows image, specify the image URL using the `--image` argument.
+
+```yaml
+steps:
+- name: 'gcr.io/$PROJECT_ID/windows-builder'
+  args: [ '--command', '<command goes here>'
+          '--image', 'projects/$PROJECT_ID/global/images/my-windows-image']
+```
+
 The VM is configured by the builder and then deleted automatically at the end of the build.  Command is executed by `cmd.exe`; in most cases it will be a build script.
 
 To use an existing Windows server instead, also provide the hostname, username and password:
