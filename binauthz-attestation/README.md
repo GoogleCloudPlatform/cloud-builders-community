@@ -1,18 +1,27 @@
 # Binauthz Attestation Cloud Build Step
 
-### A custom build step for signing and uploading Binary Authorization Attestations.
+A custom build step for signing and uploading Binary Authorization Attestations.
+
+## Background
+
+Binary Authorization (Binauthz) is a Cloud product that enforces deploy-time
+constraints on applications. Its GKE integration allows users to enforce that
+containers deployed to a Kubernetes cluster are cryptographically attested by a
+trusted authority.
 
 NOTE: This build step assumes some familiarity with Binary Authorization,
-including how to set up an Binary Authorization enforcement policy with an Attestor on a GKE cluster. A
-general introduction to Binary Authorization can be found
-[here](https://cloud.google.com/binary-authorization/), and an introductory
-codelab can be found
-[here](https://codelabs.developers.google.com/codelabs/cloud-binauthz-intro/index.html#0)
+including how to set up an Binary Authorization enforcement policy with an
+Attestor on a GKE cluster.
+
+To learn more:
+
+-   [A general introduction to Binary Authorization](https://cloud.google.com/binary-authorization/)
+-   [An introductory codelab](https://codelabs.developers.google.com/codelabs/cloud-binauthz-intro/index.html#0)
 
 ## Auth
 
-To use this build step, the Cloud Build service account needs the following
-IAM roles:
+To use this build step, the Cloud Build service account needs the following IAM
+roles:
 
 -   Binary Authorization Attestor Viewer
     -   `roles/binaryauthorization.attestorsViewer`
