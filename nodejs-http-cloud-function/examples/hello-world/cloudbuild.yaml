@@ -1,0 +1,6 @@
+steps:
+  - id: Build, Test & Deploy
+    name: gcr.io/$PROJECT_ID/nodejs-http-cloud-function:10-jessie-slim
+    args:
+      - --entry-point=helloWorld
+      - --deployment-name=$_DEPLOYMENT_NAME

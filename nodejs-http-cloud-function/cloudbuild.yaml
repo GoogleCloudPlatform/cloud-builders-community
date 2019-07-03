@@ -1,0 +1,21 @@
+substitutions:
+  _NODE_VERSION: 10-jessie-slim
+  _CLOUD_SDK_VERSION: 251.0.0
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - gcr.io/$PROJECT_ID/nodejs-http-cloud-function:$_NODE_VERSION
+      - --build-arg
+      - NODE_VERSION=$_NODE_VERSION
+      - --build-arg
+      - CLOUD_SDK_VERSION=$_CLOUD_SDK_VERSION
+      - .
+  - name: gcr.io/$PROJECT_ID/nodejs-http-cloud-function:$_NODE_VERSION
+    args:
+      - --help
+
+images:
+  - gcr.io/$PROJECT_ID/nodejs-http-cloud-function:$_NODE_VERSION

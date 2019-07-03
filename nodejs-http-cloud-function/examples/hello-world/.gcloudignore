@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Don't ignore project configuration
+!package.json
+
+# Don't ignore build artifact
+!lib/**
+
+# Don't ignore working directory
+!.

@@ -1,0 +1,5 @@
+{
+  "editor.formatOnSave": true,
+  "tslint.alwaysShowRuleFailuresAsWarnings": false,
+  "editor.tabSize": 2
+}
