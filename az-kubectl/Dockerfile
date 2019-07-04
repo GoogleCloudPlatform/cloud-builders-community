@@ -1,4 +1,4 @@
-FROM gcr.io/learning-resources-hub/az
+FROM gcr.io/$PROJECT_ID/az
 
 # Install kubectl component
 RUN /usr/local/bin/az aks install-cli
