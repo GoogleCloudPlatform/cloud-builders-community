@@ -8,3 +8,4 @@ steps:
   args: ['--version']
 
 images: ['gcr.io/$PROJECT_ID/fastlane']
+tags: ['cloud-builders-community']

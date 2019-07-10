@@ -7,3 +7,4 @@ steps:
   args: ['s3', 'help']
 
 images: ['gcr.io/$PROJECT_ID/awscli']
+tags: ['cloud-builders-community']

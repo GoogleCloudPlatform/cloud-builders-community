@@ -9,3 +9,4 @@ steps:
 
 images:
 - gcr.io/$PROJECT_ID/built-with-makisu
+tags: ['cloud-builders-community']

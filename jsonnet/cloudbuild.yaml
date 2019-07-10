@@ -9,3 +9,4 @@ steps:
   args: ['--help']
 
 images: ['gcr.io/${PROJECT_ID}/jsonnet']
+tags: ['cloud-builders-community']

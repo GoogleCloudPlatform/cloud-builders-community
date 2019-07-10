@@ -3,3 +3,4 @@ steps:
   args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v2.14.0', '.']
 
 images: ['gcr.io/$PROJECT_ID/helm']
+tags: ['cloud-builders-community']

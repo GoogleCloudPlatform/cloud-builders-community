@@ -8,3 +8,4 @@ steps:
   args: ['YOUR-LANE-NAME-HERE']
   waitFor:
     - build
+tags: ['cloud-builders-community']

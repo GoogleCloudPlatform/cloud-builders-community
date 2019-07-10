@@ -22,3 +22,4 @@ steps:
 images:
 - 'gcr.io/$PROJECT_ID/java/jfrog:1.17.1'
 - 'gcr.io/$PROJECT_ID/java/jfrog'
+tags: ['cloud-builders-community']

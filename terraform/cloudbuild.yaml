@@ -6,3 +6,4 @@ steps:
 - name: 'gcr.io/${PROJECT_ID}/terraform'
   args: ['version']
 images: ['gcr.io/${PROJECT_ID}/terraform']
+tags: ['cloud-builders-community']

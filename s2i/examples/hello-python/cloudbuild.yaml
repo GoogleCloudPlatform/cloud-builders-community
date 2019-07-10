@@ -4,3 +4,4 @@ steps:
 
 images:
 - 'gcr.io/$PROJECT_ID/s2i-hello-python'
+tags: ['cloud-builders-community']

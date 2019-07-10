@@ -13,3 +13,4 @@ steps:
 
 images:
 - 'gcr.io/$PROJECT_ID/traceroute'
+tags: ['cloud-builders-community']

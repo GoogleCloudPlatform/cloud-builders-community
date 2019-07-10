@@ -18,3 +18,4 @@ steps:
 images:
 - 'gcr.io/$PROJECT_ID/singularity:latest'
 - 'gcr.io/$PROJECT_ID/singularity:v3.1.1'
+tags: ['cloud-builders-community']

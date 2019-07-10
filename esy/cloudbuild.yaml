@@ -11,3 +11,4 @@ substitutions:
 images:
 - 'gcr.io/$PROJECT_ID/esy:latest'
 - 'gcr.io/$PROJECT_ID/esy:$_ESY_VERSION'
+tags: ['cloud-builders-community']
