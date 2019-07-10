@@ -1,16 +1,18 @@
-FROM ubuntu
+FROM ubuntu:19.10
 
-ARG PROTOC_VERSION=3.6.1
-ARG PROTOC_TARGET=linux-x86_64
-ARG ASSET_NAME=protoc-${PROTOC_VERSION}-${PROTOC_TARGET}.zip
+ARG VERS=3.8.0
+ARG ARCH=linux-x86_64
 
-RUN apt-get -qy update && apt-get -qy install python wget unzip && rm -rf /var/lib/apt/lists/*
+RUN apt-get -qy update && \
+    apt-get -qy install wget unzip && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN echo "${PROTOC_VERSION}/${ASSET_NAME}"
+RUN echo "${VERS}-${ARCH}"
 
-RUN wget https://github.com/google/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-${PROTOC_TARGET}.zip && \
-    unzip ${ASSET_NAME} -d protoc && rm ${ASSET_NAME}
+RUN wget https://github.com/google/protobuf/releases/download/v${VERS}/protoc-${VERS}-${ARCH}.zip && \
+    unzip protoc-${VERS}-${ARCH}.zip -d protoc && \
+    rm protoc-${VERS}-${ARCH}.zip
 
 ENV PATH=$PATH:/protoc/bin/
 ENTRYPOINT ["protoc"]
-CMD ["--help]
+CMD ["--help"]
