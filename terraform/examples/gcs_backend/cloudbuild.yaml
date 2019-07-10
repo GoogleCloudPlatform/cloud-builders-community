@@ -21,7 +21,4 @@ steps:
     - "TF_VAR_project-name=${PROJECT_ID}"
 substitutions:
     _BUCKET: # Provide your own bucket name
-
-
-
-
+tags: ['cloud-builders-community']

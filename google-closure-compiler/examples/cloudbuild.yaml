@@ -19,3 +19,4 @@ steps:
   args: [
     "more", "helloworld.out.js"
   ]
+tags: ['cloud-builders-community']

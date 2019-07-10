@@ -19,3 +19,4 @@ steps:
     - USERNAME=cloud-user
     # Run a script from the local build context in a Docker container
     - COMMAND=docker run -v /home/cloud-user/workspace:/workspace ubuntu:16.04 bash -xe /workspace/test-scripts/no-op.sh
+tags: ['cloud-builders-community']

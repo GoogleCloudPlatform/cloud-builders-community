@@ -9,3 +9,4 @@ steps:
       - 'readthedocs'
       - '-p'
       - '/workspace/compodoc-demo-todomvc-angularjs/tsconfig.json'
+tags: ['cloud-builders-community']

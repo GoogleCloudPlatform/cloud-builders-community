@@ -24,3 +24,4 @@ steps:
 # Push the rocker builder image.
 images:
 - 'gcr.io/$PROJECT_ID/rocker'
+tags: ['cloud-builders-community']

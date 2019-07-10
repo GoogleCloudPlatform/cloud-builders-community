@@ -18,3 +18,4 @@ substitutions:
 images:
 - 'gcr.io/$PROJECT_ID/packer:latest'
 - 'gcr.io/$PROJECT_ID/packer:$_PACKER_VERSION'
+tags: ['cloud-builders-community']

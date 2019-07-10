@@ -14,3 +14,4 @@ steps:
   args: ['query', '--use_legacy_sql=false', 'SELECT AVG(weight_pounds) FROM `bigquery-public-data.samples.natality`']
 
 images: ['gcr.io/$PROJECT_ID/bq']
+tags: ['cloud-builders-community']

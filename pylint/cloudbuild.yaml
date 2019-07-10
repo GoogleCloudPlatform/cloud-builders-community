@@ -4,3 +4,4 @@ steps:
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/pylint', '.']
 
 images: ['gcr.io/$PROJECT_ID/pylint']
+tags: ['cloud-builders-community']

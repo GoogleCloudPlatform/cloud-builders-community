@@ -13,3 +13,4 @@ substitutions:
 images:
 - 'gcr.io/$PROJECT_ID/cft:latest'
 - 'gcr.io/$PROJECT_ID/cft:$_CFT_VERSION'
+tags: ['cloud-builders-community']

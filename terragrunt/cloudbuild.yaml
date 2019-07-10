@@ -4,3 +4,4 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/${PROJECT_ID}/terragrunt', '.']
 images: ['gcr.io/${PROJECT_ID}/terragrunt']
+tags: ['cloud-builders-community']

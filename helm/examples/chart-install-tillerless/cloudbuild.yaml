@@ -6,3 +6,4 @@ steps:
   - 'CLOUDSDK_CONTAINER_CLUSTER=your_gke_cluster'
   - 'TILLERLESS=true'
   - 'TILLER_NAMESPACE=test'
+tags: ['cloud-builders-community']

@@ -9,3 +9,4 @@ steps:
   - '--type=file'
 
 images: ['gcr.io/$PROJECT_ID/diff-test']
+tags: ['cloud-builders-community']

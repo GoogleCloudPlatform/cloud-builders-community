@@ -147,3 +147,4 @@ substitutions:
   _AGENT_VERSION: 'v1'
   _BUILD_NESTED_VIRT_IMAGE: 'true'
   _BUILD_PACKER_AGENT_IMAGE: 'true'
+tags: ['cloud-builders-community']

@@ -22,3 +22,4 @@ steps:
       - 'projects/$PROJECT_ID/attestors/cloud-build'
       - '--keyversion'
       - 'projects/$PROJECT_ID/locations/global/keyRings/test/cryptoKeys/quickstart/cryptoKeyVersions/1'
+tags: ['cloud-builders-community']

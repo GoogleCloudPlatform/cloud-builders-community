@@ -10,3 +10,4 @@ steps:
   - gcp://
   - --attrs
   - test-profile/attributes.yml
+tags: ['cloud-builders-community']

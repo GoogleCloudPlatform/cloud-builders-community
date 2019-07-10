@@ -22,3 +22,4 @@ steps:
       - "TF_INPUT=false"
       - "TF_VAR_project_id=${PROJECT_ID}"
     dir: env
+tags: ['cloud-builders-community']

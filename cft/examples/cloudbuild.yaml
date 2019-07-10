@@ -8,3 +8,4 @@ steps:
   - --project=$PROJECT_ID
   - apply
   - instance.yaml
+tags: ['cloud-builders-community']

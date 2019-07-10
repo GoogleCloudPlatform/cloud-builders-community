@@ -13,3 +13,4 @@ substitutions:
 images:
 - 'gcr.io/$PROJECT_ID/inspec:latest'
 - 'gcr.io/$PROJECT_ID/inspec:$_INSPEC_VERSION'
+tags: ['cloud-builders-community']

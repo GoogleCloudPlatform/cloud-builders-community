@@ -10,3 +10,4 @@ steps:
         '.',
       ]
 images: ['gcr.io/$PROJECT_ID/protoc']
+tags: ['cloud-builders-community']

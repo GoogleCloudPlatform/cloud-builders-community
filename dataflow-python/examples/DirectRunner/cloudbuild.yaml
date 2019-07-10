@@ -12,3 +12,4 @@ steps:
          '--output', 
          'counts', 
          '--runner=DirectRunner' ]
+tags: ['cloud-builders-community']

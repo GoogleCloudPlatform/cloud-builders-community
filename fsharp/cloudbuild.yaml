@@ -10,3 +10,4 @@ steps:
   - "--help"
 
 images: ['eu.gcr.io/$PROJECT_ID/fsharp']
+tags: ['cloud-builders-community']

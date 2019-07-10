@@ -7,3 +7,4 @@ steps:
   args: ['build', '--tag=gcr.io/$PROJECT_ID/hello_yarn', '.']
 
 images: ['gcr.io/$PROJECT_ID/hello_yarn']
+tags: ['cloud-builders-community']

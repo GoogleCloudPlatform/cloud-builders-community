@@ -8,3 +8,4 @@ steps:
   args: ['--help']
 
 images: ['gcr.io/${PROJECT_ID}/hugo']
+tags: ['cloud-builders-community']

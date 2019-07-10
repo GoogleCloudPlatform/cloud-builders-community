@@ -10,3 +10,4 @@ steps:
     FROM `bigquery-public-data.usa_names.usa_1910_current`
     WHERE name = 'Bob'
     GROUP BY year
+tags: ['cloud-builders-community']
