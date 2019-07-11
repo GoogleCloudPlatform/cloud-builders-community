@@ -6,3 +6,4 @@ steps:
     - '-Dsonar.projectKey={specify}'
     - '-Dsonar.organization={specify}'
     - '-Dsonar.sources=.'
+tags: ['cloud-builders-community']

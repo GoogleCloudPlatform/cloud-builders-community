@@ -4,3 +4,4 @@
 steps:
 - name: gcr.io/$PROJECT_ID/make
   args: ['all']
+tags: ['cloud-builders-community']

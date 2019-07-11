@@ -9,3 +9,4 @@ steps:
   args: ["--help"]
 
 images: ["gcr.io/${PROJECT_ID}/google-closure-compiler"]
+tags: ['cloud-builders-community']

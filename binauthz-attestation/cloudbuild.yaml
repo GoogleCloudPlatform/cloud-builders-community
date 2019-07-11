@@ -17,3 +17,4 @@ steps:
       - 'run'
       - 'gcr.io/$PROJECT_ID/binauthz-attestation:latest'
       - '--help'
+tags: ['cloud-builders-community']

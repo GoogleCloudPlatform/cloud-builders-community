@@ -14,3 +14,4 @@ images:
 - 'gcr.io/$PROJECT_ID/jmeter:latest'
 - 'gcr.io/$PROJECT_ID/jmeter:5.0'
 
+tags: ['cloud-builders-community']

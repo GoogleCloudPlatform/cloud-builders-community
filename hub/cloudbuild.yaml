@@ -23,3 +23,4 @@ images:
 #- kmsKeyName: 'TODO: KMS key name'
 #  secretEnv:
 #    GITHUB_TOKEN: 'TODO: base64-encoded personal access token'
+tags: ['cloud-builders-community']

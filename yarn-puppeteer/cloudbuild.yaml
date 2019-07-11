@@ -81,3 +81,4 @@ images:
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-10.13.0'
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-11.1.0'
 - 'gcr.io/$PROJECT_ID/nodejs/yarn-puppeteer'
+tags: ['cloud-builders-community']

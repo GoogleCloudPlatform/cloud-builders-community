@@ -18,3 +18,4 @@ images:
   - 'gcr.io/$PROJECT_ID/ng:latest'
   - 'gcr.io/$PROJECT_ID/ng'
   - 'gcr.io/$PROJECT_ID/ng:next'
+tags: ['cloud-builders-community']

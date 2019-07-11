@@ -5,3 +5,4 @@ steps:
           '.' ]
 images:
 - 'gcr.io/$PROJECT_ID/dataflow-python'
+tags: ['cloud-builders-community']

@@ -17,3 +17,5 @@ steps:
 # apk artifacts can be pushed to a GCS bucket like this
 # - name: 'gcr.io/cloud-builders/gsutil'
 #   args: ['cp', '/workspace/flutter/examples/hello_world/build/app/outputs/apk/release/app-release.apk', 'gs://$MY_BUCKET/hello_world.apk']
+
+tags: ['cloud-builders-community']

@@ -34,3 +34,4 @@ secrets:
 
 images:
 - 'gcr.io/$PROJECT_ID/java-app:${BUILD_ID}'
+tags: ['cloud-builders-community']

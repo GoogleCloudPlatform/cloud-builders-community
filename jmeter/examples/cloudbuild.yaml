@@ -4,3 +4,4 @@ steps:
     - '-n'
     - '-t'
     - 'sample.jmx'
+tags: ['cloud-builders-community']

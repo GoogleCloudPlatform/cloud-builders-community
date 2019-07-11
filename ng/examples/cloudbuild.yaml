@@ -7,3 +7,4 @@ steps:
   args: ['--version']
 - name: 'gcr.io/$PROJECT_ID/ng:next'
   args: ['--version']
+tags: ['cloud-builders-community']

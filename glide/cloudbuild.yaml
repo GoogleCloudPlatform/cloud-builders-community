@@ -25,3 +25,4 @@ steps:
   dir: 'examples/build-glide'
 
 images: ['gcr.io/$PROJECT_ID/glide']
+tags: ['cloud-builders-community']

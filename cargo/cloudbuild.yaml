@@ -6,3 +6,4 @@ steps:
 timeout: 2400s
 
 images: ['gcr.io/$PROJECT_ID/cargo']
+tags: ['cloud-builders-community']

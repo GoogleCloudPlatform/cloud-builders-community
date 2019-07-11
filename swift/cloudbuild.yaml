@@ -11,8 +11,9 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t','gcr.io/${PROJECT_ID}/swift:4.2', '-f', 'Dockerfile_4-2', '.']
 
-images: 
+images:
   - 'gcr.io/${PROJECT_ID}/swift:latest'
   - 'gcr.io/${PROJECT_ID}/swift'
   - 'gcr.io/${PROJECT_ID}/swift:latest-dev'
   - 'gcr.io/${PROJECT_ID}/swift:4.2'
+tags: ['cloud-builders-community']

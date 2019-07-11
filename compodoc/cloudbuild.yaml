@@ -14,3 +14,4 @@ images:
 - 'gcr.io/$PROJECT_ID/compodoc:latest'
 - 'gcr.io/$PROJECT_ID/compodoc:1.1.8'
 
+tags: ['cloud-builders-community']
