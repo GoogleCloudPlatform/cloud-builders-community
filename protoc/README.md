@@ -14,77 +14,45 @@ The gcr.io/cloud-builders/protoc build step should be used when you want to run
 To build this builder and push the resulting image to the Container Registry *in
 your project*, run the following command in this directory:
 
-    $ gcloud builds submit . --config=cloudbuild.yaml
+```bash
+gcloud builds submit . --config=cloudbuild.yaml
+```
 
-## About the Dockerfile
+If you wish to specify a different version or architecture for the build, run the following:
 
-The Docker file is where the `protoc` command is installed, and is the more complex of the two files: 
+```bash
+gcloud builds submit . --config=cloudbuild.yaml --substitutions=VERS=${VER},ARCH=${ARCH}
+```
 
-    FROM ubuntu
-    
-    ARG PROTOC_VERSION=3.6.1
-    ARG PROTOC_TARGET=linux-x86_64
-    ARG ASSET_NAME=protoc-${PROTOC_VERSION}-${PROTOC_TARGET}.zip
-    
-    RUN apt-get -qy update && apt-get -qy install python wget unzip && rm -rf /var/lib/apt/lists/*
-    
-    RUN echo "${PROTOC_VERSION}/${ASSET_NAME}"
-    
-    RUN wget https://github.com/google/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-${PROTOC_TARGET}.zip && \
-    unzip ${ASSET_NAME} -d protoc && rm ${ASSET_NAME}
-    
-    ENV PATH=$PATH:/protoc/bin/
-    ENTRYPOINT ["protoc"]
-    CMD ["--help]
+Where `${VERS}` and `${ARCH}` are defined to contain values for the release and architecture as listed on:
 
-Breaking this down:
+https://github.com/protocolbuffers/protobuf/releases
 
- - Define the first read only layer of the final "protoc" image we want to
-end-up with. I chose Ubuntu because it's the what I run locally. Any minimal
-Linux "base image" will do but it must have the following binaries installed:
-`apt-get`, `wget`, `unzip`, and `rm`:
+## Referencing protoc compiler plugins
 
-`FROM ubuntu`
- 
- - Set-up some variables that users can pass at build-time to the builder with
-the docker build command using the `--build-arg <varname>=<value>` flag:
+It is common to augment `protoc` with language-specific compiler plugins. Here is a list of plugins:
 
-`ARG PROTOC_VERSION=3.6.1`
-`ARG PROTOC_TARGET=linux-x86_64`
-`ARG ASSET_NAME=protoc-${PROTOC_VERSION}-${PROTOC_TARGET}.zip`
+https://github.com/protocolbuffers/protobuf/blob/master/docs/third_party.md
 
- - Run `apt-get -qy update` to "resynchronize the package index files from their
-sources". `q` omits progress indicators, `y` assumes yes as an answer to any
-prompts encountered:
+These plugins take the form `protoc-gen-[[NAME]]`. For example, the plugin to generate Golang is called `protoc-gen-go`
 
-`RUN apt-get -qy update`
+The usual command takes the form:
+```bash
+protoc \
+--proto-path=... \
+- --go_out=plugins=grpc:...
+```
+But this assumes that `protoc-gen-go` is accessible in `${PATH}` and configuring `${PATH}` is challenging across containers.
 
- - Install **Python**, **Wget** (retrieves content from web server),
-and **Unzip**.
+The solution is to install the compiler plugins either to `/workspace` or using `volumes:` and then reference it using `--plugin`
 
-`RUN apt-get -qy install python wget unzip`
+E.g.:
 
- - Remove any files created as part of the previous steps (and that are no
-longer needed):
-
-`RUN rm -rf /var/lib/apt/lists/*`
-
-The previous three [RUN](https://docs.docker.com/engine/reference/builder/#run) instructions can be combined into one:
-
-`RUN apt-get -qy update && apt-get -qy install python wget unzip && rm -rf /var/lib/apt/lists/*`
-
- - Use the [ENV](https://docs.docker.com/engine/reference/builder/#env) instruction to update the `PATH` environment
- to include the location of the `protoc` binary in the final environment (image). 
-
-`ENV PATH=$PATH:/protoc/bin/`
-
-Set the [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint) of the image such that the image runs
-as a `protoc` executable. Not, since the previous step added `protoc` to `$PATH`, we need only specify the binary to run
-(not the full path):
-
-`ENTRYPOINT ["protoc"]`
-
- - Use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) instruction so that if no options are provided
-when running the `protoc` image, `protoc --help` will run:
-
-`CMD ["--help]`
+- name: gcr.io/${PROJECT_ID}/protoc
+  args:
+  - --proto_path=...
+  - --plugin=protoc-gen-go=/workspace/plugins/protoc-gen-go
+  - --go_out=plugins=grpc:...
+    - /workspace/protos/my.proto
+```
+In this example, `protoc-gen-go` must have been installed during a previous step into `/workspace/plugins`.
