@@ -1,7 +1,7 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV TERRAFORM_VERSION=0.12.3
-ENV TERRAFORM_VERSION_SHA256SUM=75e4323b8514074f8c2118ea382fc677c8b1d1730eda323ada222e0fac57f7db
+ENV TERRAFORM_VERSION=0.12.4
+ENV TERRAFORM_VERSION_SHA256SUM=0231562f26262de233e8e8fac668196af21b7aff355bb04f3ee1606cca239c0a
 
 RUN apt-get update && \
     apt-get -y install curl unzip ca-certificates && \
