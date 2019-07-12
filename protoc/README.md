@@ -6,13 +6,12 @@ run the
 
 ## When to use this builder
 
-The gcr.io/cloud-builders/protoc build step should be used when you want to run
-`protoc` as part of your (Google Cloud) build process.
+The `gcr.io/cloud-builders/protoc` build step should be used when you want to run
+`protoc`. It may be used as part of a Google Cloud Build process.
 
 ## Building this builder
 
-To build this builder and push the resulting image to the Container Registry *in
-your project*, run the following command in this directory:
+You will need to build this Builder and push it to a container registry before you may use it. To build and push to Google Container Registry, run the following command in this directory:
 
 ```bash
 gcloud builds submit . --config=cloudbuild.yaml
@@ -47,7 +46,7 @@ But this assumes that `protoc-gen-go` is accessible in `${PATH}` and configuring
 The solution is to install the compiler plugins either to `/workspace` or using `volumes:` and then reference it using `--plugin`
 
 E.g.:
-
+```
 - name: gcr.io/${PROJECT_ID}/protoc
   args:
   - --proto_path=...
