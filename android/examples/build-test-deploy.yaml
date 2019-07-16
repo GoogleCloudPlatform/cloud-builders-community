@@ -22,7 +22,7 @@ steps:
 #   3. write it back to the version file
 #   4. write it to the `build_env` file for use later
 - name: 'gcr.io/$PROJECT_ID/tar'
-  id: setup_env
+  id: setup_config
   entrypoint: 'bash'
   args: 
   - '-c'
@@ -35,9 +35,9 @@ steps:
 
 # Save the updated build number to cloud storage
 - name: 'gcr.io/cloud-builders/gsutil'
-  id: save_env
+  id: save_config
   args: ['cp', '/config/buildnum', 'gs://${_CONFIG_BUCKET}/buildnum']
-  waitFor: ['setup_env']
+  waitFor: ['setup_config']
   volumes:
   - name: 'config'
     path: '/config'
