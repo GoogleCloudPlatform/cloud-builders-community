@@ -23,9 +23,9 @@ steps:
     # This might fail the first time, but that's okay
     entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        tar xpzf /build_cache/cache.tgz -C /build_cache || echo "No cache found."
+    - '-c'
+    - |
+      tar xpzf /build_cache/cache.tgz -C /build_cache || echo "No cache found."
     volumes:
     - name: 'build_cache'
       path: '/build_cache'
@@ -37,11 +37,11 @@ steps:
     id: build
     args: ["./gradlew", "assembleDebug","assembleDebugAndroidTest"]
     env:
-      - 'TERM=dumb'
-      - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
-      - 'GRADLE_USER_HOME=/build_cache/.gradle'
-      - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
-      - 'BRANCH_NAME=$BRANCH_NAME'
+    - 'TERM=dumb'
+    - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
+    - 'GRADLE_USER_HOME=/build_cache/.gradle'
+    - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
+    - 'BRANCH_NAME=$BRANCH_NAME'
     waitFor: ['extract_build_cache']
     volumes:
     - name: 'build_cache'
