@@ -42,8 +42,7 @@ steps:
       - 'GRADLE_USER_HOME=/build_cache/.gradle'
       - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
       - 'BRANCH_NAME=$BRANCH_NAME'
-    waitFor:
-      - extract_build_cache
+    waitFor: ['extract_build_cache']
     volumes:
     - name: 'build_cache'
       path: '/build_cache'
@@ -56,8 +55,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['firebase','test', 'android','run','--app', 'app/build/outputs/apk/debug/app-debug.apk', '--test', 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk']
     id: firebase_test_lab
-    waitFor:
-      - build
+    waitFor: ['build']
   #
   # Save the APKs
   #
