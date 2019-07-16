@@ -1,6 +1,10 @@
 steps:
 - name: gcr.io/cloud-builders/docker
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/tar', '.']
+  args:
+  - 'build'
+  - '--tag=gcr.io/$PROJECT_ID/tar'
+  - '--file=tar/Dockerfile'
+  - '.'
 
 images: ['gcr.io/$PROJECT_ID/tar']
 tags: ['cloud-builders-community']
