@@ -1,0 +1,10 @@
+{
+  "name": "todomvc-angular1",
+  "dependencies": {},
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20161016133926",
+    "angular-ui-router": "registry:dt/angular-ui-router#1.1.5+20160810191828",
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+    "jquery": "registry:dt/jquery#1.10.0+20160303223636"
+  }
+}

@@ -1,8 +1,0 @@
-extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2
-extras;google;google_play_services
-extras;android;gapid;3
-extras;google;auto
-extras;android;m2repository
-extras;google;webdriver
-platform-tools
-platforms;android-26

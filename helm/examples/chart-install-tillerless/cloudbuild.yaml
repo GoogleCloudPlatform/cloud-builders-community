@@ -1,0 +1,9 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/helm'
+  args: ['upgrade', '--install', 'filebeat', '--namespace', 'filebeat', 'stable/filebeat']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=your_gke_cluster'
+  - 'TILLERLESS=true'
+  - 'TILLER_NAMESPACE=test'
+tags: ['cloud-builders-community']

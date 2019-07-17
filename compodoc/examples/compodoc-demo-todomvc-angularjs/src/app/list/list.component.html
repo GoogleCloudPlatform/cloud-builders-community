@@ -1,0 +1,9 @@
+<input class="toggle-all" type="checkbox"
+        ng-if="$ctrl.todos.length" #toggleall
+        [checked]="todoStore.allCompleted()"
+        (click)="todoStore.setAllTo(toggleall.checked)">
+<div ng-if="$ctrl.todos.length > 0">
+    <ul class="todo-list" >
+        <todo ng-repeat="todo in $ctrl.todos track by $index" todo="todo"></todo>
+    </ul>
+</div>

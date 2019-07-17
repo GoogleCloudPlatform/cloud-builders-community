@@ -2,7 +2,7 @@ This example uses the [Rocker builder](https://github.com/grammarly/rocker) to p
 
 To run this example:
 
-    gcloud container builds submit --config=cloudbuild.yaml .
+    gcloud builds submit --config=cloudbuild.yaml .
     
 At the bottom of the build output, you'll see something like the following:
 

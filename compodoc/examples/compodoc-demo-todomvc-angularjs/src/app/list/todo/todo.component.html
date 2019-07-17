@@ -1,0 +1,16 @@
+<li ng-class="{completed: $ctrl.todo.completed, editing: $ctrl.todo.editing}">
+    <div class="view">
+        <input class="toggle" type="checkbox" ng-model="$ctrl.todo.completed" ng-click="$ctrl.toggleCompletion($ctrl.todo)">
+        <label ng-dblclick="$ctrl.editTodo($ctrl.todo)" do-nothing>{{$ctrl.todo.title}}</label>
+        <button class="destroy" ng-click="$ctrl.remove($ctrl.todo)"></button>
+    </div>
+    <form ng-submit="$ctrl.updateEditingTodo($ctrl.todo, $ctrl.editedTodo.title)">
+        <input class="edit" ng-if="$ctrl.todo.editing"
+               ng-model="$ctrl.editedTodo.title"
+               todo-blur="vm.doneEditing(todo)"
+               todo-escape="vm.revertEdits(todo)"
+
+               (blur)="stopEditing(todo, editedtodo.value)"
+               (keyup.escape)="cancelEditingTodo(todo)">
+    </form>
+</li>

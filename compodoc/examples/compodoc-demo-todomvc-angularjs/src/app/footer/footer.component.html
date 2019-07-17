@@ -1,0 +1,23 @@
+<div class="footer" ng-if="$ctrl.todoStore.todos.length > 0">
+    <span class="todo-count"><strong>{{$ctrl.todoStore.getRemaining().length}}</strong> {{$ctrl.todoStore.getRemaining().length == 1 ? 'item' : 'items'}} left</span>
+    <ul class="filters">
+		<li>
+			<a class="selected btn-filter"
+                ng-class="{'selected': $ctrl.currentFilter === 'all'}"
+                ng-click="$ctrl.displayAll()">All</a>
+		</li>
+		<li>
+			<a class="btn-filter"
+                ng-class="{'selected': $ctrl.currentFilter === 'remaining'}"
+                ng-click="$ctrl.displayRemaining()">Active</a>
+		</li>
+		<li>
+			<a class="btn-filter"
+                ng-class="{'selected': $ctrl.currentFilter === 'completed'}"
+                ng-click="$ctrl.displayCompleted()">Completed</a>
+		</li>
+	</ul>
+    <button class="clear-completed"
+            ng-if="$ctrl.todoStore.getCompleted().length > 0"
+            ng-click="$ctrl.removeCompleted()">Clear completed</button>
+</div>

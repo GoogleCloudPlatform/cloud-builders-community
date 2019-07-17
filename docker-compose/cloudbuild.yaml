@@ -1,20 +1,21 @@
 # In this directory, run the following command to build this builder.
-# $ gcloud container builds submit . --config=cloudbuild.yaml
+# $ gcloud builds submit . --config=cloudbuild.yaml
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
   - '--build-arg'
-  - 'version=1.16.1'
+  - 'version=1.24.0'
   - '-t'
   - 'gcr.io/$PROJECT_ID/docker-compose:latest'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/docker-compose:1.16.1'
+  - 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
   - '.'
 - name: 'gcr.io/$PROJECT_ID/docker-compose'
   args: ['version']
 
 images:
 - 'gcr.io/$PROJECT_ID/docker-compose:latest'
-- 'gcr.io/$PROJECT_ID/docker-compose:1.16.1'
+- 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
+tags: ['cloud-builders-community']

@@ -3,3 +3,4 @@ steps:
   args: ['build', '--tag=gcr.io/$PROJECT_ID/kubectl_wait_for_job', '.']
 
 images: ['gcr.io/$PROJECT_ID/kubectl_wait_for_job']
+tags: ['cloud-builders-community']

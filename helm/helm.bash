@@ -35,6 +35,25 @@ fi
 echo "Running: helm init --client-only"
 helm init --client-only
 
+# if GCS_PLUGIN_VERSION is set, install the plugin
+if [[ -n $GCS_PLUGIN_VERSION ]]; then
+  echo "Installing helm GCS plugin version $GCS_PLUGIN_VERSION "
+  helm plugin install https://github.com/nouney/helm-gcs --version $GCS_PLUGIN_VERSION
+fi
+
+# if DIFF_PLUGIN_VERSION is set, install the plugin
+if [[ -n $DIFF_PLUGIN_VERSION ]]; then
+  echo "Installing helm DIFF plugin version $DIFF_PLUGIN_VERSION "
+  helm plugin install https://github.com/databus23/helm-diff --version $DIFF_PLUGIN_VERSION
+fi
+
+# if HELMFILE_VERSION is set, install Helmfile
+if [[ -n $HELMFILE_VERSION ]]; then
+  echo "Installing Helmfile version $HELMFILE_VERSION "
+  curl -SsL https://github.com/roboll/helmfile/releases/download/$HELMFILE_VERSION/helmfile_linux_amd64 > helmfile
+  chmod 700 helmfile
+fi
+
 # check if repo values provided then add that repo
 if [[ -n $HELM_REPO_NAME && -n $HELM_REPO_URL ]]; then
   echo "Adding chart helm repo $HELM_REPO_URL "
@@ -44,7 +63,32 @@ fi
 echo "Running: helm repo update"
 helm repo update
 
-if [ "$DEBUG" = true ]; then
-    echo "Running: helm $@"
+
+# if 'TILLERLESS=true' is set, run a local tiller server with the secret backend
+# see also https://github.com/helm/helm/blob/master/docs/securing_installation.md#running-tiller-locally
+if [ "$TILLERLESS" = true ]; then
+  # create tiller-namespace if it doesn't exist (helm --init would usually do this with server-side tiller'
+  if [[ -n $TILLER_NAMESPACE ]]; then
+    echo "Creating tiller namespace $TILLER_NAMESPACE"
+    kubectl get namespace $TILLER_NAMESPACE || kubectl create namespace $TILLER_NAMESPACE
+  fi
+
+  echo "Starting local tiller server"
+  #default inherits --listen localhost:44134 and TILLER_NAMESPACE
+  #use the secret driver by default
+  tiller --storage=secret &
+  export HELM_HOST=localhost:44134
+  if [ "$DEBUG" = true ]; then
+      echo "Running: helm $@"
+  fi
+  helm "$@"
+  exitCode=$?
+  echo "Stopping local tiller server"
+  pkill tiller
+  exit $exitCode
+else
+  if [ "$DEBUG" = true ]; then
+      echo "Running: helm $@"
+  fi
+  helm "$@"
 fi
-helm "$@"

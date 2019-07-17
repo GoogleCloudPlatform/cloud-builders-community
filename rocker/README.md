@@ -4,7 +4,7 @@ The Rocker [README](https://github.com/grammarly/rocker/blob/master/README.md) h
 
 This build step can be built and pushed to your GCP repository by running
 
-    gcloud container builds submit --config=cloudbuild.yaml .
+    gcloud builds submit --config=cloudbuild.yaml .
     
 in this directory.
 
