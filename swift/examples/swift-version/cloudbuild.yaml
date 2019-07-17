@@ -1,9 +1,15 @@
 steps:
-- name: 'gcr.io/${PROJECT_ID}/swift:latest'
+- name: 'gcr.io/${PROJECT_ID}/swift:bionic'
   args: ['--version']
-- name: 'gcr.io/${PROJECT_ID}/swift'
+- name: 'gcr.io/${PROJECT_ID}/swift:xenial'
   args: ['--version']
 - name: 'gcr.io/${PROJECT_ID}/swift:latest-dev'
   args: ['--version']
 - name: 'gcr.io/${PROJECT_ID}/swift:4.2'
+  args: ['--version']
+- name: 'gcr.io/${PROJECT_ID}/swift:4.2.4'
+  args: ['--version']
+- name: 'gcr.io/${PROJECT_ID}/swift:5.0-xenial'
+  args: ['--version']
+- name: 'gcr.io/${PROJECT_ID}/swift:5.0-bionic'
   args: ['--version']

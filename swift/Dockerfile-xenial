@@ -1,0 +1,3 @@
+FROM swift:xenial
+
+ENTRYPOINT [ "swift" ]
