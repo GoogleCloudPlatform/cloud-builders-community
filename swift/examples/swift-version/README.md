@@ -2,6 +2,6 @@
 
 This `cloudbuild.yaml` invokes  the `swift --version` command for all of the swift versions:
 ```
-gcloud builds submit --config=cloudbuild.yaml .
+gcloud builds submit . --config=cloudbuild.yaml
 ```
 You should see the output of all of the swift versions supported.
