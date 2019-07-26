@@ -54,12 +54,12 @@ func CancelPreviousBuild(ctx context.Context, currentBuildId string, branchName 
 		log.Printf("Going to cancel build with id: %s", build.Id)
 
 		cancelBuildCall := svc.Projects.Builds.Cancel(project, build.Id, &cloudbuild.CancelBuildRequest{})
-		buildCancel, err := cancelBuildCall.Do()
+		buildCancelResponse, buildCancelError := cancelBuildCall.Do()
 
-		if err != nil {
-			log.Fatalf("Failed to cancel build with id:%s", build.Id)
-		} else {
-			log.Printf("Cancelled build with id:%s", buildCancel.Id)
+		if buildCancelError != nil {
+			log.Fatalf("Failed to cancel build with id:%s - %v", build.Id, buildCancelError)
 		}
+
+		log.Printf("Cancelled build with id:%s", buildCancelResponse.Id)
 	}
 }
