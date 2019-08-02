@@ -1,6 +1,41 @@
 steps:
-# Add some checks around examples.
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    # Pull master from the upstream GoogleCloudPlatform/cloud-builders-community repository
+    mkdir .SCRATCH
+    git clone https://github.com/GoogleCloudPlatform/cloud-builders-community.git .SCRATCH/cloud-builders-community
+    touch build_plan.list
+    for d in */; do
+      #if it's the clone of upstream master, skip it
+      if [[ $d =~ ^\.SCRATCH.* ]]; then
+        echo "Skipping $d"
+        continue
+      fi
 
+      # Determine if there's a reason to build this sub builder:
+      # build if BUILD_ALL flag set
+      if [ ! -z "${_BUILD_ALL}" ]; then
+        echo "$d" | tee -a build_plan.list
+      # build if builder folder does not exist upstream
+      elif [ ! -d ".SCRATCH/cloud-builders-community/$d" ]; then
+        echo "$d" | tee -a build_plan.list
+      # build if any files have changed
+      else
+        build_because=$(git diff --no-index --name-only $d .SCRATCH/cloud-builders-community/$d | grep -v '^.*\.[gitignore|gcloudignore]')
+        if [ ! -z $build_because ]; then
+          echo "$d" | tee -a build_plan.list
+        fi
+      fi
+    done
+    echo "BUILD PLAN:"
+    cat build_plan.list
+
+    # clean up the scratch directory.
+    # shouldn't really be necessary as the whole workspace will be discarded.
+    rm -rf .SCRATCH
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -9,14 +44,9 @@ steps:
     # File that contains failures.
     failure_file=failure.log
     touch ${failure_file}
-
-    # Loop through the builders, and build independently.
-    for d in */; do
-      readme="${d}README.md"
-      if [[ ! -f "${readme}" ]]; then
-        # Note the error but try to build anyway.
-        echo "${d}: ${readme} not found." | tee -a ${failure_file}
-      fi
+    # Loop through the builders in the build plan, and build independently.
+    while read d; do
+      echo "building $d...')"
 
       config="${d}cloudbuild.yaml"
       if [[ ! -f "${config}" ]]; then
@@ -31,20 +61,27 @@ steps:
         continue
       fi
 
-      echo "Building $d ... "
+      readme="${d}README.md"
+      if [[ ! -f "${readme}" ]]; then
+        # Note the error but try to build anyway.
+        echo "${d}: ${readme} not found." | tee -a ${failure_file}
+      fi
+
       (
-        logfile="${d::-1}.log" # Logfile for "foo/" builder is "foo.log".
+        # collect all build output in a log file just for that builder. If something goes wrong, we'll dump it later.
+        logfile=${d::-1}.log # Logfile for "foo/" builder is "foo.log".
+        # if the build failed, record it in the failure file.
         gcloud builds submit $d --config=${config} > ${logfile} 2>&1
         if [[ $? -ne 0 ]]; then
           echo "$d failed" | tee -a ${failure_file}
           cat ${logfile}
         fi
       ) &
-    done
+    done <build_plan.list
 
     wait
 
-    # Check if there is any failure.
+    # Check if there are any failures.
     if [[ -s ${failure_file} ]]; then
       echo
       echo "Some builds failed:"
@@ -54,5 +91,7 @@ steps:
     fi
 
     echo "All builds succeeded."
-
+substitutions:
+  # pass in any value here to force a build of all sub-builders (the original default)
+  _BUILD_ALL: ''
 tags: ['$_PR_NUMBER', '$_REPO_OWNER', '$_REPO', '$_SHA', 'cloud-builders-community']
