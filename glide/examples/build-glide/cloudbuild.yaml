@@ -15,3 +15,4 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/build-glide', '.']
 images: ['gcr.io/$PROJECT_ID/build-glide']
+tags: ['cloud-builders-community']

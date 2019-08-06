@@ -32,3 +32,4 @@ images:
 - 'gcr.io/$PROJECT_ID/scala-sbt'
 - 'gcr.io/$PROJECT_ID/scala-sbt:1.2.8-jdk-8'
 - 'gcr.io/$PROJECT_ID/scala-sbt:0.13.15-jdk-8'
+tags: ['cloud-builders-community']

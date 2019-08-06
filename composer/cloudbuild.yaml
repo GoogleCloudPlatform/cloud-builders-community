@@ -5,3 +5,4 @@ steps:
   args: ["--help"]
 
 images: ['gcr.io/$PROJECT_ID/composer']
+tags: ['cloud-builders-community']

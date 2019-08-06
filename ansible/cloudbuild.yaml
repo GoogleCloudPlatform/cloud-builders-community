@@ -18,3 +18,4 @@ images:
 - 'gcr.io/$PROJECT_ID/ansible'
 
 timeout: 1200s
+tags: ['cloud-builders-community']

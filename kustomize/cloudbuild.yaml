@@ -7,3 +7,4 @@ steps:
   args: ['version']
 
 images: ['gcr.io/$PROJECT_ID/kustomize']
+tags: ['cloud-builders-community']

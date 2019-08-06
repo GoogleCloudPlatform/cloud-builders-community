@@ -33,12 +33,12 @@ gcloud compute instances create \
 trap cleanup EXIT
 
 gcloud compute scp --compress --recurse \
-       ./ ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
+       $(pwd) ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
        --ssh-key-file=${KEYNAME}
 
 gcloud compute ssh --ssh-key-file=${KEYNAME} \
        ${USERNAME}@${INSTANCE_NAME} -- ${COMMAND}
 
 gcloud compute scp --compress --recurse \
-       ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} ./ \
+       ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE}* $(pwd) \
        --ssh-key-file=${KEYNAME}

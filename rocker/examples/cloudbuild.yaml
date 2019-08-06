@@ -18,3 +18,4 @@ steps:
   args: ['info']
 
 # Note that we don't push this image.
+tags: ['cloud-builders-community']

@@ -13,3 +13,4 @@ steps:
   args: ['plan']
   env:
     - "TF_VAR_project-name=${PROJECT_ID}"
+tags: ['cloud-builders-community']

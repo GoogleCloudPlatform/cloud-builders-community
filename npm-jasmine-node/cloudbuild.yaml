@@ -5,3 +5,4 @@ images:
 - 'gcr.io/$PROJECT_ID/npm-jasmine-node'
 tags:
 - 'builder'
+- 'cloud-builders-community'

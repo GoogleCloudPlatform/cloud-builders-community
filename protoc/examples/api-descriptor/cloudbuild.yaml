@@ -10,3 +10,4 @@ steps:
         'api_descriptor.pb',
         'person.proto',
       ]
+tags: ['cloud-builders-community']

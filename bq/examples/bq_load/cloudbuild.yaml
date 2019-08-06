@@ -6,3 +6,4 @@ steps:
 - name: 'gcr.io/community-builders/bq'
   args: ['load', '--replace', 'test_dataset.us_states', 'us-states.csv',
          'name:string,post_abbr:string']
+tags: ['cloud-builders-community']

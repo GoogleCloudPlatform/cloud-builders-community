@@ -7,3 +7,4 @@ steps:
   args: ['--version']
 - name: 'gcr.io/${PROJECT_ID}/swift:4.2'
   args: ['--version']
+tags: ['cloud-builders-community']

@@ -9,3 +9,4 @@ steps:
 
 images:
 - 'gcr.io/$PROJECT_ID/make'
+tags: ['cloud-builders-community']

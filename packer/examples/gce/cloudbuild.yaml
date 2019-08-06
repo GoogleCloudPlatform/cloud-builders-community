@@ -18,3 +18,4 @@ steps:
   - -var
   - project_id=$PROJECT_ID
   - packer.json
+tags: ['cloud-builders-community']

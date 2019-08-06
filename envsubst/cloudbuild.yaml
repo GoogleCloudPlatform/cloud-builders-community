@@ -12,3 +12,4 @@ steps:
   entrypoint: sh
   args: ['-c', '[[ "$(cat test.txt)" == "Mars is Red and Neptune is Blue" ]]']
 images: ['gcr.io/${PROJECT_ID}/envsubst']
+tags: ['cloud-builders-community']

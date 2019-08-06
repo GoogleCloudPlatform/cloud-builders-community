@@ -6,3 +6,4 @@ secrets:
 - kmsKeyName: 'projects/[PROJECT_ID]/locations/global/keyRings/cloudbuilder/cryptoKeys/firebase-token'
   secretEnv:
     FIREBASE_TOKEN: '<ENCRYPTED_TOKEN>'
+tags: ['cloud-builders-community']

@@ -19,3 +19,4 @@ steps:
 # Use busybox to more the example.yaml to the Cloud Builder logs
 - name: busybox
   args: ["more","./example.yaml"]
+tags: ['cloud-builders-community']

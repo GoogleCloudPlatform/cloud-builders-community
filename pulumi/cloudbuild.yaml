@@ -6,3 +6,4 @@ steps:
 - name: gcr.io/$PROJECT_ID/pulumi-node
 
 images: ['gcr.io/$PROJECT_ID/pulumi-node']
+tags: ['cloud-builders-community']

@@ -14,3 +14,4 @@ images:
 - 'gcr.io/$PROJECT_ID/sonar-scanner:latest'
 - 'gcr.io/$PROJECT_ID/sonar-scanner:3.2.0.1227'
 
+tags: ['cloud-builders-community']

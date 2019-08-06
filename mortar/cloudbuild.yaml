@@ -7,3 +7,4 @@ steps:
   args: ['-v']
 
 images: ['gcr.io/$PROJECT_ID/mortar']
+tags: ['cloud-builders-community']
