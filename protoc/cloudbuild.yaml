@@ -9,7 +9,6 @@ steps:
     - "--build-arg=VERS=${_VERS}"
     - "--build-arg=ARCH=${_ARCH}"
     - --tag=gcr.io/${PROJECT_ID}/protoc:${_VERS}-${_ARCH}
-    - --tag=gcr.io/${PROJECT_ID}/protoc:3.8.0-linux-x86_64
     - "."
 
 images:
