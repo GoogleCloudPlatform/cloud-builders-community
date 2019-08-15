@@ -27,6 +27,8 @@ Where `${VERS}` and `${ARCH}` are defined to contain values for the release and 
 
 https://github.com/protocolbuffers/protobuf/releases
 
+**NB** Due to inconsistent handling of URLs for release candidates, the build will fail when referencing these ([issue](https://github.com/protocolbuffers/protobuf/issues/6522)).
+
 ## Referencing protoc compiler plugins
 
 It is common to augment `protoc` with language-specific compiler plugins. Here is a list of plugins:
