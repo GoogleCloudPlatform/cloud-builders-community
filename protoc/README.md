@@ -20,7 +20,7 @@ gcloud builds submit . --config=cloudbuild.yaml
 If you wish to specify a different version or architecture for the build, run the following:
 
 ```bash
-gcloud builds submit . --config=cloudbuild.yaml --substitutions=VERS=${VER},ARCH=${ARCH}
+gcloud builds submit . --config=cloudbuild.yaml --substitutions=_VERS=${VER},_ARCH=${ARCH}
 ```
 
 Where `${VERS}` and `${ARCH}` are defined to contain values for the release and architecture as listed on:
