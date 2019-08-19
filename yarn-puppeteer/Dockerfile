@@ -7,10 +7,11 @@ RUN apk update && apk upgrade && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     apk add --no-cache \
-      chromium@edge \
+      chromium=68.0.3440.75-r0 \
       nss@edge \
       freetype@edge \
       harfbuzz@edge \
+      bash \
       git
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
