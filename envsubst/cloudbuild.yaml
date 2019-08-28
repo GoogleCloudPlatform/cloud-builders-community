@@ -11,5 +11,18 @@ steps:
 - name: alpine
   entrypoint: sh
   args: ['-c', '[[ "$(cat test.txt)" == "Mars is Red and Neptune is Blue" ]]']
+- name: 'gcr.io/${PROJECT_ID}/envsubst'
+  env: ["MARS_COLOR=Red"]
+  args: ['-e', 'test.env', '-s', "'$${MARS_COLOR} $${NEPTUNE_COLOR}'", '**/test-shellformat.txt']
+- name: alpine
+  args: [cat, 'test-shellformat.txt']
+- name: alpine
+  args: [cat, 'test-globstar/test-shellformat.txt']
+- name: alpine
+  entrypoint: sh
+  args: ['-c', '[[ "$(cat test-shellformat.txt)" == ''Mars is Red, Neptune is Blue and Saturn is $${YELLOW}'' ]]']
+- name: alpine
+  entrypoint: sh
+  args: ['-c', '[[ "$(cat test-globstar/test-shellformat.txt)" == ''Mars is Red, Neptune is Blue and Saturn is $${YELLOW}'' ]]']
 images: ['gcr.io/${PROJECT_ID}/envsubst']
 tags: ['cloud-builders-community']
