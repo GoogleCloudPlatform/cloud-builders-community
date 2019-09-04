@@ -30,16 +30,16 @@ steps:
     args:
       [
         'build', '.',
-        '--tag=gcr.io/$PROJECT_ID/ng:latest',
+        '--tag=gcr.io/$PROJECT_ID/ng:v8',
         '--file=Dockerfile',
-        '--build-arg', 'ng_version=latest',
+        '--build-arg', 'ng_version=8.*',
       ]
 
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
         'build', '.',
-        '--tag=gcr.io/$PROJECT_ID/ng',
+        '--tag=gcr.io/$PROJECT_ID/ng:latest',
         '--file=Dockerfile',
         '--build-arg', 'ng_version=latest',
       ]
@@ -57,8 +57,8 @@ images:
   - 'gcr.io/$PROJECT_ID/ng:v1'
   - 'gcr.io/$PROJECT_ID/ng:v6'
   - 'gcr.io/$PROJECT_ID/ng:v7'
+  - 'gcr.io/$PROJECT_ID/ng:v8'
   - 'gcr.io/$PROJECT_ID/ng:latest'
-  - 'gcr.io/$PROJECT_ID/ng'
   - 'gcr.io/$PROJECT_ID/ng:next'
 
 tags: ['cloud-builders-community']
