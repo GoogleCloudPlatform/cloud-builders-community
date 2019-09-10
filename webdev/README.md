@@ -27,9 +27,9 @@ This directory contains `webdev` command. Also `pub` command is included `../pub
 ## Use the build step
 ```
 steps:
-  - name: "gcr.io/studiome-exp/pub"
+  - name: "gcr.io/$PROJECT_ID/pub"
     args: ["get"]
-  - name: "gcr.io/studiome-exp/webdev"
+  - name: "gcr.io/$PROJECT_ID/webdev"
     args: ["build"]
 ```
 
