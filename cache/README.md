@@ -27,15 +27,18 @@ The `--no-clobber` flag is used to skip creating and uploading the cache to GCS 
 
 All options use the form `--option=value` or `-o=value` so that they look nice in Yaml files.
 
-| Option       | Description                                                      |
-| ------------ | ---------------------------------------------------------------- |
-| -b, --bucket | The cloud storage bucket to download the cache from. [optional]  |
-| -s, --src    | The local directory in which the cache is stored. [optional]     |
-| -k, --key    | The cache key used for this cache file. [optional]           |
+| Option                 | Description                                                                            |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| -b,  --bucket          | The cloud storage bucket to download the cache from. [optional]                        |
+| -s,  --src             | The local directory in which the cache is stored. [optional]                           |
+| -k,  --key             | The cache key used for this cache file. [optional]                                     |
+| -kf, --key_fallback    | The cache key fallback pattern to be used if exact cache key is not found. [optional]  |
 
 One of `--bucket` or `--src` parameters are required.  If `--bucket` then the cache file will be downloaded from the provided GCS bucket path.  If `--src` then the cache file will be read from the directory specified on disk.
 
 The key provided by `--key` is used to identify the cache file.
+
+The fallback key pattern provide by `--key_fallback`, will be used to fetch the most recent cache file matching that pattern in case there is a cache miss from the specified `--key`.
 
 ### `checksum` Helper
 
@@ -118,4 +121,16 @@ This `cloudbuild.yaml` restores the files from the compressed cache file identif
   volumes:
   - name: 'cache'
     path: '/cache'
+```
+
+### Restore a cache with a fallback key
+
+```yaml
+- name: gcr.io/$PROJECT_ID/restore_cache
+  id: restore_cache
+  args: [
+    '--bucket=gs://${_CACHE_BUCKET}',
+    '--key=gradle-$( checksum checksum.txt )',
+    '--key_fallback=gradle-',
+  ]
 ```

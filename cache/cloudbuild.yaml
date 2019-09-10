@@ -9,7 +9,6 @@ steps:
   - '--file=Dockerfile-base'
   - '.'
 
-
 - name: 'gcr.io/cloud-builders/docker'
   id: build_save_cache
   args: 
@@ -20,7 +19,6 @@ steps:
   - '--build-arg=project_id=$PROJECT_ID'
   - '--cache-from=gcr.io/$PROJECT_ID/cache:latest'
   - '.'
-
 
 - name: 'gcr.io/cloud-builders/docker'
   id: build_restore_cache
@@ -126,9 +124,8 @@ steps:
   - name: original
     path: /original
 
-
 substitutions:
-  _VERSION: '1.1'
+  _VERSION: '1.2'
 
 images: 
 - 'gcr.io/$PROJECT_ID/cache:${_VERSION}'
