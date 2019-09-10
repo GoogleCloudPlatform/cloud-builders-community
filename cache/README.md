@@ -122,3 +122,15 @@ This `cloudbuild.yaml` restores the files from the compressed cache file identif
   - name: 'cache'
     path: '/cache'
 ```
+
+### Restore a cache with a fallback key
+
+```yaml
+- name: gcr.io/$PROJECT_ID/restore_cache
+  id: restore_cache
+  args: [
+    '--bucket=gs://${_CACHE_BUCKET}',
+    '--key=gradle-$( checksum checksum.txt )',
+    '--key_fallback=gradle-',
+  ]
+```
