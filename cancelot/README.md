@@ -40,6 +40,14 @@ start_time<"[CURRENT_BUILD_START_TIME]"
 After successfully fetching the list with the running builds that match the defined criteria, it loops and cancels 
 each one.
 
+### Contributing
+
+After making any changes to Cancelot, please navigate to `test` folder & deploy the `cloudbuild.yaml`, like this:
+
+```bash
+gcloud builds submit . --config=cloudbuild.yaml --substitutions=BRANCH_NAME="test"
+```
+
 ## Inspiration
 
 Cancelot is heavily inspired by `slackbot` from CloudBuilders community
