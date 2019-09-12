@@ -26,7 +26,9 @@ This cloud-builder can assist with the following use cases:
 
 ## Python Version
 
-By default, this cloud-builder will use python `3.7`. To use a different version, modify your local clone of [cloudbuild.yaml](cloudbuild.yaml) to provide a different docker build-arg.
+By default, the Dockerfile is using python `3.7`. To use a different version we can pass a build-arg to the `docker build` command.
+
+The supplied [cloudbuild](./cloudbuild.yaml) will create this builder for versions `2.7`, `3.6`, `3.7` (`latest`).
 
 Supported versions are any version that has a `python:<version>-alpine` docker image distributed.
 
