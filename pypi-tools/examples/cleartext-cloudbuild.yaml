@@ -9,7 +9,7 @@ steps:
       - 'PYPI_PASSWORD=XXX'
     args: ['upload', '--repository-url', 'https://test.pypi.org/legacy/', 'dist/*', '-u', '$PYPI_USERNAME', '-p', '$PYPI_PASSWORD']
 
-  - name: 'gcr.io/$PROJECT_ID/pypi-tools'
+  - name: 'gcr.io/$PROJECT_ID/pypi-tools:3.7'
     id: 'push to pypi'
     entrypoint: 'twine'
     dir: 'example-package'
@@ -18,7 +18,7 @@ steps:
       - 'PYPI_PASSWORD=XXX'
     args: ['upload', 'dist/*', '-u', '$PYPI_USERNAME', '-p', '$PYPI_PASSWORD']
 
-  - name: 'gcr.io/$PROJECT_ID/pypi-tools'
+  - name: 'gcr.io/$PROJECT_ID/pypi-tools:3.7'
     id: 'push to pypi if has a new version'
     dir: 'example-package'
     args:

@@ -1,11 +1,11 @@
 steps:
 
-  - name: 'gcr.io/$PROJECT_ID/pypi-tools'
+  - name: 'gcr.io/$PROJECT_ID/pypi-tools:3.7'
     id: 'sanity - print python version'
     entrypoint: 'python'
     args: ['--version']
 
-  - name: 'gcr.io/$PROJECT_ID/pypi-tools'
+  - name: 'gcr.io/$PROJECT_ID/pypi-tools:3.7'
     id: 'build wheel'
     entrypoint: 'python'
     args: ['setup.py', 'bdist_wheel']

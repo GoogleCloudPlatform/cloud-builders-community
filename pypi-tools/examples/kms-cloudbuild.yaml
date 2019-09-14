@@ -11,7 +11,7 @@ steps:
       - |
         twine upload dist/* -u $PYPI_USERNAME -p $$PYPI_PASSWORD
 
-  - name: 'gcr.io/$PROJECT_ID/pypi-tools'
+  - name: 'gcr.io/$PROJECT_ID/pypi-tools:3.7'
     id: 'push to pypi if has a new version'
     dir: 'example-package'
     secretEnv: ['PYPI_PASSWORD']
