@@ -14,8 +14,8 @@ steps:
     # we use rsync and not cp so that this step doesn't fail the first time it's run
     args: ['rsync', 'gs://${_CACHE_BUCKET}/', '/build_cache']
     volumes:
-      - name: 'build_cache'
-        path: '/build_cache'
+    - name: 'build_cache'
+      path: '/build_cache'
 
   - name: 'gcr.io/$PROJECT_ID/tar'
     id: extract_build_cache
@@ -23,12 +23,12 @@ steps:
     # This might fail the first time, but that's okay
     entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        tar xpzf /build_cache/cache.tgz -C /build_cache || echo "No cache found."
+    - '-c'
+    - |
+      tar xpzf /build_cache/cache.tgz -C /build_cache || echo "No cache found."
     volumes:
-      - name: 'build_cache'
-        path: '/build_cache'
+    - name: 'build_cache'
+      path: '/build_cache'
 
   #
   # Build the project
@@ -37,16 +37,15 @@ steps:
     id: build
     args: ["./gradlew", "assembleDebug","assembleDebugAndroidTest"]
     env:
-      - 'TERM=dumb'
-      - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
-      - 'GRADLE_USER_HOME=/build_cache/.gradle'
-      - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
-      - 'BRANCH_NAME=$BRANCH_NAME'
-    waitFor:
-      - extract_build_cache
+    - 'TERM=dumb'
+    - 'JAVA_TOOL_OPTIONS="-Xmx3g"'
+    - 'GRADLE_USER_HOME=/build_cache/.gradle'
+    - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
+    - 'BRANCH_NAME=$BRANCH_NAME'
+    waitFor: ['extract_build_cache']
     volumes:
-      - name: 'build_cache'
-        path: '/build_cache'
+    - name: 'build_cache'
+      path: '/build_cache'
  #
  # this step is to run UI tests on firebase test lab
  # first you need to link you google cloud project to firebase test lab and create a service account with editor role for firebase test lab
@@ -56,8 +55,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['firebase','test', 'android','run','--app', 'app/build/outputs/apk/debug/app-debug.apk', '--test', 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk']
     id: firebase_test_lab
-    waitFor:
-      - build
+    waitFor: ['build']
   #
   # Save the APKs
   #
@@ -75,15 +73,15 @@ steps:
     args: ['cpvzf', '/build_cache/cache.tgz', '-C', '/build_cache', '/build_cache/.gradle']
     waitFor: ['firebase_test_lab']
     volumes:
-      - name: 'build_cache'
-        path: '/build_cache'
+    - name: 'build_cache'
+      path: '/build_cache'
 
   # Store the build cache
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', '/build_cache/cache.tgz', 'gs://${_CACHE_BUCKET}/cache.tgz']
     waitFor: ['compress_cache']
     volumes:
-      - name: 'build_cache'
-        path: '/build_cache'
+    - name: 'build_cache'
+      path: '/build_cache'
 
 timeout: 1800s

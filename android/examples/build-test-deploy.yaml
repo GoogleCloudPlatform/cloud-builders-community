@@ -22,12 +22,12 @@ steps:
 #   3. write it back to the version file
 #   4. write it to the `build_env` file for use later
 - name: 'gcr.io/$PROJECT_ID/tar'
-  id: setup_env
+  id: setup_config
   entrypoint: 'bash'
   args: 
   - '-c'
   - |
-    cat /config/buildnum | awk '{print $1"+1"}' | bc | tee /config/buildnum | awk '{print "BUILD_NUM="$1 }' | tee .buildnum
+    cat /config/buildnum | awk '{$1=1+$1;print}' | tee /config/buildnum | awk '{print "BUILD_NUM="$1}'
   waitFor: ['copy_config']
   volumes:
   - name: 'config'
@@ -35,9 +35,9 @@ steps:
 
 # Save the updated build number to cloud storage
 - name: 'gcr.io/cloud-builders/gsutil'
-  id: save_env
+  id: save_config
   args: ['cp', '/config/buildnum', 'gs://${_CONFIG_BUCKET}/buildnum']
-  waitFor: ['setup_env']
+  waitFor: ['setup_config']
   volumes:
   - name: 'config'
     path: '/config'
@@ -106,9 +106,7 @@ steps:
     - 'GRADLE_USER_HOME=/build_cache/.gradle'
     - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.workers.max=8 -Dkotlin.incremental=false"'
     - 'BRANCH_NAME=$BRANCH_NAME'
-  waitFor:
-    - decrypt_secrets
-    - extract_build_cache
+  waitFor: ['decrypt_secrets', 'extract_build_cache']
   volumes:
   - name: 'build_cache'
     path: '/build_cache'
@@ -161,8 +159,8 @@ steps:
   <<: *env
   waitFor: ['unit_tests']
   volumes:
-  - name: 'cache'
-    path: '/gradle_cache'
+  - name: 'build_cache'
+    path: '/build_cache'
 
 #
 # Deploy to Crashlytics Beta if this is any other branch.
@@ -173,8 +171,8 @@ steps:
   <<: *env
   waitFor: ['unit_tests']
   volumes:
-  - name: 'cache'
-    path: '/gradle_cache'
+  - name: 'build_cache'
+    path: '/build_cache'
 
 #
 # Cleanup
