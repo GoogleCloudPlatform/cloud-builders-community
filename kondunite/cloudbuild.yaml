@@ -1,4 +1,3 @@
----
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Docker build'
