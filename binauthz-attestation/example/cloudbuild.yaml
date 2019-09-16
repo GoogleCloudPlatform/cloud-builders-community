@@ -1,7 +1,6 @@
 steps:
   - id: 'build'
     name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
     args:
       - 'build'
       - '-t'
@@ -9,7 +8,6 @@ steps:
       - '.'
   - id: 'publish'
     name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
     args:
       - 'push'
       - 'gcr.io/$PROJECT_ID/helloworld:latest'

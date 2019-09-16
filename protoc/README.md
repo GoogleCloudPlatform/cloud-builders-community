@@ -20,12 +20,14 @@ gcloud builds submit . --config=cloudbuild.yaml
 If you wish to specify a different version or architecture for the build, run the following:
 
 ```bash
-gcloud builds submit . --config=cloudbuild.yaml --substitutions=VERS=${VER},ARCH=${ARCH}
+gcloud builds submit . --config=cloudbuild.yaml --substitutions=_VERS=${VER},_ARCH=${ARCH}
 ```
 
 Where `${VERS}` and `${ARCH}` are defined to contain values for the release and architecture as listed on:
 
 https://github.com/protocolbuffers/protobuf/releases
+
+**NB** Due to inconsistent handling of URLs for release candidates, the build will fail when referencing these ([issue](https://github.com/protocolbuffers/protobuf/issues/6522)).
 
 ## Referencing protoc compiler plugins
 

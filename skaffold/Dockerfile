@@ -3,7 +3,7 @@ FROM gcr.io/cloud-builders/kubectl
 RUN mkdir -p /builder/bin && \
   apt-get update && \
   apt-get install -y curl && \
-  curl -sSLo /builder/bin/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+  curl -sSLo /builder/bin/skaffold https://storage.googleapis.com/skaffold/releases/v0.38.0/skaffold-linux-amd64 && \
   chmod +x /builder/bin/skaffold && \
   apt-get remove --purge -y curl && \
   apt-get --purge -y autoremove && \

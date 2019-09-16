@@ -8,9 +8,15 @@ This builder can be used to run the terraform tool in the GCE. From the Hashicor
 > edited, reviewed, and versioned.
 
 ### Building this builder
-To build this builder, run the following command in this directory.
+To build this builder with the default version, run the following command in this directory.
 ```sh
 $ gcloud builds submit --config=cloudbuild.yaml
+```
+
+To override the builder version for Terraform, run the following command in this directory (make sure to update the version and the SHA256 hash with the desired ones).
+```
+$ gcloud builds submit --config=cloudbuild.yaml \
+  --substitutions=_TERRAFORM_VERSION="0.12.6",_TERRAFORM_VERSION_SHA256SUM="6544eb55b3e916affeea0a46fe785329c36de1ba1bdb51ca5239d3567101876f"
 ```
 
 ## Using this builder
