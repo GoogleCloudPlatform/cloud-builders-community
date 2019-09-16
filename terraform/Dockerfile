@@ -1,21 +1,16 @@
-FROM gcr.io/cloud-builders/gcloud
+FROM alpine:3.9
 
 ARG TERRAFORM_VERSION
 ARG TERRAFORM_VERSION_SHA256SUM
 
-RUN apt-get update && \
-    apt-get -y install curl unzip ca-certificates && \
-    curl -Ss --fail https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-      > terraform_linux_amd64.zip && \
-    echo "${TERRAFORM_VERSION_SHA256SUM} terraform_linux_amd64.zip" > terraform_SHA256SUMS && \
-    sha256sum -c terraform_SHA256SUMS --status && \
-    unzip terraform_linux_amd64.zip -d /builder/terraform && \
-    rm -f terraform_linux_amd64.zip && \
-    apt-get remove --purge -y curl unzip && \
-    apt-get --purge -y autoremove && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
-ENV PATH=/builder/terraform/:$PATH
+COPY terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN echo "${TERRAFORM_VERSION_SHA256SUM}  terraform_${TERRAFORM_VERSION}_linux_amd64.zip" > checksum && sha256sum -c checksum
+RUN unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+
+
+FROM gcr.io/cloud-builders/gcloud
+
+COPY --from=0 terraform /usr/bin/terraform
 COPY entrypoint.bash /builder/entrypoint.bash
 ENTRYPOINT ["/builder/entrypoint.bash"]
