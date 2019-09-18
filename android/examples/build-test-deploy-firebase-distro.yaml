@@ -88,8 +88,9 @@ steps:
   - '-c'
   - |
     gcloud kms decrypt --ciphertext-file=signing/keystore.properties.enc --plaintext-file=signing/keystore.properties --location=global --keyring=my-app --key=android-builder
-    gcloud kms decrypt --ciphertext-file=signing/google-service-account.json.enc --plaintext-file=signing/google-service-account.json --location=global --keyring=my-app --key=android-builder
-    gcloud kms decrypt --ciphertext-file=distro/firebase-admin.json.enc --plant-text-file=app-distro.json --location=global --keyring=my-app --key=android-builder
+    gcloud kms decrypt --ciphertext-file=signing/google-service-account.json.enc --plaintext-file=signing/google-service-account.json --location=global --keyring=my-app --key=android-builder || echo "No playstore service account; master branch builds not yet supported."
+    gcloud kms decrypt --ciphertext-file=app/googler-services.json --plainttext-file=app/google-services.json --location=global --keyring=my-app --key=android-builder
+    gcloud kms decrypt --ciphertext-file=app-distro.json.enc --plaintext-file=app-distro.json --location=global --keyring=my-app --key=android-builder
 #
 # Build the project
 #
@@ -165,11 +166,11 @@ steps:
     path: '/gradle_cache'
 
 #
-# Deploy to Firebase Distribution if this is develop other branch.
+# Deploy to Firebase Distribution if this is develop branch.
 #
 - name: 'gcr.io/$PROJECT_ID/android:28'
   id: deploy_to_beta
-  args: ["for_branch", "develop", "./gradlew", ":app:appDistributionUploadDebug "]
+  args: ["for_branch", "develop", "./gradlew", ":app:appDistributionUploadDebug"]
   <<: *env
   waitFor: ['unit_tests']
   volumes:
