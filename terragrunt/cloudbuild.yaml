@@ -1,7 +1,30 @@
 # In this directory, run the following command to build this builder.
 # $ gcloud builds submit . --config=cloudbuild.yaml
+
+substitutions:
+  _TERRAFORM_VERSION: 0.12.9
+  _TERRAFORM_VERSION_SHA256SUM: 69712c6216cc09b7eca514b9fb137d4b1fead76559c66f338b4185e1c347ace5
+  _TERRAGRUNT_VERSION: 0.19.25
+  _TERRAGRUNT_VERSION_SHA256SUM: f55164e7a53df18d2feebe8cd93a86b53f83b60a5ffd1104b4c7c819f376dfc4
+
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/${PROJECT_ID}/terragrunt', '.']
-images: ['gcr.io/${PROJECT_ID}/terragrunt']
-tags: ['cloud-builders-community']
+  - name: "gcr.io/cloud-builders/docker"
+    env:
+      - "TERRAFORM_VERSION=${_TERRAFORM_VERSION}"
+      - "TERRAFORM_VERSION_SHA256SUM=${_TERRAFORM_VERSION_SHA256SUM}"
+      - "TERRAGRUNT_VERSION=${_TERRAGRUNT_VERSION}"
+      - "TERRAGRUNT_VERSION_SHA256SUM=${_TERRAGRUNT_VERSION_SHA256SUM}"
+    args:
+      - "build"
+      - --build-arg
+      - TERRAFORM_VERSION=${_TERRAFORM_VERSION}
+      - --build-arg
+      - TERRAFORM_VERSION_SHA256SUM=${_TERRAFORM_VERSION_SHA256SUM}
+      - --build-arg
+      - TERRAGRUNT_VERSION=${_TERRAGRUNT_VERSION}
+      - --build-arg
+      - TERRAGRUNT_VERSION_SHA256SUM=${_TERRAGRUNT_VERSION_SHA256SUM}
+      - "--tag=gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
+      - "."
+images: ["gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"]
+tags: ["cloud-builders-community"]
