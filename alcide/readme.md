@@ -24,12 +24,6 @@ Alcide Advisor security checks are being added and updated on a regular basis.
 ```yaml
 steps:
 #
-# Build the Alcide Advisor Image
-#
-- name: gcr.io/cloud-builders/docker
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/advisor', '.']
-
-#
 # This step takes care of fetching cluster credentials (kubeconfig)
 # DO NOT REMOVE THIS STEP
 #
