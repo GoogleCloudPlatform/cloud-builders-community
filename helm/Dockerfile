@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ARG HELM_VERSION=v2.14.0
+ARG HELM_VERSION=v2.14.3
 
 COPY helm.bash /builder/helm.bash
 
