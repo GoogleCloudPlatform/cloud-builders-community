@@ -7,7 +7,5 @@ steps:
 #
 - name: gcr.io/cloud-builders/docker
   args: ['build', '--tag=gcr.io/$PROJECT_ID/advisor', '.']
-- name: "gcr.io/${PROJECT_ID}/advisor"
-  args: ["validate", "cluster", "--help"]
 
 images: ["gcr.io/${PROJECT_ID}/advisor"]
