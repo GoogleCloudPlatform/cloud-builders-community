@@ -3,21 +3,22 @@ package cancelot
 import (
 	"context"
 	"fmt"
-	"google.golang.org/api/cloudbuild/v1"
 	"log"
+
+	cloudbuild "google.golang.org/api/cloudbuild/v1"
 )
 
-// Checks for previous running builds on the same branch, in order to cancel them
-func CancelPreviousBuild(ctx context.Context, currentBuildId string, branchName string) {
+// CancelPreviousBuild checks for previous running builds on the same branch, in order to cancel them
+func CancelPreviousBuild(ctx context.Context, currentBuildID string, branchName string, sameTriggerOnly bool) {
 	svc := gcbClient(ctx)
 	project, err := getProject()
 	if err != nil {
 		log.Fatalf("Failed to get project: %v", err)
 	}
 
-	log.Printf("Going to fetch current build details for: %s", currentBuildId)
+	log.Printf("Going to fetch current build details for: %s", currentBuildID)
 
-	currentBuildResponse, currentBuildError := svc.Projects.Builds.Get(project, currentBuildId).Do()
+	currentBuildResponse, currentBuildError := svc.Projects.Builds.Get(project, currentBuildID).Do()
 	if currentBuildError != nil {
 		log.Fatalf("Failed to get build details from Cloud Build.  Will retry in one minute.")
 	}
@@ -29,9 +30,17 @@ func CancelPreviousBuild(ctx context.Context, currentBuildId string, branchName 
 		source.repo_source.branch_name = "%s" AND 
 		status = "WORKING" AND 
 		start_time<"%s"`,
-		currentBuildId,
+		currentBuildID,
 		branchName,
 		currentBuildResponse.StartTime)
+
+	if sameTriggerOnly {
+		onGoingJobFilter = fmt.Sprintf(`
+		%s AND
+		trigger_id = "%s"`,
+			onGoingJobFilter,
+			currentBuildResponse.BuildTriggerId)
+	}
 
 	log.Printf("Builds filter created: %s", onGoingJobFilter)
 
@@ -44,7 +53,11 @@ func CancelPreviousBuild(ctx context.Context, currentBuildId string, branchName 
 	onGoingBuilds := onGoingBuildsResponse.Builds
 	numOfOnGoingBuilds := len(onGoingBuilds)
 
-	log.Printf("Ongoing builds for %s has size of: %d", branchName, numOfOnGoingBuilds)
+	if sameTriggerOnly {
+		log.Printf("Ongoing builds triggered by %s for %s has size of: %d", currentBuildResponse.BuildTriggerId, branchName, numOfOnGoingBuilds)
+	} else {
+		log.Printf("Ongoing builds for %s has size of: %d", branchName, numOfOnGoingBuilds)
+	}
 
 	if numOfOnGoingBuilds == 0 {
 		return

@@ -37,6 +37,26 @@ status = "WORKING" AND
 start_time<"[CURRENT_BUILD_START_TIME]"
 ```
 
+If you'd prefer to only cancel builds that were triggered by the same trigger as your current build, use the `--same_trigger_only` option:
+
+```yaml
+steps:
+- name: 'gcr.io/$PROJECT_ID/cancelot'
+  args: [
+    '--current_build_id', '$BUILD_ID',
+    '--branch_name', '$BRANCH_NAME',
+    '--same_trigger_only',
+  ]
+```
+
+When using `--same_trigger_only`, Cancelot will add the following condition to the default filter:
+
+```text
+... AND trigger_id = "[CURRENT_BUILD_TRIGGER_ID]"
+```
+
+`--same_trigger_only` can be helpful if you have multiple repositories connected to the same Cloud Build project or if a single repository has multiple triggers that target the same branch, but with different configurations (e.g., different included / excluded files, tag / branch name patterns, etc).
+
 After successfully fetching the list with the running builds that match the defined criteria, it loops and cancels 
 each one.
 
