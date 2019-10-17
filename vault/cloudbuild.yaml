@@ -1,8 +1,8 @@
 # In this directory, run the following command to build this builder.
 # $ gcloud builds submit . --config=cloudbuild.yaml
 substitutions:
-  _VAULT_VERSION: 1.2.2
-  _VAULT_VERSION_SHA256SUM: 7725b35d9ca8be3668abe63481f0731ca4730509419b4eb29fa0b0baa4798458
+  _VAULT_VERSION: 1.2.3
+  _VAULT_VERSION_SHA256SUM: fe15676404aff35cb45f7c957f90491921b9269d79a8f933c5a36e26a431bfc4
 steps:
 - name: 'gcr.io/cloud-builders/wget'
   args: ["https://releases.hashicorp.com/vault/${_VAULT_VERSION}/vault_${_VAULT_VERSION}_linux_amd64.zip"]
