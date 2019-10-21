@@ -24,7 +24,12 @@ steps:
       - TERRAGRUNT_VERSION=${_TERRAGRUNT_VERSION}
       - --build-arg
       - TERRAGRUNT_VERSION_SHA256SUM=${_TERRAGRUNT_VERSION_SHA256SUM}
-      - "--tag=gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
+      - --tag
+      - "gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
+      - --tag
+      - "gcr.io/${PROJECT_ID}/terragrunt:latest"
       - "."
-images: ["gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"]
+images:
+  - "gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
+  - "gcr.io/${PROJECT_ID}/terragrunt:latest"
 tags: ["cloud-builders-community"]
