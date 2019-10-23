@@ -10,14 +10,14 @@ The following examples demonstrate build requests that use this builder.
 
 ### Rsync to a remote folder
 
-This `cloudbuild.yaml` synchs local folder to remote folder by deleting existing content in the destination.
+This `cloudbuild.yaml` syncs local folder to remote folder by deleting existing content in the destination.
 
 ```
 steps:
-- name: gcr.io/baskoro-common/rsync
+- name: gcr.io/$PROJECT_ID/rsync
   args:
   - -e
-  - 'ssh -p 88888'
+  - 'ssh -p 8888'
   - --recursive
   - --delete
   - --verbose
