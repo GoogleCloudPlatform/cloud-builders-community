@@ -4,7 +4,7 @@ This build step invokes `cft` commands in [Google Cloud Build](https://cloud.goo
 
 Arguments passed to this builder will be passed to `cft` directly, allowing
 callers to run [any CFT
-command](https://github.com/GoogleCloudPlatform/deploymentmanager-samples/blob/cloud-foundation/community/cloud-foundation/docs/userguide.md#cli-usage).
+command](https://github.com/GoogleCloudPlatform/cloud-foundation-toolkit/blob/master/dm/docs/userguide.md#cli-usage).
 
 See examples in the `examples` subdirectory.
 
