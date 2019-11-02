@@ -62,7 +62,7 @@ Additional libraries can be added by creating another container based on this
 one, for example:
 
 ```
-FROM gcr.io/my-project/dataflow-python
+FROM gcr.io/my-project/dataflow-python3
 
 RUN /bin/bash -c "source venv/bin/activate"
 
@@ -76,5 +76,5 @@ This container uses Python 2.  Python 3 is currently under development: see
 ## Examples
 
 For examples, see the [examples
-directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python/examples).
+directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python3/examples).
 

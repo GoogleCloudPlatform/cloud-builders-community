@@ -4,7 +4,7 @@ This example shows the process of triggering Dataflow runners from Container
 Builder.
 
 To run the example, first build the builder as described [in the
-instructions](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python/README.md).  Be sure to follow the instructions to permission your service account.
+instructions](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/dataflow-python3/README.md).  Be sure to follow the instructions to permission your service account.
 
 Then, execute the pipeline:
 
