@@ -2,7 +2,7 @@
 
 ## Helm version
 
-At this time this builder is only compatible with helm v3. Added backwards functionality with helm v2 can be added in a subsequent PR if desired.
+At this time this builder is only compatible with helm v3. Backwards functionality with helm v2 can be added in a subsequent PR if desired.
 
 ## Using this builder with Google Kubernetes Engine
 
@@ -50,7 +50,7 @@ You can set the `Helm` and `Helmfile` versions in `cloudbuild.yaml`.
         'build',
         '--tag=gcr.io/$PROJECT_ID/helm',
         '--build-arg', 'HELM_VERSION=v3.0.0',
-        '--build-arg', 'HELMFILE_VERSION=v0.92.0',
+        '--build-arg', 'HELMFILE_VERSION=v0.93.2',
         '.'
     ]
 
