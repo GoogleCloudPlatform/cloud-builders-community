@@ -35,7 +35,7 @@ fi
 # if GCS_PLUGIN_VERSION is set, install the plugin
 if [[ -n $GCS_PLUGIN_VERSION ]]; then
   echo "Installing helm GCS plugin version $GCS_PLUGIN_VERSION "
-  helm plugin install https://github.com/nouney/helm-gcs --version $GCS_PLUGIN_VERSION
+  helm plugin install https://github.com/nouney/helm-gcs --version "$GCS_PLUGIN_VERSION"
 fi
 
 helmfile "$@"
