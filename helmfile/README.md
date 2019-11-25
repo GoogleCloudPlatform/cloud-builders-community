@@ -2,7 +2,7 @@
 
 ## Helm version
 
-At this time this builder is only compatible with helm v3. Added backwards functionality with helm v2 can be added in a subsequent PR if desired.
+At this time this builder is only compatible with helm v3. Backwards functionality with helm v2 can be added in a subsequent PR if desired.
 
 ## Using this builder with Google Kubernetes Engine
 
