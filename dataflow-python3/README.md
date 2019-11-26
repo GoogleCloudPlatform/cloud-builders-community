@@ -43,7 +43,7 @@ commands to permission your Cloud Build service account:
 export PROJECT=$(gcloud info --format='value(config.project)')
 export PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format 'value(projectNumber)')
 export CB_SA_EMAIL=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/iam.serviceAccountActor' --role='roles/dataflow.admin’
+gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$CB_SA_EMAIL --role='roles/iam.serviceAccountUser' --role='roles/iam.serviceAccountActor' --role='roles/dataflow.admin'
 # Enable Dataflow API
 gcloud services enable dataflow.googleapis.com
 # Setup GCS bucket
