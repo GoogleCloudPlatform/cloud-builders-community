@@ -9,10 +9,8 @@ COPY --from=0 /go/bin/ko /
 COPY ko.bash /builder/ko.bash
 
 # Install Go
-RUN curl https://dl.google.com/go/go1.13.4.linux-amd64.tar.gz -o go1.13.4.linux-amd64.tar.gz \
-  && tar -C /usr/local -xzf go1.13.4.linux-amd64.tar.gz \
-  && rm go1.13.4.linux-amd64.tar.gz
-ENV PATH="${PATH}:/usr/local/go/bin"
+COPY --from=0 /usr/local/go /usr/local/go
+ENV PATH="/go/bin:${PATH}:/usr/local/go/bin"
 RUN mkdir -p /go/src
 ENV GOPATH=/go
 
