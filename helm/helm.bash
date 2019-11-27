@@ -37,7 +37,7 @@ if [[ $HELM_VERSION =~ ^v2 ]]; then
   echo "Running: helm init --client-only"
   helm init --client-only
 else
-  echo "Skipped `helm init --client-only` because not v2"
+  echo "Skipped 'helm init --client-only' because not v2"
 fi
 
 # if GCS_PLUGIN_VERSION is set, install the plugin
