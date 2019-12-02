@@ -67,6 +67,7 @@ build step in the `env` parameter:
 
 | Options       | Description   | Default |
 | ------------- | ------------- | ------- |
+| GCLOUD | The expression to use as the `gcloud` command-line utility. Can be set to `gcloud alpha` or `gcloud beta`, as examples. | `gcloud` |
 | COMMAND | Command to run inside the remote workspace | None, must be set |
 | USERNAME  | Username to use when logging into the instance via SSH  | `admin` |
 | REMOTE_WORKSPACE  | Location on remote host to use as workspace | `/home/${USERNAME}/workspace/` |
