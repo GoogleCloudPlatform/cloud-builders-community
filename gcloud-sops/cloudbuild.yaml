@@ -3,6 +3,5 @@ steps:
   args: ['build', '--tag=gcr.io/$PROJECT_ID/gcloud-sops', '.']
 - # Verify sops has been built correctly
   name: 'gcr.io/$PROJECT_ID/gcloud-sops'
-  entrypoint: 'sops'
   args: ['-v']
 images: ['gcr.io/$PROJECT_ID/gcloud-sops']
