@@ -13,7 +13,7 @@ REMOTE_WORKSPACE=${REMOTE_WORKSPACE:-/home/${USERNAME}/workspace/}
 INSTANCE_NAME=${INSTANCE_NAME:-builder-$(cat /proc/sys/kernel/random/uuid)}
 ZONE=${ZONE:-us-central1-f}
 INSTANCE_ARGS=${INSTANCE_ARGS:---preemptible}
-GCLOUD=${GCLOUD:gcloud}
+GCLOUD=${GCLOUD:-gcloud}
 
 ${GCLOUD} config set compute/zone ${ZONE}
 
