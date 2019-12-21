@@ -5,9 +5,9 @@ steps:
         "build",
         "--tag=gcr.io/$PROJECT_ID/helmfile",
         "--build-arg",
-        "HELM_VERSION=v3.0.1",
+        "HELM_VERSION=v3.0.2",
         "--build-arg",
-        "HELMFILE_VERSION=v0.94.1",
+        "HELMFILE_VERSION=v0.97.0",
         ".",
       ]
 
