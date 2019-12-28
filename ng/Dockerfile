@@ -1,4 +1,4 @@
-FROM node:10.16.3
+FROM node:lts
 
 ARG ng_version=latest
 RUN npm install -g @angular/cli@$ng_version --unsafe-perms && \
