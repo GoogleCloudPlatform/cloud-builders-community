@@ -1,4 +1,4 @@
-FROM gcr.io/cloud-builders/npm:current
+FROM node:10.16.3
 
 ARG ng_version=latest
 RUN npm install -g @angular/cli@$ng_version --unsafe-perms && \
