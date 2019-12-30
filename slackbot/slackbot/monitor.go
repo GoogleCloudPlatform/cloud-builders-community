@@ -7,34 +7,33 @@ import (
 )
 
 const maxErrors = 3
+const tickDuration = 20 * time.Second
+// 1m20s
+const monitorErrorMarginDuration = (maxErrors + 1) * tickDuration
 
 // Monitor polls Cloud Build until the build reaches completed status, then triggers the Slack event.
-func Monitor(ctx context.Context, build string, webhook string) {
+func Monitor(ctx context.Context, projectId string, buildId string, webhook string) {
 	svc := gcbClient(ctx)
 	errors := 0
-	project, err := getProject()
-	if err != nil {
-		log.Fatalf("Failed to get project: %v", err)
-	}
 
-	t := time.Tick(20 * time.Second)
+	t := time.Tick(tickDuration)
 	for {
-		log.Printf("Polling build %s", build)
-		lc := svc.Projects.Builds.Get(project, build)
-		b, err := lc.Do()
+		log.Printf("Polling build %s", buildId)
+		getMonitoredBuild := svc.Projects.Builds.Get(projectId, buildId)
+		monitoredBuild, err := getMonitoredBuild.Do()
 		if err != nil {
 			if errors <= maxErrors {
-				log.Printf("Failed to get build details from Cloud Build.  Will retry in one minute.")
+				log.Printf("Failed to get build details from Cloud Build.  Will retry in %s", tickDuration)
 				errors++
 				continue
 			} else {
 				log.Fatalf("Reached maximum number of errors (%d).  Exiting", maxErrors)
 			}
 		}
-		switch b.Status {
+		switch monitoredBuild.Status {
 		case "SUCCESS", "FAILURE", "INTERNAL_ERROR", "TIMEOUT", "CANCELLED":
 			log.Printf("Terminal status reached.  Notifying")
-			Notify(b, webhook)
+			Notify(monitoredBuild, webhook)
 			return
 		}
 		<-t

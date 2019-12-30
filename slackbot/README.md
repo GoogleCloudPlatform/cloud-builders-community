@@ -27,6 +27,138 @@ steps:
 ...
 ```
 
+## API
+
+### `build`
+
+_**type**_ `string`
+
+_**description**_ ID of monitored build
+
+_**notes**_ Required
+
+_**example**_
+
+```yaml
+steps:
+- name: gcr.io/$PROJECT_ID/slackbot
+  args:
+  # ...
+  - --build
+  - 333225b1-b215-4992-9241-d8f4f3197be2
+  # ...
+```
+
+### `webhook`
+
+_**type**_ `string`
+
+_**description**_ Slack webhook URL
+
+_**notes**_ Required
+
+_**example**_
+
+```yaml
+steps:
+- name: gcr.io/$PROJECT_ID/slackbot
+  args:
+  # ...
+  - --webhook
+  - https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+  # ...
+```
+
+### `mode`
+
+_**type**_ `string`
+
+_**default**_ `"trigger"`
+
+_**description**_ Mode the builder runs in
+
+_**notes**_ Required. Must be one of: `"trigger"`, `"monitor"`
+
+_**example**_
+
+```yaml
+steps:
+- name: gcr.io/$PROJECT_ID/slackbot
+  args:
+  # ...
+  - --mode
+  - trigger
+  # ...
+```
+
+### `copy-name`
+
+_**type**_ `bool`
+
+_**default**_ `false`
+
+_**description**_ Copy [`name`](https://cloud.google.com/cloud-build/docs/build-config#name) of slackbot's build step from monitored build to watcher build
+
+_**notes**_ If enabled, the `name` of the slackbot build step name must include `"slackbot"`. If not enabled, watcher build will use `name: gcr.io/$PROJECT_ID/slackbot`.
+
+_**example**_
+
+```yaml
+steps:
+- name: gcr.io/$PROJECT_ID/slackbot@sha256:5ae97d5e41e8c4c87f30b3766184e4440c7e4092ccebf13a166ee09ecf9891f5
+  args:
+  # ...
+  - --copy-name
+  # ...
+```
+
+### `copy-tags`
+
+_**type**_ `bool`
+
+_**default**_ `false`
+
+_**description**_ Copy [`tags`](https://cloud.google.com/cloud-build/docs/build-config#tags) from monitored build to watcher build
+
+_**notes**_ If disabled, the watcher build will use `tags: ["slackbot"]`. If enabled, the monitored build's tags will be added to the defaults. In the following example, the resulting values for the watcher build would be `tags: ["slackbot", "e2e"]`.
+
+_**example**_
+
+```yaml
+steps:
+- name: gcr.io/$PROJECT_ID/slackbot
+  args:
+  # ...
+  - --copy-tags
+  # ...
+
+tags:
+- e2e
+```
+
+### `copy-timeout`
+
+_**type**_ `bool`
+
+_**default**_ `false`
+
+_**description**_ Copy [`timeout`](https://cloud.google.com/cloud-build/docs/build-config#timeout_2) from monitored build to watcher build
+
+_**notes**_ If enabled, watcher build's `timeout` will be set to monitored build's `timeout` (plus a small margin for transient API errors encountered by the watcher). If disabled, watcher build's `timeout` will not be set (i.e., Cloud Build's defaults will apply).
+
+_**example**_
+
+```yaml
+steps:
+- name: gcr.io/$PROJECT_ID/slackbot
+  args:
+  # ...
+  - --copy-timeout
+  # ...
+
+timeout: 900s
+```
+
 ## Examples
 
 Examples showing both successful and unsuccessful builds are in the [examples](examples/) directory.
