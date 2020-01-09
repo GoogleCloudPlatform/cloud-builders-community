@@ -46,6 +46,6 @@ if [ ! -z "$display_help" ]; then
     exit 0
 else
     mkdir -p ${report_dir}
-    export PYTHONPATH=/usr/local/src:/usr/local/src/lib:$PYTHONPATH:
+    export PYTHONPATH=/usr/local/src:$PYTHONPATH:
     /usr/local/src/scan --src ${src_dir} --type $src_type --out_dir ${report_dir} --convert
 fi
