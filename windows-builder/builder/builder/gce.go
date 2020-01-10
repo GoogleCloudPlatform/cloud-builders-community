@@ -24,11 +24,8 @@ import (
 )
 
 const (
-	zone               = "us-central1-f"
 	instanceNamePrefix = "windows-builder"
 	prefix             = "https://www.googleapis.com/compute/v1/projects/"
-	defaultImageURL    = prefix +
-		"windows-cloud/global/images/windows-server-1803-dc-core-for-containers-v20180802"
 	winrmport          = 5986
 	startupCmd         = `winrm set winrm/config/Service/Auth @{Basic="true"}`
 )
@@ -68,7 +65,7 @@ func getProject() (string, error) {
 }
 
 // NewServer creates a new Windows server on GCE.
-func NewServer(ctx context.Context, imageURL string) *Server {
+func NewServer(ctx context.Context, bs *BuilderServer) *Server {
 	// Get the current project ID.
 	projectID, err := getProject()
 	if err != nil {
@@ -83,7 +80,7 @@ func NewServer(ctx context.Context, imageURL string) *Server {
 		log.Fatalf("Failed to start GCE service: %v", err)
 		return nil
 	}
-	err = s.newInstance(imageURL)
+	err = s.newInstance(bs)
 	if err != nil {
 		log.Fatalf("Failed to start Windows VM: %v", err)
 		return nil
@@ -91,20 +88,20 @@ func NewServer(ctx context.Context, imageURL string) *Server {
 
 	// Reset password
 	username := "windows-builder"
-	password, err := s.resetWindowsPassword(username)
+	password, err := s.resetWindowsPassword(username, bs)
 	if err != nil {
 		log.Fatalf("Failed to reset Windows password: %+v", err)
 	}
 
 	// Set firewall rule.
-	err = s.setFirewallRule()
+	err = s.setFirewallRule(bs)
 	if err != nil {
 		log.Fatalf("Failed to set ingress firewall rule: %v", err)
 	}
 	log.Printf("Set ingress firewall rule successfully")
 
 	// Get IP address.
-	ip, err := s.getExternalIP()
+	ip, err := s.getExternalIP(bs)
 	if err != nil {
 		log.Fatalf("Failed to get external IP address: %v", err)
 		return nil
@@ -137,15 +134,12 @@ func (s *Server) newGCEService(ctx context.Context) error {
 }
 
 // newInstance starts a Windows VM on GCE and returns host, username, password.
-func (s *Server) newInstance(imageURL string) error {
+func (s *Server) newInstance(bs *BuilderServer) error {
 	scmd := startupCmd // TODO: find better way to take address of const
 	name := "windows-builder-" + uuid.New()
-	if imageURL == "" {
-		imageURL = defaultImageURL
-	}
 	instance := &compute.Instance{
 		Name:        name,
-		MachineType: prefix + s.projectID + "/zones/" + zone + "/machineTypes/n1-standard-1",
+		MachineType: prefix + s.projectID + "/zones/" + *bs.Zone + "/machineTypes/n1-standard-1",
 		Disks: []*compute.AttachedDisk{
 			{
 				AutoDelete: true,
@@ -153,7 +147,7 @@ func (s *Server) newInstance(imageURL string) error {
 				Type:       "PERSISTENT",
 				InitializeParams: &compute.AttachedDiskInitializeParams{
 					DiskName:    fmt.Sprintf("%s-pd", name),
-					SourceImage: imageURL,
+					SourceImage: prefix + *bs.ImageUrl,
 				},
 			},
 		},
@@ -173,7 +167,8 @@ func (s *Server) newInstance(imageURL string) error {
 						Name: "External NAT",
 					},
 				},
-				Network: prefix + s.projectID + "/global/networks/default",
+				Network: prefix + s.projectID + "/global/networks/" + *bs.VPC,
+				Subnetwork: prefix + s.projectID + "/regions/" + *bs.Region + "/subnetworks/" + *bs.Subnet,
 			},
 		},
 		ServiceAccounts: []*compute.ServiceAccount{
@@ -187,19 +182,19 @@ func (s *Server) newInstance(imageURL string) error {
 		},
 	}
 
-	op, err := s.service.Instances.Insert(s.projectID, zone, instance).Do()
+	op, err := s.service.Instances.Insert(s.projectID, *bs.Zone, instance).Do()
 	if err != nil {
 		log.Printf("GCE Instances insert call failed: %v", err)
 		return err
 	}
-	err = s.waitForComputeOperation(op)
+	err = s.waitForComputeOperation(op, bs)
 	if err != nil {
 		log.Printf("Wait for instance start failed: %v", err)
 		return err
 	}
 
 	etag := op.Header.Get("Etag")
-	inst, err := s.service.Instances.Get(s.projectID, zone, name).IfNoneMatch(etag).Do()
+	inst, err := s.service.Instances.Get(s.projectID, *bs.Zone, name).IfNoneMatch(etag).Do()
 	if err != nil {
 		log.Printf("Could not get GCE Instance details after creation: %v", err)
 		return err
@@ -210,8 +205,8 @@ func (s *Server) newInstance(imageURL string) error {
 }
 
 // refreshInstance refreshes latest info from GCE into struct.
-func (s *Server) refreshInstance() error {
-	inst, err := s.service.Instances.Get(s.projectID, zone, s.instance.Name).Do()
+func (s *Server) refreshInstance(bs *BuilderServer) error {
+	inst, err := s.service.Instances.Get(s.projectID, *bs.Zone, s.instance.Name).Do()
 	if err != nil {
 		log.Printf("Could not refresh instance: %v", err)
 		return err
@@ -221,8 +216,8 @@ func (s *Server) refreshInstance() error {
 }
 
 // DeleteInstance stops a Windows VM on GCE.
-func (s *Server) DeleteInstance() error {
-	_, err := s.service.Instances.Delete(s.projectID, zone, s.instance.Name).Do()
+func (s *Server) DeleteInstance(bs *BuilderServer) error {
+	_, err := s.service.Instances.Delete(s.projectID, *bs.Zone, s.instance.Name).Do()
 	if err != nil {
 		log.Printf("Could not delete instance: %v", err)
 		return err
@@ -231,8 +226,8 @@ func (s *Server) DeleteInstance() error {
 }
 
 // getExternalIP gets the external IP for an instance.
-func (s *Server) getExternalIP() (string, error) {
-	err := s.refreshInstance()
+func (s *Server) getExternalIP(bs *BuilderServer) (string, error) {
+	err := s.refreshInstance(bs)
 	if err != nil {
 		log.Printf("Error refreshing instance: %+v", err)
 	}
@@ -247,7 +242,7 @@ func (s *Server) getExternalIP() (string, error) {
 }
 
 // setFirewallRule allows ingress on WinRM port.
-func (s *Server) setFirewallRule() error {
+func (s *Server) setFirewallRule(bs *BuilderServer) error {
 	list, err := s.service.Firewalls.List(s.projectID).Do()
 	if err != nil {
 		log.Printf("Could not list GCE firewalls: %+v", err)
@@ -270,6 +265,7 @@ func (s *Server) setFirewallRule() error {
 		Direction:    "INGRESS",
 		Name:         "allow-winrm-ingress",
 		SourceRanges: []string{"0.0.0.0/0"},
+		Network: prefix + s.projectID + "/global/networks/" + *bs.VPC,
 	}
 	_, err = s.service.Firewalls.Insert(s.projectID, firewallRule).Do()
 	if err != nil {
@@ -302,7 +298,7 @@ type WindowsPasswordResponse struct {
 
 // resetWindowsPassword securely resets the admin Windows password.
 // See https://cloud.google.com/compute/docs/instances/windows/automate-pw-generation
-func (s *Server) resetWindowsPassword(username string) (string, error) {
+func (s *Server) resetWindowsPassword(username string, bs *BuilderServer) (string, error) {
 	//Create random key and encode
 	key, err := rsa.GenerateKey(rand.Reader, 2048)
 	if err != nil {
@@ -332,7 +328,7 @@ func (s *Server) resetWindowsPassword(username string) (string, error) {
 		Key:   "windows-keys",
 		Value: &dstring,
 	})
-	op, err := s.service.Instances.SetMetadata(s.projectID, zone, s.instance.Name, &compute.Metadata{
+	op, err := s.service.Instances.SetMetadata(s.projectID, *bs.Zone, s.instance.Name, &compute.Metadata{
 		Fingerprint: s.instance.Metadata.Fingerprint,
 		Items:       s.instance.Metadata.Items,
 	}).Do()
@@ -340,7 +336,7 @@ func (s *Server) resetWindowsPassword(username string) (string, error) {
 		log.Printf("Failed to set instance metadata: %v", err)
 		return "", err
 	}
-	err = s.waitForComputeOperation(op)
+	err = s.waitForComputeOperation(op, bs)
 	if err != nil {
 		log.Printf("Compute operation timed out")
 		return "", err
@@ -351,7 +347,7 @@ func (s *Server) resetWindowsPassword(username string) (string, error) {
 	timeout := time.Now().Add(time.Minute * 5)
 	hash := sha1.New()
 	for time.Now().Before(timeout) {
-		output, err := s.service.Instances.GetSerialPortOutput(s.projectID, zone, s.instance.Name).Port(4).Do()
+		output, err := s.service.Instances.GetSerialPortOutput(s.projectID, *bs.Zone, s.instance.Name).Port(4).Do()
 		if err != nil {
 			log.Printf("Unable to get serial port output: %v", err)
 			return "", err
@@ -383,11 +379,11 @@ func (s *Server) resetWindowsPassword(username string) (string, error) {
 }
 
 // waitForComputeOperation waits for a compute operation
-func (s *Server) waitForComputeOperation(op *compute.Operation) error {
+func (s *Server) waitForComputeOperation(op *compute.Operation, bs *BuilderServer) error {
 	log.Printf("Waiting for %+v to complete", op.Name)
 	timeout := time.Now().Add(300 * time.Second)
 	for time.Now().Before(timeout) {
-		newop, err := s.service.ZoneOperations.Get(s.projectID, zone, op.Name).Do()
+		newop, err := s.service.ZoneOperations.Get(s.projectID, *bs.Zone, op.Name).Do()
 		if err != nil {
 			log.Printf("Failed to update operation status: %v", err)
 			return err
