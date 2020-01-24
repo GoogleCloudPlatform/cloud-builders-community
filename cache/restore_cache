@@ -73,6 +73,7 @@ if [ -n "${BUCKET}" ];then
 
     echo "Restoring cache from file ${CACHE_FILE}..."
     tar xpzf "$CACHE_FILE" -P
+    rm "$CACHE_FILE"
   else
     # Check if fallback key pattern has been specified
     if [ -z "${KEY_FALLBACK_PATTERN}" ]; then
@@ -97,6 +98,7 @@ if [ -n "${BUCKET}" ];then
 
     echo "Restoring cache from fallback file ${FALLBACK_CACHE_FILE}..."
     tar xpzf "$FALLBACK_CACHE_FILE_NAME" -P
+    rm "$FALLBACK_CACHE_FILE_NAME"
   fi
 # If SRC_DIR is specified, restore cache from local file
 elif [ -n "${SRC_DIR}" ]; then
