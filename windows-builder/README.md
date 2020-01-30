@@ -51,6 +51,31 @@ steps:
           '--command', '<command goes here>' ]
 ```
 
+You can also provide the VPC, Subnetwork, Region, and Zone parameters to specify where to create the VM:
+
+```yaml
+steps:
+- name: 'gcr.io/$PROJECT_ID/windows-builder'
+  args: [ '--network', '<network-name>',
+          '--subnetwork', '<subnetwork-name>',
+          '--region', '<region>',
+          '--zone', '<zone>',
+          '--command', '<command goes here>' ]
+```
+
+As the remote copy command provided is very slow if you have a number of files in your workspace, it is also possible to avoid copying the workspace (you can use GCS to copy the workspace instead):
+
+```yaml
+steps:
+- name: 'gcr.io/$PROJECT_ID/windows-builder'
+  args: [ '--network', '<network-name>',
+          '--subnetwork', '<subnetwork-name>',
+          '--region', '<region>',
+          '--zone', '<zone>',
+          '--not-copy-workspace',
+          '--command', '<command goes here>' ]
+```
+
 Your server must support Basic Authentication (username and password) and your network must allow access from the internet on TCP port 5986.  Do not submit plaintext passwords in your build configuration: instead, use [encrypted credentials](https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials) secured with Cloud KMS.  In addition, you must clear up your workspace directory after use, and take care to manage concurrent builds.
 
 ## Examples

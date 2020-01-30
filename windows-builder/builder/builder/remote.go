@@ -24,6 +24,14 @@ type Remote struct {
 	Password *string
 }
 
+type BuilderServer struct {
+	ImageUrl *string
+	VPC *string
+	Subnet *string
+	Region *string
+	Zone *string
+}
+
 // Wait for server to be available.
 func (r *Remote) Wait() error {
 	timeout := time.Now().Add(time.Minute * 5)
