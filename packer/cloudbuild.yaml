@@ -12,8 +12,8 @@ steps:
         '--build-arg', 'PACKER_VERSION_SHA256SUM=${_PACKER_VERSION_SHA256SUM}',
         '.']
 substitutions:
-  _PACKER_VERSION: 1.4.5
-  _PACKER_VERSION_SHA256SUM: 30da8dab9c526a6d15b037e2234f6f12cf3accfad77eb2c130738ec1a54cab6d
+  _PACKER_VERSION: 1.5.1
+  _PACKER_VERSION_SHA256SUM: 3305ede8886bc3fd83ec0640fb87418cc2a702b2cb1567b48c8cb9315e80047d
 
 images:
 - 'gcr.io/$PROJECT_ID/packer:latest'
