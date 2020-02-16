@@ -43,7 +43,6 @@ To build this builder, run the following command in this directory.
 
     gcloud builds submit . --config=cloudbuild.yaml
 
-
 You can set the `Helm` and `Helmfile` versions in `cloudbuild.yaml`.
 
     args: [
@@ -56,9 +55,7 @@ You can set the `Helm` and `Helmfile` versions in `cloudbuild.yaml`.
 
 ## Using Helmfile
 
-
 Check the [examples](examples) folder for examples of using Helm in `Cloud Build` pipelines.
-
 
 ## Configuration
 
