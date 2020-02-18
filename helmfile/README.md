@@ -43,22 +43,19 @@ To build this builder, run the following command in this directory.
 
     gcloud builds submit . --config=cloudbuild.yaml
 
-
 You can set the `Helm` and `Helmfile` versions in `cloudbuild.yaml`.
 
     args: [
         'build',
         '--tag=gcr.io/$PROJECT_ID/helm',
-        '--build-arg', 'HELM_VERSION=v3.0.3',
-        '--build-arg', 'HELMFILE_VERSION=v0.99.0',
+        '--build-arg', 'HELM_VERSION=v3.1.0',
+        '--build-arg', 'HELMFILE_VERSION=v0.99.1',
         '.'
     ]
 
 ## Using Helmfile
 
-
 Check the [examples](examples) folder for examples of using Helm in `Cloud Build` pipelines.
-
 
 ## Configuration
 
