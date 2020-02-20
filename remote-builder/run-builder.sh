@@ -14,6 +14,7 @@ INSTANCE_NAME=${INSTANCE_NAME:-builder-$(cat /proc/sys/kernel/random/uuid)}
 ZONE=${ZONE:-us-central1-f}
 INSTANCE_ARGS=${INSTANCE_ARGS:---preemptible}
 GCLOUD=${GCLOUD:-gcloud}
+CONNECTION_RETRIES=${CONNECTION_RETRIES:-8}
 
 ${GCLOUD} config set compute/zone ${ZONE}
 
@@ -33,9 +34,20 @@ ${GCLOUD} compute instances create \
 
 trap cleanup EXIT
 
-${GCLOUD} compute scp --compress --recurse \
+retries=0
+while ! ${GCLOUD} compute scp --compress --recurse \
        $(pwd) ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
        --ssh-key-file=${KEYNAME}
+do
+    retries=$((retries+1))
+    if [[ "$retries" -lt $CONNECTION_RETRIES ]]; then
+        echo "SSH not ready. Trying again in 5 sec..."
+        sleep 5 
+    else
+        echo "ERROR: Couldn't connect to ${INSTANCE_NAME} through SSH"
+        exit 1
+    fi
+done
 
 ${GCLOUD} compute ssh --ssh-key-file=${KEYNAME} \
        ${USERNAME}@${INSTANCE_NAME} -- ${COMMAND}
