@@ -73,6 +73,7 @@ build step in the `env` parameter:
 | REMOTE_WORKSPACE  | Location on remote host to use as workspace | `/home/${USERNAME}/workspace/` |
 | INSTANCE_NAME  | Name of the instance that is launched  | `builder-$UUID` |
 | ZONE  | Compute zone to launch the instance in | `us-central1-f` |
+| CONNECTION_RETRIES  | Number of retries before giving up SSH connection to remote host | `8` |
 | INSTANCE_ARGS| Parameters to the instance creation command. For a full list run `gcloud compute instances create --help`| `--preemptible` |
 
 To give it a try, see the [examples directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/remote-builder/examples).
