@@ -167,7 +167,7 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 						Name: "External NAT",
 					},
 				},
-				Network: prefix + s.projectID + "/global/networks/" + *bs.VPC,
+				Network:    prefix + s.projectID + "/global/networks/" + *bs.VPC,
 				Subnetwork: prefix + s.projectID + "/regions/" + *bs.Region + "/subnetworks/" + *bs.Subnet,
 			},
 		},
@@ -175,8 +175,7 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 			{
 				Email: "default",
 				Scopes: []string{
-					compute.DevstorageFullControlScope,
-					compute.ComputeScope,
+					compute.CloudPlatformScope,
 				},
 			},
 		},
@@ -265,7 +264,7 @@ func (s *Server) setFirewallRule(bs *BuilderServer) error {
 		Direction:    "INGRESS",
 		Name:         "allow-winrm-ingress",
 		SourceRanges: []string{"0.0.0.0/0"},
-		Network: prefix + s.projectID + "/global/networks/" + *bs.VPC,
+		Network:      prefix + s.projectID + "/global/networks/" + *bs.VPC,
 	}
 	_, err = s.service.Firewalls.Insert(s.projectID, firewallRule).Do()
 	if err != nil {
