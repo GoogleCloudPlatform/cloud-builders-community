@@ -1,9 +1,10 @@
-FROM gcr.io/cloud-builders/go AS build-env
+FROM golang AS build-env
 
-ADD ./ /go/src/
+ADD ./ /go/src/builder
+WORKDIR /go/src/builder
 
-ENV GOBIN=/go/bin
-RUN go get -d -v ./...
-RUN go install /go/src/main.go
+RUN GO111MODULE=on CGO_ENABLED=0 go build -o /go/bin/main
 
-ENTRYPOINT [ "/go/bin/main" ]
+FROM gcr.io/distroless/base-debian10
+COPY --from=build-env /go/bin/main /bin/main
+ENTRYPOINT [ "/bin/main" ]
