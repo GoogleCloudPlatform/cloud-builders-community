@@ -10,3 +10,4 @@ FROM alpine:3.6
 
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /go/src/github.com/optiopay/klar/klar /klar
+ENTRYPOINT ["/klar"]
