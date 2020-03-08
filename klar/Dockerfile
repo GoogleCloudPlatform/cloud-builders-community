@@ -6,8 +6,8 @@ WORKDIR /go/src/github.com/optiopay/klar
 RUN go get -d -v ./... && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build  -o klar .
 RUN pwd && ls
 
-FROM alpine:3.6
+FROM gcr.io/cloud-builders/gcloud
 
-RUN apk add --no-cache ca-certificates
-COPY --from=builder /go/src/github.com/optiopay/klar/klar /klar
-ENTRYPOINT ["/klar"]
+COPY --from=builder /go/src/github.com/optiopay/klar/klar /usr/local/bin/klar
+COPY entrypoint.bash /builder/entrypoint.bash
+ENTRYPOINT ["/builder/entrypoint.bash"]
