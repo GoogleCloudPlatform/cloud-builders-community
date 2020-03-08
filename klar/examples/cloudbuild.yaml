@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/$PROJECT_ID/klar:latest'
+    args: [
+      "klar",
+      "gcr.io/$PROJECT_ID/<image:tag>"
+      ]
+    env: 
+      - "CLAIR_ADDR=<clair host>"
+      - "CLAIR_OUTPUT=High"
+      - "CLAIR_THRESHOLD=10"
+      - "DOCKER_USER=oauth2accesstoken"
+      - "DOCKER_PASSWORD=<access token for service account with viewer IAM access>"
