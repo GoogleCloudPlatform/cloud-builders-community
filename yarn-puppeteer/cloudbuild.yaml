@@ -7,10 +7,12 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg=NODE_VERSION=12.14.1'
-  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.14.1'
-  # 12.14.1 is tagged :latest
+  - '--build-arg=NODE_VERSION=12.16.1'
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.16.1'
+  # 12.16.1 is tagged :latest
   - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
+  # 12.16.1 is tagged :node-12 
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-12'
   - '--tag=gcr.io/$PROJECT_ID/nodejs/yarn-puppeteer'
   - '.'
 - name: 'gcr.io/cloud-builders/docker'
@@ -20,18 +22,20 @@ steps:
   - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-13.6.0'
   # 13.6.0 is tagged :current
   - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:current'
+  # 13.6.0 is tagged :13 
+  - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-13'
   - '.'
 # Print for each version
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.14.1'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.16.1'
   args: ['--version']
 - name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-13.6.0'
   args: ['--version']
 
 # Test the cloud builder on the example
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.14.1'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.16.1'
   args: ['install']
   dir: 'examples/hello_world'
-- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.14.1'
+- name: 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.16.1'
   args: ['test:puppeteer']
   dir: 'examples/hello_world'
 
@@ -45,7 +49,7 @@ steps:
 images:
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:latest'
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:current'
-- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.14.1'
+- 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.16.1'
 - 'gcr.io/$PROJECT_ID/yarn-puppeteer:node-13.6.0'
 - 'gcr.io/$PROJECT_ID/nodejs/yarn-puppeteer'
 tags: ['cloud-builders-community']
