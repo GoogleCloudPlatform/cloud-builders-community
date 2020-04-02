@@ -8,6 +8,7 @@ import (
 
 const maxErrors = 3
 const tickDuration = 20 * time.Second
+
 // 1m20s
 const monitorErrorMarginDuration = (maxErrors + 1) * tickDuration
 
@@ -30,10 +31,15 @@ func Monitor(ctx context.Context, projectId string, buildId string, webhook stri
 				log.Fatalf("Reached maximum number of errors (%d).  Exiting", maxErrors)
 			}
 		}
+		getBuildTrigger := svc.Projects.Triggers.Get(projectId, monitoredBuild.BuildTriggerId)
+		buildTrigger, err := getBuildTrigger.Do()
+		if err != nil {
+			log.Fatalf("Failed to get build trigger details from Cloud Build. Exiting", err)
+		}
 		switch monitoredBuild.Status {
 		case "SUCCESS", "FAILURE", "INTERNAL_ERROR", "TIMEOUT", "CANCELLED":
 			log.Printf("Terminal status reached.  Notifying")
-			Notify(monitoredBuild, webhook)
+			Notify(monitoredBuild, buildTrigger, webhook)
 			return
 		}
 		<-t
