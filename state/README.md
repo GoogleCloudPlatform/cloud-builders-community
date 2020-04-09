@@ -45,5 +45,4 @@ settings for these secrets.
    [ActiveState Platform]: https://www.activestate.com/products/platform/
    [Documentation]: http://docs.activestate.com/platform/state/#usage
    [State Tool Secrets]: http://docs.activestate.com/platform/state/start.html#secrets
-   [Secrets Documentation]: http://docs.activestate.com/platform/state/secrets.html
    [Google Secret Manager]: https://console.cloud.google.com/security/secret-manager
