@@ -7,7 +7,7 @@ steps:
         "--build-arg",
         "HELM_VERSION=v3.1.2",
         "--build-arg",
-        "HELMFILE_VERSION=v0.106.3",
+        "HELMFILE_VERSION=v0.109.0",
         ".",
       ]
 
