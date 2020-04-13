@@ -1,6 +1,7 @@
-# Docker-compose example
+# Example Build
+The provided `cloudbuild.yaml` simply invokes `docker-compose up` for a service that says "Hello world".
 
-This `cloudbuild.yaml` invokes a `docker-compose up`:
-```
+```bash
+cd cloud-builders-community/docker-compose/examples/hello-world
 gcloud builds submit --config=cloudbuild.yaml .
 ```
