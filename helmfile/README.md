@@ -49,7 +49,7 @@ You can set the `Helm` and `Helmfile` versions in `cloudbuild.yaml`.
         'build',
         '--tag=gcr.io/$PROJECT_ID/helm',
         '--build-arg', 'HELM_VERSION=v3.1.2',
-        '--build-arg', 'HELMFILE_VERSION=v0.106.3',
+        '--build-arg', 'HELMFILE_VERSION=v0.109.0',
         '.'
     ]
 
