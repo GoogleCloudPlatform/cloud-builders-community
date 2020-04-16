@@ -70,9 +70,6 @@ RUN pip install my-library
 ...
 ```
 
-This container uses Python 2.  Python 3 is currently under development: see
-[BEAM-1251](https://issues.apache.org/jira/browse/BEAM-1251).
-
 ## Examples
 
 For examples, see the [examples
