@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # If there is no current context, get one.
-if [[ $(kubectl config current-context 2> /dev/null) == "" ]]; then
+if [[ $(kubectl config current-context 2> /dev/null) == "" && "$SKIP_CLUSTER_CONFIG" != true ]]; then
     # This tries to read environment variables. If not set, it grabs from gcloud
     cluster=${CLOUDSDK_CONTAINER_CLUSTER:-$(gcloud config get-value container/cluster 2> /dev/null)}
     region=${CLOUDSDK_COMPUTE_REGION:-$(gcloud config get-value compute/region 2> /dev/null)}
@@ -22,13 +22,11 @@ EOF
     [ ! "$zone" -o "$region" ] && var_usage
 
     if [ -n "$region" ]; then
-      echo "Running: gcloud config set container/use_v1_api_client false"
-      gcloud config set container/use_v1_api_client false
-      echo "Running: gcloud beta container clusters get-credentials --project=\"$project\" --region=\"$region\" \"$cluster\""
-      gcloud beta container clusters get-credentials --project="$project" --region="$region" "$cluster" || exit
+      echo "Running: gcloud container clusters get-credentials --project=\"$project\" --region=\"$region\" \"$cluster\""
+      gcloud container clusters get-credentials --project="$project" --region="$region" "$cluster"
     else
       echo "Running: gcloud container clusters get-credentials --project=\"$project\" --zone=\"$zone\" \"$cluster\""
-      gcloud container clusters get-credentials --project="$project" --zone="$zone" "$cluster" || exit
+      gcloud container clusters get-credentials --project="$project" --zone="$zone" "$cluster"
     fi
 fi
 
@@ -37,7 +35,7 @@ if [[ $HELM_VERSION =~ ^v2 ]]; then
   echo "Running: helm init --client-only"
   helm init --client-only
 else
-  echo "Skipped `helm init --client-only` because not v2"
+  echo "Skipped 'helm init --client-only' because not v2"
 fi
 
 # if GCS_PLUGIN_VERSION is set, install the plugin
@@ -61,12 +59,12 @@ fi
 
 # check if repo values provided then add that repo
 if [[ -n $HELM_REPO_NAME && -n $HELM_REPO_URL ]]; then
-  echo "Adding chart helm repo $HELM_REPO_URL "
+  echo "Adding chart helm repo $HELM_REPO_URL"
   helm repo add $HELM_REPO_NAME $HELM_REPO_URL
 fi
 
 echo "Running: helm repo update"
-helm repo update
+helm repo list && helm repo update || true
 
 
 # if 'TILLERLESS=true' is set, run a local tiller server with the secret backend
@@ -86,8 +84,7 @@ if [ "$TILLERLESS" = true ]; then
   if [ "$DEBUG" = true ]; then
       echo "Running: helm $@"
   fi
-  helm "$@"
-  exitCode=$?
+  helm "$@" && exitCode=$? || exitCode=$?
   echo "Stopping local tiller server"
   pkill tiller
   exit $exitCode

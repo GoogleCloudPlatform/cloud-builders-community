@@ -1,8 +1,8 @@
 # In this directory, run the following command to build this builder.
 # $ gcloud builds submit . --config=cloudbuild.yaml
 substitutions:
-  _TERRAFORM_VERSION: 0.12.9
-  _TERRAFORM_VERSION_SHA256SUM: 69712c6216cc09b7eca514b9fb137d4b1fead76559c66f338b4185e1c347ace5
+  _TERRAFORM_VERSION: 0.12.20
+  _TERRAFORM_VERSION_SHA256SUM: 46bd906f8cb9bbb871905ecb23ae7344af8017d214d735fbb6d6c8e0feb20ff3
 steps:
 - name: 'gcr.io/cloud-builders/wget'
   args: ["https://releases.hashicorp.com/terraform/${_TERRAFORM_VERSION}/terraform_${_TERRAFORM_VERSION}_linux_amd64.zip"]
