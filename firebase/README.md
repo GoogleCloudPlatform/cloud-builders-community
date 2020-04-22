@@ -25,7 +25,7 @@ Ensure you have the following APIs enabled
 - Open Cloud Build service account settings
 - Give the Cloud Build service account the **Firebase Admin** role:
 
-![service account settings](./docs/service-account.png)
+![service account settings](docs/service-account.png)
 
 
 ### With Token
