@@ -5,6 +5,7 @@ This builder is used to generate a [Cloud Dataproc custom image](https://cloud.g
 
 From this folder, run the following:
 
+    PROJECT_ID=[YOUR_PROJECT_ID]
     gcloud builds submit . --config=cloudbuild.yaml
 
 ## Example
