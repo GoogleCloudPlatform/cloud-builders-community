@@ -1,3 +1,0 @@
-[submodule "pulumi/examples"]
-	path = pulumi/examples
-	url = https://github.com/pulumi/examples
