@@ -42,7 +42,7 @@ if [ ! -z "$MACHINE_TYPE" ]; then
     params+=(--machine-type=${MACHINE_TYPE})
 fi
 if [ ! -z "$NO_SMOKE_TEST" ]; then
-    params+=(--no-smoke-test=${NO_SMOKE_TEST})
+    params+=(--no-smoke-test)
 fi
 if [ ! -z "$NETWORK" ]; then
     params+=(--network=${NETWORK})
@@ -51,7 +51,7 @@ if [ ! -z "$SUBNETWORK" ]; then
     params+=(--subnetwork=${SUBNETWORK})
 fi
 if [ ! -z "$NO_EXTERNAL_IP" ]; then
-    params+=(--no-external-ip=${NO_EXTERNAL_IP})
+    params+=(--no-external-ip)
 fi
 if [ ! -z "$SERVICE_ACCOUNT" ]; then
     params+=(--service-account=${SERVICE_ACCOUNT})
@@ -75,7 +75,7 @@ if [ ! -z "$SHUTDOWN_INSTANCE_TIMER_SEC" ]; then
     params+=(--shutdown-instance-timer-sec=${SHUTDOWN_INSTANCE_TIMER_SEC})
 fi
 if [ ! -z "$DRY_RUN" ]; then
-    params+=(--dry-run=${DRY_RUN})
+    params+=(--dry-run)
 fi
 
 echo "---- Passing these parameters to 'python generate_custom_image.py' ${params[@]} ----"
