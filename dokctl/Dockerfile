@@ -1,6 +1,6 @@
 FROM launcher.gcr.io/google/ubuntu16_04
-ARG DOCTL_VERSION=1.39.0
-ARG KUBECTL_VERSION=1.16
+ARG DOCTL_VERSION=1.43.0
+ARG KUBECTL_VERSION=1.18.2
 # https://github.com/digitalocean/doctl
 # https://github.com/digitalocean/doctl/releases
 RUN curl -sL https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz | tar -xzv -C /usr/local/bin
