@@ -1,8 +1,8 @@
 ARG BASE_IMAGE=gcr.io/cloud-builders/java/javac:8
 FROM ${BASE_IMAGE}
 
-ARG SBT_VERSION=1.3.4
-ARG SHA=04d49d6e535b3586e40910ccd7396034ca7a7bab7d31bfd265fddca7cccc95eb
+ARG SBT_VERSION=1.3.12
+ARG SHA=1914caf18790d2320c37ef091ba696f8fc00808e034597e948196d0ec0f39e0a
 ARG BASE_URL=https://github.com/sbt/sbt/releases/download
 
 RUN apt-get update -qqy \
