@@ -31,8 +31,11 @@ func Monitor(ctx context.Context, projectId string, buildId string, webhook stri
 			}
 		}
 		switch monitoredBuild.Status {
+		case "WORKING":
+			log.Printf("Build started. Notifying")
+			Notify(monitoredBuild, webhook, project)
 		case "SUCCESS", "FAILURE", "INTERNAL_ERROR", "TIMEOUT", "CANCELLED":
-			log.Printf("Terminal status reached.  Notifying")
+			log.Printf("Terminal status reached. Notifying")
 			Notify(monitoredBuild, webhook, project)
 			return
 		}
