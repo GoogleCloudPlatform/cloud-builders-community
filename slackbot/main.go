@@ -7,7 +7,7 @@ import (
 	"flag"
 	"log"
 
-	"./slackbot"
+	"github.com/GoogleCloudPlatform/cloud-builders-community/slackbot/slackbot"
 )
 
 var (
