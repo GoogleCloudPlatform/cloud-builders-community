@@ -12,7 +12,7 @@ import (
 )
 
 // Notify posts a notification to Slack that the build is complete.
-func Notify(b *cloudbuild.Build, webhook string) {
+func Notify(b *cloudbuild.Build, webhook string, project string) {
 	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s", b.Id)
 	var i string
 	switch b.Status {
@@ -41,7 +41,7 @@ func Notify(b *cloudbuild.Build, webhook string) {
 	buildDuration := finishTime.Sub(startTime).Truncate(time.Second)
 
 	msgFmt := `{
-		"text": "%s build _%s_ after _%s_",
+		"text": "%s *%s* build _%s_ after _%s_",
 		"attachments": [{
 			"fallback": "Open build details at %s",
 			"actions": [{
@@ -52,7 +52,7 @@ func Notify(b *cloudbuild.Build, webhook string) {
 		}]
 	}`
 
-	j := fmt.Sprintf(msgFmt, i, b.Status, buildDuration, url, url)
+	j := fmt.Sprintf(msgFmt, i, project, b.Status, buildDuration, url, url)
 
 	r := strings.NewReader(j)
 	resp, err := http.Post(webhook, "application/json", r)
