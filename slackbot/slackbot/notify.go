@@ -32,16 +32,6 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 		i = ":question:"
 	}
 
-	startTime, err := time.Parse(time.RFC3339, b.StartTime)
-	if err != nil {
-		log.Fatalf("Failed to parse Build.StartTime: %v", err)
-	}
-	finishTime, err := time.Parse(time.RFC3339, b.FinishTime)
-	if err != nil {
-		log.Fatalf("Failed to parse Build.FinishTime: %v", err)
-	}
-	buildDuration := finishTime.Sub(startTime).Truncate(time.Second)
-
 	var msg string
 	if b.Status == "WORKING" {
 		msgFmt := `{
@@ -57,6 +47,16 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 		}`
 		msg = fmt.Sprintf(msgFmt, i, project, url, url)
 	} else {
+		startTime, err := time.Parse(time.RFC3339, b.StartTime)
+		if err != nil {
+			log.Fatalf("Failed to parse Build.StartTime: %v", err)
+		}
+		finishTime, err := time.Parse(time.RFC3339, b.FinishTime)
+		if err != nil {
+			log.Fatalf("Failed to parse Build.FinishTime: %v", err)
+		}
+		buildDuration := finishTime.Sub(startTime).Truncate(time.Second)
+
 		msgFmt := `{
 			"text": "%s *%s* build _%s_ after _%s_",
 			"attachments": [{
