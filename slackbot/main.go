@@ -13,7 +13,7 @@ import (
 var (
 	buildId     = flag.String("build", "", "Id of monitored Build")
 	webhook     = flag.String("webhook", "", "Slack webhook URL")
-	project     = flag.String("project", "", "Project name being built")
+	project     = flag.String("project", "unknown", "Project name being built")
 	mode        = flag.String("mode", "trigger", "Mode the builder runs in")
 	copyName    = flag.Bool("copy-name", false, "Copy name of slackbot's build step from monitored build to watcher build")
 	copyTags    = flag.Bool("copy-tags", false, "Copy tags from monitored build to watcher build")

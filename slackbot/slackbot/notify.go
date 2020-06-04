@@ -32,6 +32,11 @@ func Notify(b *cloudbuild.Build, webhook string, project string) {
 		i = ":question:"
 	}
 
+	// Ensure messages remain the same as before
+	if project == "unknown" {
+		project = ""
+	}
+
 	var msg string
 	if b.Status == "WORKING" {
 		msgFmt := `{
