@@ -15,6 +15,7 @@ const monitorErrorMarginDuration = (maxErrors + 1) * tickDuration
 func Monitor(ctx context.Context, projectId string, buildId string, webhook string, project string) {
 	svc := gcbClient(ctx)
 	errors := 0
+	started := false
 
 	t := time.Tick(tickDuration)
 	for {
@@ -32,8 +33,11 @@ func Monitor(ctx context.Context, projectId string, buildId string, webhook stri
 		}
 		switch monitoredBuild.Status {
 		case "WORKING":
-			log.Printf("Build started. Notifying")
-			Notify(monitoredBuild, webhook, project)
+			if !started {
+				log.Printf("Build started. Notifying")
+				Notify(monitoredBuild, webhook, project)
+				started = true
+			}
 		case "SUCCESS", "FAILURE", "INTERNAL_ERROR", "TIMEOUT", "CANCELLED":
 			log.Printf("Terminal status reached. Notifying")
 			Notify(monitoredBuild, webhook, project)
