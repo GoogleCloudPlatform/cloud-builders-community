@@ -111,4 +111,6 @@ images:
   - "gcr.io/$PROJECT_ID/ballerina:v1.1.1"
   - "gcr.io/$PROJECT_ID/ballerina:v1.1.0"
 
+timeout: 2700s
+
 tags: ["cloud-builders-community"]
