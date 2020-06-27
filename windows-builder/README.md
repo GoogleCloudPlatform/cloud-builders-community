@@ -91,6 +91,7 @@ Several example builds are provided:
 * [images/docker-windows](images/docker-windows) builds a Windows container with
   a Docker executable inside - useful for building containers within a
   Docker context itself.
+* [images/multi-arch_1909_2019](images/multi-arch_1909_2019) builds a multi-arch Windows container from servercore 1909 & ltsc2019.
 
 ## Performance
 
