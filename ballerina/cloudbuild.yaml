@@ -6,7 +6,25 @@ steps:
       - "--tag=gcr.io/$PROJECT_ID/ballerina:latest"
       - "--file=Dockerfile"
       - "--build-arg"
-      - "ballerina_version=1.2.4"
+      - "ballerina_version=1.2.6"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "."
+      - "--tag=gcr.io/$PROJECT_ID/ballerina:v1.2.6"
+      - "--file=Dockerfile"
+      - "--build-arg"
+      - "ballerina_version=1.2.6"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "."
+      - "--tag=gcr.io/$PROJECT_ID/ballerina:v1.2.5"
+      - "--file=Dockerfile"
+      - "--build-arg"
+      - "ballerina_version=1.2.5"
 
   - name: "gcr.io/cloud-builders/docker"
     args:
@@ -100,6 +118,8 @@ steps:
 
 images:
   - "gcr.io/$PROJECT_ID/ballerina:latest"
+  - "gcr.io/$PROJECT_ID/ballerina:v1.2.6"
+  - "gcr.io/$PROJECT_ID/ballerina:v1.2.5"
   - "gcr.io/$PROJECT_ID/ballerina:v1.2.4"
   - "gcr.io/$PROJECT_ID/ballerina:v1.2.3"
   - "gcr.io/$PROJECT_ID/ballerina:v1.2.2"
@@ -111,6 +131,6 @@ images:
   - "gcr.io/$PROJECT_ID/ballerina:v1.1.1"
   - "gcr.io/$PROJECT_ID/ballerina:v1.1.0"
 
-timeout: 2700s
+timeout: 3600s
 
 tags: ["cloud-builders-community"]
