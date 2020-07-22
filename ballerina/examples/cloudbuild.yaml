@@ -1,6 +1,10 @@
 steps:
   - name: "gcr.io/$PROJECT_ID/ballerina:latest"
     args: ["version"]
+  - name: "gcr.io/$PROJECT_ID/ballerina:v1.2.6"
+    args: ["version"]
+  - name: "gcr.io/$PROJECT_ID/ballerina:v1.2.5"
+    args: ["version"]
   - name: "gcr.io/$PROJECT_ID/ballerina:v1.2.4"
     args: ["version"]
   - name: "gcr.io/$PROJECT_ID/ballerina:v1.2.3"

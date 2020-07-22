@@ -9,8 +9,8 @@ command](https://ballerina.io/learn/cli-commands/).
 
 ## Available builders
 
-For convenience, we have included different versions of the Angular CLI:
-- `gcr.io/$PROJECT_ID/ballerina:v1.2.4`: provides the `v1.2.4` stable branch
+For convenience, we have included different versions of the Ballerina CLI:
+- `gcr.io/$PROJECT_ID/ballerina:v1.2.6`: provides the `v1.2.6` stable branch
 
 
 
