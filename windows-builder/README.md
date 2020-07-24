@@ -113,7 +113,7 @@ Downloading and expanding archives is a common build step.  While Powershell off
 
 For ephemeral VMs on Compute Engine, the initial password reset is performed [using public key cryptography](https://cloud.google.com/compute/docs/instances/windows/automate-pw-generation).  The cleartext password is never sent over an unencrypted connection, and is stored in memory for the duration of the build.
 
-The latest version of Windows Server 1803 DC Core for Containers (patched 2018-08-02) is currently used.
+The latest version of Windows Server 2019 DC Core for Containers (patched 2019-12-10) is currently used.
 
 ## Docker builds
 
