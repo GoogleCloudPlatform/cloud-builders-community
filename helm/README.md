@@ -45,17 +45,18 @@ You can also build this builder setting `Helm` version via in `cloudbuild.yaml`,
 
 ## Using Helm
 
-This builder supports two install options of Helm:
-* The default one when the `tiller` gets installed into your GKE cluster.
-* Secure `Tillerless Helm` where `tiller` runs outside the GKE cluster.
+This builder supports three install options of Helm:
+* The default one when where Helm v3 is used and thus tiller is no longer present
+* Helm v2 where `tiller` gets installed into your GKE cluster.
+* Secure v2 `Tillerless Helm` where `tiller` runs outside the GKE cluster.
 
 Check the [examples](examples) folder for examples of using Helm in `Cloud Build` pipelines.
 
 **Note:** Do not forget to update `zone` and GKE `cluster` settings in the `cloudbuild.yaml` files.
 
-### Default Helm + Tiller setup
+### Helm v3
 
-The default one when the `tiller` gets installed into your GKE cluster (oh all those `tiller` security issues).
+The default one.
 
 You can test e.g. installing a chart via `Helm`, running the following command.
 
@@ -66,7 +67,11 @@ And to list Helm releases.
     $ gcloud builds submit . --config=examples/releases-list/cloudbuild.yaml
 
 
-### Tillerless Helm setup
+### Helm v2 + Tiller setup
+
+The v2 choice when `Tillerless` is not toggled on. `tiller` will be installed into your GKE cluster (consider the security implications, `tiller` has historically had some issues).
+
+### Helm v2 + Tillerless Helm setup
 
 `Tillerless Helm` solves many `tiller` [security issues](https://docs.helm.sh/using_helm/#securing-your-helm-installation), as `tiller` runs outside the GKE cluster, locally in the container, and stores configs as secrets using the [secrets storage backend](https://docs.helm.sh/using_helm/#storage-backends).
 It is based on the [Tillerless](https://rimusz.net/tillerless-helm/) [plugin](https://github.com/rimusz/helm-tiller), and is available in the image.
