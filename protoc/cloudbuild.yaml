@@ -1,5 +1,5 @@
 substitutions:
-  _VERS: "3.8.0"
+  _VERS: "3.12.4"
   _ARCH: linux-x86_64
 
 steps:
