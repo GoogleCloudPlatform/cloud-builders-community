@@ -1,7 +1,5 @@
 # [Terraform](https://www.terraform.io/docs) cloud builder
 
-## Terraform cloud builder
-
 This builder can be used to run the terraform tool in the GCE. From the Hashicorp Terraform 
 [product page][terraform]:
 
@@ -23,7 +21,7 @@ To override the builder version for Terraform, run the following command in this
 
 ```
 $ gcloud builds submit --config=cloudbuild.yaml \
-  --substitutions=_TERRAFORM_VERSION="0.12.26",_TERRAFORM_VERSION_SHA256SUM="607bc802b1c6c2a5e62cc48640f38aaa64bef1501b46f0ae4829feb51594b257"
+  --substitutions=_TERRAFORM_VERSION="0.12.29",_TERRAFORM_VERSION_SHA256SUM="872245d9c6302b24dc0d98a1e010aef1e4ef60865a2d1f60102c8ad03e9d5a1d"
 ```
 
 ## Using this builder
@@ -36,7 +34,7 @@ This state can be stored in different ways by Terraform; it is configured via
 [backends][terraform-backends].
 
 The default backend for Terraform is local, which will store state information 
-the working directory in ```$ ./.terraform```. Most build platforms (including GCE) 
+the working directory in `$ ./.terraform`. Most build platforms (including GCE) 
 do not persist the working directory between builds. Losing this state information is no bueno.
 
 There are a couple of options for managing Terraform state across builds:
