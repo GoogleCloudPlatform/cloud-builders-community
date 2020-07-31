@@ -13,7 +13,7 @@ steps:
     - "."
 
 images:
-  - "gcr.io/${PROJECT_ID}/protoc:latest"
   - "gcr.io/${PROJECT_ID}/protoc:${_VERS}-${_ARCH}"
+  - "gcr.io/${PROJECT_ID}/protoc:latest"
 
 tags: ['cloud-builders-community']
