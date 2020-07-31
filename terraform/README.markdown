@@ -44,7 +44,7 @@ There are a couple of options for managing Terraform state across builds:
 ###### Ignore the issue
 
 In your build, you'll want to initialize terraform and refresh the local state. 
-This is really not a good idea; it'll be slow and not multi-run safe 
+This is really **not a good idea**; it'll be slow and not multi-run safe 
 (if multiple runs kick off concurrently, there'll be nastiness such as race conditions). 
 [local_backend](examples/local_backend/README.markdown) is an example of this approach.
 
