@@ -34,7 +34,7 @@ This state can be stored in different ways by Terraform; it is configured via
 [backends][terraform-backends].
 
 The default backend for Terraform is local, which will store state information 
-the working directory in `$ ./.terraform`. Most build platforms (including GCE) 
+the working directory in `./.terraform`. Most build platforms (including GCE) 
 do not persist the working directory between builds. Losing this state information is no bueno.
 
 There are a couple of options for managing Terraform state across builds:
