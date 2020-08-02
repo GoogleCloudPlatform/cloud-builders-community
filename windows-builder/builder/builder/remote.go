@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/compute/metadata"
@@ -16,8 +17,7 @@ import (
 )
 
 const (
-	copyTimeout = 5 * time.Minute
-	runTimeout  = 5 * time.Minute
+	runTimeoutDef = 5
 )
 
 // Remote represents a remote Windows server.
@@ -29,18 +29,21 @@ type Remote struct {
 }
 
 type BuilderServer struct {
-	ImageUrl *string
-	VPC      *string
-	Subnet   *string
-	Region   *string
-	Zone     *string
+	ImageUrl       *string
+	VPC            *string
+	Subnet         *string
+	Region         *string
+	Zone           *string
+	Labels         *string
+	MachineType    *string
+	ServiceAccount *string
 }
 
 // Wait for server to be available.
 func (r *Remote) Wait() error {
 	timeout := time.Now().Add(time.Minute * 5)
 	for time.Now().Before(timeout) {
-		err := r.Run("ver")
+		err := r.RunDef("ver")
 		if err == nil {
 			return nil
 		}
@@ -50,11 +53,15 @@ func (r *Remote) Wait() error {
 }
 
 // Copy workspace from Linux to Windows.
-func (r *Remote) Copy(inputPath string) error {
+func (r *Remote) Copy(inputPath string, copyTimeoutMin int) error {
 	defer func() {
 		// Flush stdout
 		fmt.Println()
 	}()
+
+	if copyTimeoutMin <= 0 {
+		return errors.New("copy timeout must be greater than 0")
+	}
 
 	hostport := fmt.Sprintf("%s:5986", *r.Hostname)
 	c, err := winrmcp.New(hostport, &winrmcp.Config{
@@ -63,7 +70,7 @@ func (r *Remote) Copy(inputPath string) error {
 		Insecure:              true,
 		TLSServerName:         "",
 		CACertBytes:           nil,
-		OperationTimeout:      copyTimeout,
+		OperationTimeout:      time.Duration(copyTimeoutMin) * time.Minute,
 		MaxOperationsPerShell: 15,
 	})
 	if err != nil {
@@ -77,6 +84,7 @@ func (r *Remote) Copy(inputPath string) error {
 		context.Background(),
 		inputPath,
 		`C:\workspace`,
+		copyTimeoutMin,
 	)
 	if err == nil {
 		// Successfully copied via GCE bucket
@@ -95,7 +103,7 @@ func (r *Remote) Copy(inputPath string) error {
 	return nil
 }
 
-func (r *Remote) copyViaBucket(ctx context.Context, inputPath, outputPath string) error {
+func (r *Remote) copyViaBucket(ctx context.Context, inputPath, outputPath string, copyTimeoutMin int) error {
 	var bucket string
 	if r.BucketName == nil || *r.BucketName == "" {
 		// Cloud Build creates a bucket called <PROJECT-ID>_cloudbuild. Put
@@ -129,11 +137,21 @@ Expand-Archive -Path c:\workspace.zip -DestinationPath c:\workspace -Force
 `, gsURL)
 
 	// Now tell the Windows VM to download it.
-	return r.Run(winrm.Powershell(pwrScript))
+	return r.Run(winrm.Powershell(pwrScript), copyTimeoutMin)
 }
 
 // Run a command on the Windows remote.
-func (r *Remote) Run(command string) error {
+func (r *Remote) RunDef(command string) error {
+	return r.Run(command, runTimeoutDef)
+}
+
+func (r *Remote) Run(command string, runTimeoutMin int) error {
+	if runTimeoutMin <= 0 {
+		return errors.New("runTimeout must be greater than 0")
+	}
+
+	runTimeout := time.Duration(runTimeoutMin) * time.Minute
+
 	cmdstring := fmt.Sprintf(`cd c:\workspace & %s`, command)
 	endpoint := winrm.NewEndpoint(*r.Hostname, 5986, true, true, nil, nil, nil, runTimeout)
 	w, err := winrm.NewClient(endpoint, *r.Username, *r.Password)
@@ -155,5 +173,43 @@ func (r *Remote) Run(command string) error {
 
 	cmd.Wait()
 	shell.Close()
+
+	if cmd.ExitCode() != 0 {
+		return fmt.Errorf("command failed with exit-code:%d", cmd.ExitCode())
+	}
+
 	return nil
+}
+
+func (bs *BuilderServer) GetServiceAccountEmail(projectID string) string {
+	if *bs.ServiceAccount == "default" || strings.Contains(*bs.ServiceAccount, "@") {
+		return *bs.ServiceAccount
+	}
+	//add service account email suffix
+	return fmt.Sprintf("%s@%s.iam.gserviceaccount.com", *bs.ServiceAccount, projectID)
+}
+
+func (bs *BuilderServer) GetLabelsMap() map[string]string {
+	var labelsMap map[string]string
+
+	for _, label := range strings.Split(*bs.Labels, ",") {
+		labelSpl := strings.Split(label, "=")
+		if len(labelSpl) != 2 {
+			log.Printf("Error: Label needs to be key=value template. %s label ignored", label)
+			continue
+		}
+
+		var key = strings.TrimSpace(labelSpl[0])
+		if len(key) == 0 {
+			log.Printf("Error: Label key can't be empty. %s label ignored", label)
+			continue
+		}
+		var value = strings.TrimSpace(labelSpl[1])
+
+		if labelsMap == nil {
+			labelsMap = make(map[string]string)
+		}
+		labelsMap[key] = value
+	}
+	return labelsMap
 }
