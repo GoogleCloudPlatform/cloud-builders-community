@@ -190,6 +190,10 @@ func (bs *BuilderServer) GetServiceAccountEmail(projectID string) string {
 }
 
 func (bs *BuilderServer) GetLabelsMap() map[string]string {
+	if *bs.Labels == "" {
+		return nil
+	}
+	
 	var labelsMap map[string]string
 
 	for _, label := range strings.Split(*bs.Labels, ",") {
