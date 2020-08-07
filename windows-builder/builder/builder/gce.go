@@ -137,9 +137,15 @@ func (s *Server) newGCEService(ctx context.Context) error {
 func (s *Server) newInstance(bs *BuilderServer) error {
 	scmd := startupCmd // TODO: find better way to take address of const
 	name := "windows-builder-" + uuid.New()
+
+	machineType := *bs.MachineType
+	if machineType == "" {
+		machineType = "n1-standard-1"
+	}
+
 	instance := &compute.Instance{
 		Name:        name,
-		MachineType: prefix + s.projectID + "/zones/" + *bs.Zone + "/machineTypes/n1-standard-1",
+		MachineType: prefix + s.projectID + "/zones/" + *bs.Zone + "/machineTypes/" + machineType,
 		Disks: []*compute.AttachedDisk{
 			{
 				AutoDelete: true,
@@ -173,12 +179,13 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		},
 		ServiceAccounts: []*compute.ServiceAccount{
 			{
-				Email: "default",
+				Email: bs.GetServiceAccountEmail(s.projectID),
 				Scopes: []string{
 					compute.CloudPlatformScope,
 				},
 			},
 		},
+		Labels: bs.GetLabelsMap(),
 	}
 
 	op, err := s.service.Instances.Insert(s.projectID, *bs.Zone, instance).Do()
@@ -388,7 +395,14 @@ func (s *Server) waitForComputeOperation(op *compute.Operation, bs *BuilderServe
 			return err
 		}
 		if newop.Status == "DONE" {
-			return nil
+			if newop.Error == nil || len(newop.Error.Errors) == 0 {
+				return nil
+			}
+			//Operation Error
+			for _, opError := range newop.Error.Errors {
+				fmt.Printf("Operation Error. Code: %s, Location: %s, Message: %s :", opError.Code, opError.Location, opError.Message)
+			}
+			return fmt.Errorf("Compute operation %s completed with errors", op.Name)
 		}
 		time.Sleep(1 * time.Second)
 	}
