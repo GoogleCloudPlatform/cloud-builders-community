@@ -9,7 +9,6 @@ command](https://ballerina.io/learn/cli-commands/).
 ## Available builders
 
 For convenience, we have included different versions of the Ballerina CLI:
-
 - `gcr.io/$PROJECT_ID/ballerina:v1.2.7`: provides the `v1.2.7` stable branch
 
 ## Getting started

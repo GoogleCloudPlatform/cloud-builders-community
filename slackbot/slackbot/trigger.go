@@ -11,7 +11,7 @@ import (
 )
 
 // Trigger starts an independent watcher build.
-func Trigger(ctx context.Context, projectId string, buildId string, webhook string, copyName bool, copyTags bool, copyTimeout bool) {
+func Trigger(ctx context.Context, projectId string, buildId string, webhook string, project string, copyName bool, copyTags bool, copyTimeout bool) {
 	svc := gcbClient(ctx)
 	watcherBuild := &cloudbuild.Build{
 		Steps: []*cloudbuild.BuildStep{
@@ -20,6 +20,7 @@ func Trigger(ctx context.Context, projectId string, buildId string, webhook stri
 				Args: []string{
 					fmt.Sprintf("--build=%s", buildId),
 					fmt.Sprintf("--webhook=%s", webhook),
+					fmt.Sprintf("--project=%s", project),
 					"--mode=monitor",
 				},
 			},

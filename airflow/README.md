@@ -15,3 +15,7 @@ You can run an example by running the following command inside the `examples` di
 To build this builder, run the following command in this directory.
 
     $ gcloud builds submit . --config=cloudbuild.yaml
+
+## Updating the version
+
+To update the version you will need to change the `cloudbuild.yaml` in the `_AIRFLOW_VERSION` part.
