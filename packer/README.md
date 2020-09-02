@@ -3,8 +3,7 @@
 This build step invokes `packer` commands in [Google Cloud Build](https://cloud.google.com/cloud-build).
 
 Arguments passed to this builder will be passed to `packer` directly, allowing
-callers to run [any Packer
-command](https://www.packer.io/docs/commands/index.html).
+callers to run [any Packer command](https://www.packer.io/docs/commands).
 
 ## Building this Builder
 
