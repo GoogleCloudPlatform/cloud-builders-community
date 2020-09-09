@@ -10,7 +10,7 @@ steps:
       - .
 
   - # Verify kustomize has been built correctly
-    name: "gcr.io/$PROJECT_ID/kustomize"
+    name: "gcr.io/$PROJECT_ID/kustomize:${_LATEST_TAG}"
     entrypoint: "kustomize"
     args:
       - version
