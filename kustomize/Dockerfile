@@ -1,12 +1,14 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VERSION v3.6.1
+# overridden in cloudbuild.yaml
+ARG VER=v3.8.1
+ENV VERSION ${VER}
 
 COPY kustomize.bash /builder/kustomize.bash
 
 RUN apt-get update && \
   apt-get install -y wget && \
-  wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${VERSION}/kustomize_${VERSION}_linux_amd64.tar.gz && \
+  wget -nv https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${VERSION}/kustomize_${VERSION}_linux_amd64.tar.gz && \
   tar xvzf kustomize_${VERSION}_linux_amd64.tar.gz && \
   mkdir /builder/kustomize && \
   mv kustomize /builder/kustomize/kustomize && \

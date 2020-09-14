@@ -60,7 +60,7 @@ To apply the build yourself, you can use a custom entrypoint, e.g.
   - '-c'
   - |
     gcloud container clusters get-credentials --zone "$$CLOUDSDK_COMPUTE_ZONE" "$$CLOUDSDK_CONTAINER_CLUSTER"
-    kustomize build "overlays/prod" | kubectl apply -f -  
+    kustomize build "overlays/prod" | kubectl apply -f -
   env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-west1'
     - 'CLOUDSDK_CONTAINER_CLUSTER=tf-k8s'
@@ -72,3 +72,15 @@ To apply the build yourself, you can use a custom entrypoint, e.g.
 To build this builder, run the following command in this directory.
 
     $ gcloud builds submit . --config=cloudbuild.yaml
+
+To build with another kustomize version, substitute the version into the submission, e.g.
+
+    $ gcloud builds submit . --config=cloudbuild.yaml --substitutions=_KUSTOMIZE_VERSION=v3.5.4
+
+To trigger an image build from a fork of this repository, configure your cloudbuild trigger with the substituiton
+
+```
+_BUILD_DIRECTORY=kustomize
+```
+
+See sample-trigger.yaml
