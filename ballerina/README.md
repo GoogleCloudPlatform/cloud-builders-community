@@ -6,13 +6,10 @@ Arguments passed to this builder will be passed to the `ballerina` command direc
 allowing callers to run [any `ballerina`
 command](https://ballerina.io/learn/cli-commands/).
 
-
 ## Available builders
 
 For convenience, we have included different versions of the Ballerina CLI:
-- `gcr.io/$PROJECT_ID/ballerina:v1.2.6`: provides the `v1.2.6` stable branch
-
-
+- `gcr.io/$PROJECT_ID/ballerina:v1.2.7`: provides the `v1.2.7` stable branch
 
 ## Getting started
 
@@ -20,12 +17,11 @@ In order to use call one of these builder, simply invoke the builder (and versio
 
 ```yaml
 steps:
-  - name: 'gcr.io/$PROJECT_ID/ballerina'
-    args: ['build', '-a']
+  - name: "gcr.io/$PROJECT_ID/ballerina"
+    args: ["build", "-a"]
 ```
 
 See the `examples` folder for a complete example.
-
 
 ## Building these builders
 

@@ -6,7 +6,16 @@ steps:
       - "--tag=gcr.io/$PROJECT_ID/ballerina:latest"
       - "--file=Dockerfile"
       - "--build-arg"
-      - "ballerina_version=1.2.6"
+      - "ballerina_version=1.2.7"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "."
+      - "--tag=gcr.io/$PROJECT_ID/ballerina:v1.2.7"
+      - "--file=Dockerfile"
+      - "--build-arg"
+      - "ballerina_version=1.2.7"
 
   - name: "gcr.io/cloud-builders/docker"
     args:
@@ -118,6 +127,7 @@ steps:
 
 images:
   - "gcr.io/$PROJECT_ID/ballerina:latest"
+  - "gcr.io/$PROJECT_ID/ballerina:v1.2.7"
   - "gcr.io/$PROJECT_ID/ballerina:v1.2.6"
   - "gcr.io/$PROJECT_ID/ballerina:v1.2.5"
   - "gcr.io/$PROJECT_ID/ballerina:v1.2.4"
