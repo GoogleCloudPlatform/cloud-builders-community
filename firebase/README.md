@@ -1,8 +1,13 @@
 # firebase
 
+## Google Cloud Docs
+
+You can find official Google Cloud steps for this build process [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
+
+#
+
 This build step invokes `firebase` commands that can be used in [Google Cloud Build](https://cloud.google.com/cloud-build/).
 
-Detailed steps can be found at https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase
 
 Arguments passed to this builder will be passed to `firebase` directly,
 allowing callers to run [any firebase
