@@ -2,7 +2,7 @@
 
 ## Google Cloud Docs
 
-You can find official Google Cloud steps for this build process [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
+You can find official Google Cloud steps for this build processor [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
 
 #
 
