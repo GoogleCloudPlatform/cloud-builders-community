@@ -2,7 +2,7 @@
 
 ## Official "Deploying to Firebase" Docs
 
-You can find official Google Cloud guide for this build processor [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
+You can find the official Google Cloud guide for this build processor [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
 
 #
 
