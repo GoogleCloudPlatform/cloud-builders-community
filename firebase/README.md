@@ -8,7 +8,6 @@ You can find official Google Cloud steps for this build processor [here](https:/
 
 This build step invokes `firebase` commands that can be used in [Google Cloud Build](https://cloud.google.com/cloud-build/).
 
-
 Arguments passed to this builder will be passed to `firebase` directly,
 allowing callers to run [any firebase
 command](https://firebase.google.com/docs/cli/#command_reference).
