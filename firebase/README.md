@@ -2,9 +2,9 @@
 
 ## Official "Deploying to Firebase" Docs
 
-You can find the official Google Cloud guide for this build processor [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
-
 This build step invokes `firebase` commands that can be used in [Google Cloud Build](https://cloud.google.com/cloud-build/).
+
+You can find the official Google Cloud guide for this build processor [here](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-firebase).
 
 Arguments passed to this builder will be passed to `firebase` directly,
 allowing callers to run [any firebase
