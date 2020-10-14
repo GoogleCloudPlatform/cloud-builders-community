@@ -94,7 +94,7 @@ if [ -n "${BUCKET}" ];then
     echo "Downloading fallback cache file: ${FALLBACK_CACHE_FILE}..."
     gsutil -q cp "${FALLBACK_CACHE_FILE}" "${SRC_DIR}"
 
-    FALLBACK_CACHE_FILE_NAME=$(echo ${FALLBACK_CACHE_FILE} | awk '{split($0,parts,"/"); print parts[4]}')
+    FALLBACK_CACHE_FILE_NAME=$(echo ${FALLBACK_CACHE_FILE} | awk '{n=split($0,parts,"/"); print parts[n]}')
 
     echo "Restoring cache from fallback file ${FALLBACK_CACHE_FILE}..."
     tar xpzf "$FALLBACK_CACHE_FILE_NAME" -P
