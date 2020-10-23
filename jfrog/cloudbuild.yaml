@@ -7,8 +7,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/mvn:3.3.9-jdk-8'  
-  - '--tag=gcr.io/$PROJECT_ID/java/jfrog:1.17.1'
+  - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/mvn:3.5.0-jdk-8'
+  - '--tag=gcr.io/$PROJECT_ID/java/jfrog:1.39.7'
   - '.'
   wait_for: ['-']
 
@@ -16,10 +16,10 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'tag'
-  - 'gcr.io/$PROJECT_ID/java/jfrog:1.17.1'
+  - 'gcr.io/$PROJECT_ID/java/jfrog:1.39.7'
   - 'gcr.io/$PROJECT_ID/java/jfrog'
 
 images:
-- 'gcr.io/$PROJECT_ID/java/jfrog:1.17.1'
+- 'gcr.io/$PROJECT_ID/java/jfrog:1.39.7'
 - 'gcr.io/$PROJECT_ID/java/jfrog'
 tags: ['cloud-builders-community']
