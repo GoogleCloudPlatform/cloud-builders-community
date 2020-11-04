@@ -12,7 +12,7 @@ RUN apk update \
 	&& apk upgrade \
 	&& apk add ca-certificates \
 	&& update-ca-certificates \
-	&& apk add --update openjdk8-jre tzdata curl unzip bash \
+	&& apk add --update openjdk11-jre tzdata curl unzip bash \
 	&& rm -rf /var/cache/apk/* \
     && mkdir -p /tmp/sonar-scanner  \
 	&& curl -L --silent ${SONAR_SCANNER_CLI_DOWNLOAD_URL} >  /tmp/sonar-scanner/sonar-scanner-cli-${SONARQUBE_SCANNER_CLI_VERSION}-linux.zip  \
