@@ -52,7 +52,7 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
         --signature-file=./generated_signature.pgp \
         --public-key-id="${args[pgp_key_fingerprint]}"
 else
-    gcloud container binauthz attestations sign-and-create \
+    gcloud beta container binauthz attestations sign-and-create \
         --attestor="${args[attestor]}" \
         --artifact-url="$IMAGE_AND_DIGEST" \
         --keyversion="${args[keyversion]}"
