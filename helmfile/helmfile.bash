@@ -38,5 +38,5 @@ if [[ -n $GCS_PLUGIN_VERSION ]]; then
   helm plugin install https://github.com/nouney/helm-gcs --version "$GCS_PLUGIN_VERSION"
 fi
 
-helmfile "$@"
+exec helmfile "$@"
 
