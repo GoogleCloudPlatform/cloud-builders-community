@@ -5,6 +5,12 @@ function cleanup {
     ${GCLOUD} compute instances delete ${INSTANCE_NAME} --quiet
 }
 
+# Run command on the instance via ssh
+function ssh {
+    ${GCLOUD} compute ssh --ssh-key-file=${KEYNAME} \
+         ${USERNAME}@${INSTANCE_NAME} -- $1
+}
+
 # Configurable parameters
 [ -z "$COMMAND" ] && echo "Need to set COMMAND" && exit 1;
 
@@ -32,9 +38,8 @@ ${GCLOUD} compute instances create \
        --metadata block-project-ssh-keys=TRUE \
        --metadata-from-file ssh-keys=ssh-keys
 
-READY_COMMAND="${GCLOUD} compute ssh --ssh-key-file=${KEYNAME} ${USERNAME}@${INSTANCE_NAME} -- printf 1"
 RETRY_COUNT=1
-while [ "$(${READY_COMMAND})" != "1" ]; do
+while [ "$(ssh 'printf pass')" != "pass" ]; do
   echo "[Try $RETRY_COUNT of $RETRIES] Waiting for instance to start accepting SSH connections..."
   if [ "$RETRY_COUNT" == "$RETRIES" ]; then
     echo "Retry limit reached, giving up!"
@@ -50,8 +55,7 @@ ${GCLOUD} compute scp --compress --recurse \
        $(pwd) ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
        --ssh-key-file=${KEYNAME}
 
-${GCLOUD} compute ssh --ssh-key-file=${KEYNAME} \
-       ${USERNAME}@${INSTANCE_NAME} -- ${COMMAND}
+ssh "${COMMAND}"
 
 ${GCLOUD} compute scp --compress --recurse \
        ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE}* $(pwd) \
