@@ -1,8 +1,8 @@
 FROM gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
 
-RUN gcloud components install beta --quiet
-
 RUN apk update && apk upgrade --no-cache
+
+RUN gcloud components install beta --quiet
 
 RUN apk add --no-cache docker gnupg bash python3
 
