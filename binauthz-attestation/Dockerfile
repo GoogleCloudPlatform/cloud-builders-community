@@ -4,6 +4,8 @@ RUN apk update && apk upgrade --no-cache
 
 RUN apk add --no-cache gnupg bash python3
 
+RUN apk add --no-cache docker gnupg bash python3
+
 WORKDIR /work
 ADD create_binauthz_attestation.sh /work
 ADD parse_arguments.py /work
