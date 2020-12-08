@@ -25,7 +25,8 @@ fi
 OUTPUT=$(python3 /work/parse_arguments.py $@)
 declare -A args="($OUTPUT)"
 
-IMAGE_AND_DIGEST="$(gcloud container images describe "${args[artifact_url]}"  --format='get(image_summary.fully_qualified_digest)')"
+docker pull "${args[artifact_url]}"
+IMAGE_AND_DIGEST="$(docker inspect "${args[artifact_url]}" --format='{{index .RepoDigests 0}}')"
 echo "$IMAGE_AND_DIGEST"
 
 if [ -n "${args[pgp_key_fingerprint]}" ]; then
