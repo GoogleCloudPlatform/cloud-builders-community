@@ -34,7 +34,7 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
         die "PGP_SECRET_KEY environment variable is required if providing the PGP signing key through an environment variable. Please consult the documentation for more information."
     fi
 
-    gcloud beta container binauthz create-signature-payload \
+    gcloud container binauthz create-signature-payload \
         --artifact-url="$IMAGE_AND_DIGEST" > binauthz_signature_payload.json
 
     mkdir -p ~/.gnupg
@@ -47,13 +47,13 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
 
     echo -n "$PGP_SECRET_KEY" | gpg2 $COMMON_FLAGS --import
     gpg2 $COMMON_FLAGS --output generated_signature.pgp --local-user "${args[pgp_key_fingerprint]}" --armor --sign binauthz_signature_payload.json
-    gcloud alpha container binauthz attestations create \
+    gcloud container binauthz attestations create \
         --artifact-url="$IMAGE_AND_DIGEST" \
         --attestor="${args[attestor]}" \
         --signature-file=./generated_signature.pgp \
         --public-key-id="${args[pgp_key_fingerprint]}"
 else
-    gcloud alpha container binauthz attestations sign-and-create \
+    gcloud beta container binauthz attestations sign-and-create \
         --attestor="${args[attestor]}" \
         --artifact-url="$IMAGE_AND_DIGEST" \
         --keyversion="${args[keyversion]}"
