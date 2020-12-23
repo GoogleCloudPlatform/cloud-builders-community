@@ -3,6 +3,14 @@
 This builder contains the [Github CLI](https://cli.github.com/) tool that allows to control more Github features
 from the CLI (e.g. issue/pr comments, closing and reopening issues, etc.).
 
+## Generating Github Personal Access Token
+
+If you want to generate a Personal Access Token, make sure it has:
+- `repo` scope to access your private repos
+- `read:org` scope to access PRs within the organization
+
+![personal access token scopes](docs/token_rights.png)
+
 ## Usage with Secret Manager
 
 **Create the secret on GCP**
