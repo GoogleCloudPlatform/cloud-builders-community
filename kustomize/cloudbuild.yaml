@@ -21,7 +21,7 @@ images:
 
 substitutions:
   _BUILD_DIRECTORY: "./" #set to kustomize to run in a trigger
-  _KUSTOMIZE_VERSION: v3.8.1
+  _KUSTOMIZE_VERSION: v3.8.9
   _LATEST_TAG: latest
 
 tags:
