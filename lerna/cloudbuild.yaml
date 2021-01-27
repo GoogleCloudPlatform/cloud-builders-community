@@ -1,5 +1,5 @@
 substitutions:
-  _LERNA_PACKAGE: "lerna"
+  _NPM_CLI_PACKAGE: "lerna"
   _NODE_IMAGE: "node"
   _NODE_TAG: "lts"
 
@@ -8,19 +8,19 @@ steps:
     args:
       - "build"
       - "--build-arg"
-      - "LERNA_PACKAGE=${_LERNA_PACKAGE}"
+      - "NPM_CLI_PACKAGE=${_NPM_CLI_PACKAGE}"
       - "--build-arg"
       - "NODE_IMAGE=${_NODE_IMAGE}"
       - "--build-arg"
       - "NODE_TAG=${_NODE_TAG}"
       - "-t"
-      - "gcr.io/$PROJECT_ID/lerna"
+      - "gcr.io/$PROJECT_ID/${_NPM_CLI_PACKAGE}"
       - "-t"
-      - "gcr.io/$PROJECT_ID/lerna:${_NODE_IMAGE}-${_NODE_TAG}"
+      - "gcr.io/$PROJECT_ID/${_NPM_CLI_PACKAGE}:${_NODE_IMAGE}-${_NODE_TAG}"
       - "."
 
 images:
-  - "gcr.io/$PROJECT_ID/lerna"
-  - "gcr.io/$PROJECT_ID/lerna:${_NODE_IMAGE}-${_NODE_TAG}"
+  - "gcr.io/$PROJECT_ID/${_NPM_CLI_PACKAGE}"
+  - "gcr.io/$PROJECT_ID/${_NPM_CLI_PACKAGE}:${_NODE_IMAGE}-${_NODE_TAG}"
 
 tags: ["cloud-builders-community"]

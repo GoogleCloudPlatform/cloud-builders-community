@@ -1,21 +1,16 @@
-# lerna
+# npm-cli-package
 
-> Lerna is a tool that optimizes the workflow around managing multi-package repositories with git and npm.
+Install a npm cli package (e.g.: [lerna](https://github.com/lerna/lerna)) and
+invoke it at entrypoint.
 
-Arguments passed to this builder will be passed to `lerna` directly.
-
-The node image used to build the lerna builder and the lerna package to install
+The node image used to build the builder and the npm cli package to install
 can be overridden by substitutions. Please see
-[cloudbuild.yaml](./cloudbuild.yaml) for available substitutions and their
+[cloudbuild.yaml](./cloudbuild.yaml)  or the example below for available substitutions and their
 default values.
-
-To build:
 
 ```sh
 gcloud builds submit \
   --config=cloudbuild.yaml \
-  # optional: override the node image, tag and lerna package
-  --substitutions=_NODE_IMAGE=node,_NODE_TAG=12,LERNA_PACKAGE=lerna \
-  # optional: build in a specific project
+  --substitutions=_NODE_IMAGE=node,_NODE_TAG=12,_NPM_CLI_PACKAGE=lerna \
   --project=<GCR_PROJECT>
 ```
