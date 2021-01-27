@@ -1,5 +1,8 @@
-FROM node:lts
+ARG NODE_IMAGE
+ARG NODE_TAG
+FROM ${NODE_IMAGE}:${NODE_TAG}
 
-RUN npm install lerna --global
+ARG LERNA_PACKAGE
+RUN npm install ${LERNA_PACKAGE} --global
 
 ENTRYPOINT ["lerna"]

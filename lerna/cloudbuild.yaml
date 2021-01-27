@@ -1,6 +1,26 @@
+substitutions:
+  _LERNA_PACKAGE: "lerna"
+  _NODE_IMAGE: "node"
+  _NODE_TAG: "lts"
+
 steps:
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/lerna", "."]
+    args:
+      - "build"
+      - "--build-arg"
+      - "LERNA_PACKAGE=${_LERNA_PACKAGE}"
+      - "--build-arg"
+      - "NODE_IMAGE=${_NODE_IMAGE}"
+      - "--build-arg"
+      - "NODE_TAG=${_NODE_TAG}"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/lerna"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/lerna:${_NODE_IMAGE}-${_NODE_TAG}"
+      - "."
 
-images: ["gcr.io/$PROJECT_ID/lerna"]
+images:
+  - "gcr.io/$PROJECT_ID/lerna"
+  - "gcr.io/$PROJECT_ID/lerna:${_NODE_IMAGE}-${_NODE_TAG}"
+
 tags: ["cloud-builders-community"]
