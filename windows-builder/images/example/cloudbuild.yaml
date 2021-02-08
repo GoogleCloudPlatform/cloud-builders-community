@@ -1,4 +1,4 @@
 steps:
-- name: 'gcr.io/$PROJECT_ID/windows-builder'
+- name: 'gcr.io/gke-release/gke-windows-builder:release-1.0.0-gke.0'
   args: [ '--command', 'C:\workspace\hello.bat' ]
 tags: ['cloud-builders-community']
