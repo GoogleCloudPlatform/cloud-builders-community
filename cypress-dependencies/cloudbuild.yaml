@@ -1,0 +1,6 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/cypress-dependencies', '.']
+
+images: ['gcr.io/$PROJECT_ID/cypress-dependencies:latest']
+tags: ['cloud-builders-community']
