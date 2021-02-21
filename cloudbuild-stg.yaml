@@ -1,0 +1,58 @@
+steps:
+  # - name: "gcr.io/cloud-builders/docker"
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       set -ex
+  #       docker build -t "${_ARTIFACT_REGISTRY}/${REPO_NAME}:stage-${SHORT_SHA}" .
+  #       docker push "${_ARTIFACT_REGISTRY}/${REPO_NAME}:stage-${SHORT_SHA}"
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: /bin/bash
+    args:
+      - "-c"
+      - |
+        set -ex
+        cd remote-builder
+        docker build -t "${_ARTIFACT_REGISTRY}/builder/remote-builder:stage-${SHORT_SHA}" .
+        docker push "${_ARTIFACT_REGISTRY}/builder/remote-builder:stage-${SHORT_SHA}"
+  # - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  #   entrypoint: /bin/sh
+  #   args:
+  #     - "-c"
+  #     - |
+  #       set -ex
+  #       gcloud --project=${_SEC_PROJECT_ID} \
+  #         secrets versions access latest \
+  #         --secret=sre-sb-cloudrun-project-sa-enc-key-secret \
+  #         --format='get(payload.data)' | tr '_-' '/+' | base64 -d > decrypted-data.txt
+  # - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  #   entrypoint: /bin/sh
+  #   args:
+  #     - "-c"
+  #     - |
+  #       set -ex
+  #       gcloud --project ${_STG_PROJECT_ID} \
+  #         run deploy stage-${REPO_NAME} \
+  #         --image ${_ARTIFACT_REGISTRY}/${REPO_NAME}:stage-${SHORT_SHA} \
+  #         --region ${_DEFAULT_REGION} \
+  #         --platform managed \
+  #         --service-account project-service-account@${_STG_PROJECT_ID}.iam.gserviceaccount.com \
+  #         --allow-unauthenticated \
+  #         --memory 512Mi \
+  #         --vpc-connector ${_CONNECTOR_NAME} \
+  #         --set-cloudsql-instances ${_CLOUD_MYSQL} \
+  #         --update-env-vars PROJECT_ID=${_STG_PROJECT_ID} \
+  #         --update-env-vars MYSQL_CONN=${_CLOUD_MYSQL} \
+  #         --update-env-vars MYSQL_DB=petclinic \
+  #         --update-env-vars MYSQL_USER=app \
+  #         --update-env-vars MYSQL_SA_KEY=$(cat decrypted-data.txt) \
+  #         # --update-env-vars MYSQL_PASS=$(cat decrypted-data.txt)
+
+# substitutions:
+#   _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
+
+# options:
+#   machineType: 'E2_HIGHCPU_8'
+
+timeout: 3600s

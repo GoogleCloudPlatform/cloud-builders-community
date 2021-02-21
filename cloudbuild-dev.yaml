@@ -1,0 +1,48 @@
+steps:
+  # [Start docker build]
+  # - name: "gcr.io/cloud-builders/docker"
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       set -ex
+  #       docker build -t "${_ARTIFACT_REGISTRY}/${REPO_NAME}:dev-${SHORT_SHA}" .
+  #       docker push "${_ARTIFACT_REGISTRY}/${REPO_NAME}:dev-${SHORT_SHA}"
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: /bin/bash
+    args:
+      - "-c"
+      - |
+        set -ex
+        cd remote-builder
+        docker build -t "${_ARTIFACT_REGISTRY}/builder/remote-builder:dev-${SHORT_SHA}" .
+        docker push "${_ARTIFACT_REGISTRY}/builder/remote-builder:dev-${SHORT_SHA}"
+  # [Start secrets]
+  # - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  #   entrypoint: /bin/sh
+  #   args:
+  #     - "-c"
+  #     - |
+  #       set -ex
+  #       gcloud --project=${_SEC_PROJECT_ID} \
+  #         secrets versions access latest \
+  #         --secret=sre-sb-cloudrun-project-sa-enc-key-secret \
+  #         --format='get(payload.data)' | tr '_-' '/+' | base64 -d > decrypted-data.txt
+  #       # gcloud --project=${_SEC_PROJECT_ID} \
+  #       #   secrets versions access latest \
+  #       #   --secret=sre-sb-cloudrun-sqldb-app-secret \
+  #       #   --format='get(payload.data)' | tr '_-' '/+' | base64 -d > decrypted-data.txt
+
+# Variables defined here will not override the ones supplied by our build
+# trigger. These variables are considered defaults if the value from our
+# build trigger is empty or does not exist.
+# https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
+# substitutions:
+  # _POLICY_REPO: '' # add path to policies here https://github.com/forseti-security/policy-library/blob/master/docs/user_guide.md#how-to-use-terraform-validator
+
+# https://cloud.google.com/cloud-build/docs/build-config?hl=en#options
+# options:
+  # machineType: 'E2_HIGHCPU_8'
+
+# https://cloud.google.com/cloud-build/docs/build-config?hl=en#timeout_2
+timeout: 3600s
