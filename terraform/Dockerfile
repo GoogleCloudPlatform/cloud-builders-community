@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.12 AS build
 
 ARG TERRAFORM_VERSION
 ARG TERRAFORM_VERSION_SHA256SUM
@@ -11,6 +11,6 @@ RUN unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 FROM gcr.io/cloud-builders/gcloud
 
-COPY --from=0 terraform /usr/bin/terraform
+COPY --from=build terraform /usr/bin/terraform
 COPY entrypoint.bash /builder/entrypoint.bash
 ENTRYPOINT ["/builder/entrypoint.bash"]

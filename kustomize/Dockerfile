@@ -1,23 +1,14 @@
+FROM alpine:3.12 AS build
+
+ARG KUSTOMIZE_VERSION
+
+RUN apk add --no-cache wget tar
+RUN wget -nv https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
+  tar xvzf kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz
+
+
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VERSION v3.6.1
-
+COPY --from=build kustomize /usr/bin/kustomize
 COPY kustomize.bash /builder/kustomize.bash
-
-RUN apt-get update && \
-  apt-get install -y wget && \
-  wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${VERSION}/kustomize_${VERSION}_linux_amd64.tar.gz && \
-  tar xvzf kustomize_${VERSION}_linux_amd64.tar.gz && \
-  mkdir /builder/kustomize && \
-  mv kustomize /builder/kustomize/kustomize && \
-  chmod +x /builder/kustomize/kustomize && \
-  chmod +x /builder/kustomize.bash && \
-  rm kustomize_${VERSION}_linux_amd64.tar.gz && \
-  apt-get remove --purge -y wget && \
-  apt-get --purge -y autoremove && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
-
-ENV PATH=/builder/kustomize:$PATH
-
 ENTRYPOINT ["/builder/kustomize.bash"]

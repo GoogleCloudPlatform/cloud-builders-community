@@ -1,4 +1,4 @@
-FROM golang:1.13
+FROM golang:1.15
 
 ENV GO111MODULE=on
 RUN CGO_ENABLED=0 GOOS=linux go get github.com/google/ko/cmd/ko
