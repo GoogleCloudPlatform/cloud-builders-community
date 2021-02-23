@@ -11,7 +11,7 @@ This builder can be used to run the terraform tool in GKE. From the Hashicorp Te
 ## Getting started
 
 If you are new to Google Cloud Build, we recommend you start by visiting the [manage resources page](https://console.cloud.google.com/cloud-resource-manager) in the Cloud Console, [enable billing](https://cloud.google.com/billing/docs/how-to/modify-project), [enable the Cloud Build API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com), and [install the Cloud SDK](https://cloud.google.com/sdk/docs/).
-=======
+
 This builder can be used to run the terraform tool in the GCE. From the Hashicorp Terraform 
 [product page][terraform]:
 
@@ -40,7 +40,7 @@ $ gcloud builds submit --config=cloudbuild.yaml \
 
 ### Terraform backend
 The default backend for Terraform is local, which will store state information the working directory in ```$ ./.terraform```. Most build platforms (including Cloud Build) do not persist the working directory between builds. Losing this state information is no bueno.
-=======
+
 Terraform stores state information about infrastructure it has provisioned. 
 It uses this to plan out the delta between what your .tf files specifiy, and what's actually out there. 
 This state can be stored in different ways by Terraform; it is configured via 
