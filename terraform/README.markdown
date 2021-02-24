@@ -1,4 +1,16 @@
 # [Terraform](https://www.terraform.io/docs) cloud builder
+This builder can be used to run the terraform tool in GKE. From the Hashicorp Terraform 
+[product page][terraform]:
+
+> HashiCorp Terraform enables you to safely and predictably create, change, and improve 
+> infrastructure. It is an open source tool that codifies APIs into declarative configuration 
+> files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
+
+[terraform]: https://www.terraform.io/
+
+## Getting started
+
+If you are new to Google Cloud Build, we recommend you start by visiting the [manage resources page](https://console.cloud.google.com/cloud-resource-manager) in the Cloud Console, [enable billing](https://cloud.google.com/billing/docs/how-to/modify-project), [enable the Cloud Build API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com), and [install the Cloud SDK](https://cloud.google.com/sdk/docs/).
 
 This builder can be used to run the terraform tool in the GCE. From the Hashicorp Terraform 
 [product page][terraform]:
@@ -27,15 +39,13 @@ $ gcloud builds submit --config=cloudbuild.yaml \
 ## Using this builder
 
 ### Terraform backend
+The default backend for Terraform is local, which will store state information the working directory in ```$ ./.terraform```. Most build platforms (including Cloud Build) do not persist the working directory between builds. Losing this state information is no bueno.
 
 Terraform stores state information about infrastructure it has provisioned. 
 It uses this to plan out the delta between what your .tf files specifiy, and what's actually out there. 
 This state can be stored in different ways by Terraform; it is configured via 
 [backends][terraform-backends].
 
-The default backend for Terraform is local, which will store state information 
-the working directory in `./.terraform`. Most build platforms (including GCE) 
-do not persist the working directory between builds. Losing this state information is no bueno.
 
 There are a couple of options for managing Terraform state across builds:
 
@@ -64,7 +74,8 @@ support locking of the remote state. This helps address the concurrency issue.
 
 [terraform-gcs-backend]: https://www.terraform.io/docs/backends/types/gcs.html
 
-### Using this builder with Google Container Engine
+### Using this builder with Google Kubernetes Engine (GKE)
+To use this builder, your [builder service account](https://cloud.google.com/build/docs/securing-builds/configure-access-for-cloud-build-service-account) will need IAM permissions sufficient for the operations you want to perform. Adding the 'Kubernetes Engine Service Agent' role is sufficient for running the examples. Refer to the Google Cloud Platform [IAM integration page](https://cloud.google.com/kubernetes-engine/docs/concepts/access-control) for more info.
 
 To use this builder, your [builder service account][builder-sa-permissions] will need IAM 
 permissions sufficient for the operations you want to perform. Adding the 
@@ -81,7 +92,6 @@ service accounts by function. A service account that can do 'all the things' is 
 [gcp-with-terraform]: https://cloud.google.com/community/tutorials/managing-gcp-projects-with-terraform
 
 ### Using this builder image anywhere else
-
 This image can be run on any Docker host, without GCE. Why would you want to do this? 
 It'll let you run Terraform locally, with no environment dependencies other than a Docker host installation. 
 You can use the [local Cloud Build][cloud-build-local-debug] for this; 
