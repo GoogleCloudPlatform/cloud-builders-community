@@ -12,8 +12,8 @@ import (
 )
 
 // Notify posts a notification to Slack that the build is complete.
-func Notify(b *cloudbuild.Build, webhook string, project string) {
-	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s?project=%s", b.Id, project)
+func Notify(b *cloudbuild.Build, webhook string, project string, projectId string) {
+	url := fmt.Sprintf("https://console.cloud.google.com/cloud-build/builds/%s?project=%s", b.Id, projectId)
 	var i string
 	switch b.Status {
 	case "WORKING":
