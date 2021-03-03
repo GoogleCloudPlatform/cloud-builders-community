@@ -8,6 +8,7 @@ import (
 
 const maxErrors = 3
 const tickDuration = 20 * time.Second
+
 // 1m20s
 const monitorErrorMarginDuration = (maxErrors + 1) * tickDuration
 
@@ -35,12 +36,12 @@ func Monitor(ctx context.Context, projectId string, buildId string, webhook stri
 		case "WORKING":
 			if !started {
 				log.Printf("Build started. Notifying")
-				Notify(monitoredBuild, webhook, project)
+				Notify(monitoredBuild, webhook, project, projectId)
 				started = true
 			}
 		case "SUCCESS", "FAILURE", "INTERNAL_ERROR", "TIMEOUT", "CANCELLED":
 			log.Printf("Terminal status reached. Notifying")
-			Notify(monitoredBuild, webhook, project)
+			Notify(monitoredBuild, webhook, project, projectId)
 			return
 		}
 		<-t
