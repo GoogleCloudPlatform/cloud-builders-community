@@ -13,3 +13,8 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/cypress-dependencies'
   args: ['cypress', 'run', '--headless']
 ```
+
+## Useful links
+- Cypress documentation: https://docs.cypress.io
+- Cypress inside docker: https://docs.cypress.io/examples/examples/docker.html
+- Base image: https://hub.docker.com/r/cypress/browsers
