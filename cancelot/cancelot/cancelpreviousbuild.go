@@ -25,7 +25,6 @@ func CancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 	}
 }
 
-// CancelPreviousBuild checks for previous running builds on the same branch, in order to cancel them
 func cancelPreviousBuild(ctx context.Context, currentBuildID string, branchName string, sameTriggerOnly bool) error {
 	svc := gcbClient(ctx)
 	project, err := getProject()
