@@ -1,16 +1,4 @@
 steps:
-  # Substitute the image name for all occurrences of "IMAGE" in deployment.yaml
-  # so that docker-reuse can find them and add the computed image tag to them.
-  - id: prep
-    name: bash
-    args:
-      [
-        "sed",
-        "-i",
-        "s,IMAGE,gcr.io/$PROJECT_ID/hello-world,g",
-        "deployment/deployment.yaml",
-      ]
-
   # Build and push the image to the registry only if the image has not been
   # built yet.
   - id: build-and-push
@@ -18,9 +6,11 @@ steps:
     args: [
         "-f",
         "deployment/Dockerfile",
+        "-p",
+        "IMAGE_PLACEHOLDER",
         ".",
         "gcr.io/$PROJECT_ID/hello-world",
-        "deployment/deployment.yaml", # the file to update
+        "deployment/deploy.sh", # the file to update
         "GREETING=Hello Earthlings!", # build-arg value is provided
         "PORT", # build-arg value is taken from the environment
       ]
