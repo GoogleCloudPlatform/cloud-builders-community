@@ -1,11 +1,13 @@
-FROM golang:1.15
+FROM golang:1.16 AS kosource
+ARG KO_GIT_TAG
 
-ENV GO111MODULE=on
-RUN CGO_ENABLED=0 GOOS=linux go get github.com/google/ko/cmd/ko
+RUN git clone --depth=1 -b "${KO_GIT_TAG}" https://github.com/google/ko
+WORKDIR ko
+RUN GOOS=linux go build -mod=vendor -o /bin/ko ./cmd/ko
 
 FROM gcr.io/cloud-builders/kubectl
 
-COPY --from=0 /go/bin/ko /
+COPY --from=kosource /bin/ko /
 COPY ko.bash /builder/ko.bash
 
 # Install Go
