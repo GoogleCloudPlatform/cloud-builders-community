@@ -1,0 +1,11 @@
+# Perform an inspec command execution
+#
+# See README.md for invocation instructions.
+steps:
+- name: 'gcr.io/$PROJECT_ID/conftest'
+  args:
+  - test
+  - -n
+  - policy
+  - resource/dm-vm.yaml
+tags: ['cloud-builders-community']
