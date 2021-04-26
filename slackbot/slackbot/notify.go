@@ -25,7 +25,7 @@ func Notify(b *cloudbuild.Build, webhook string, project string, projectId strin
 	case "CANCELLED":
 		i = ":wastebasket:"
 	case "TIMEOUT":
-		i = ":hourglass: <!subteam^S014F8S6EBH>"
+		i = ":hourglass:"
 	case "STATUS_UNKNOWN", "INTERNAL_ERROR":
 		i = ":interrobang:"
 	default:
