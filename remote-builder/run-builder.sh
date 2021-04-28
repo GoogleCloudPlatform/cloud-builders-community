@@ -38,6 +38,8 @@ ${GCLOUD} compute instances create \
        --metadata block-project-ssh-keys=TRUE \
        --metadata-from-file ssh-keys=ssh-keys
 
+trap cleanup EXIT
+
 RETRY_COUNT=1
 while [ "$(ssh 'printf pass')" != "pass" ]; do
   echo "[Try $RETRY_COUNT of $RETRIES] Waiting for instance to start accepting SSH connections..."
@@ -48,8 +50,6 @@ while [ "$(ssh 'printf pass')" != "pass" ]; do
   sleep 10
   RETRY_COUNT=$(($RETRY_COUNT+1))
 done
-
-trap cleanup EXIT
 
 ${GCLOUD} compute scp --compress --recurse \
        $(pwd) ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
