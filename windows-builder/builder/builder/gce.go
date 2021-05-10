@@ -193,6 +193,9 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 			},
 		},
 		Labels: bs.GetLabelsMap(),
+		Scheduling: &compute.Scheduling{
+			Preemptible: *bs.Preemptible,
+		},
 	}
 
 	op, err := s.service.Instances.Insert(s.projectID, *bs.Zone, instance).Do()

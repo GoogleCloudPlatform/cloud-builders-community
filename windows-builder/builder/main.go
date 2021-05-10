@@ -26,6 +26,7 @@ var (
 	zone             = flag.String("zone", "us-central1-f", "The zone name to use when creating the Windows server")
 	labels           = flag.String("labels", "", "List of label KEY=VALUE pairs separated by comma to add when creating the Windows server")
 	machineType      = flag.String("machineType", "", "The machine type to use when creating the Windows server")
+	preemptible      = flag.Bool("preemptible", false, "If instance running the Windows server should be preemptible or not")
 	diskSizeGb       = flag.Int64("diskSizeGb", 50, "The disk size to use when creating the Windows server")
 	diskType         = flag.String("diskType", "", "The disk type to use when creating the Windows server")
 	commandTimeout   = flag.Int("commandTimeout", 5, "The command run timeout in minutes")
@@ -58,6 +59,7 @@ func main() {
 			Zone:           zone,
 			Labels:         labels,
 			MachineType:    machineType,
+			Preemptible:	preemptible,
 			DiskSizeGb:     diskSizeGb,
 			DiskType:       diskType,
 			ServiceAccount: serviceAccount,
