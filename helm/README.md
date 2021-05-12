@@ -117,4 +117,4 @@ The following options are configurable via environment variables passed to the b
 | HELMFILE_VERSION | [Helmfile](https://github.com/roboll/helmfile) version to install, optional (if using helm v3, please use the helmfile builder)
 | TILLERLESS | If true, Tillerless Helm is enabled, optional |
 | TILLER_NAMESPACE | Tiller namespace, optional |
-| SKIP_CLUSTER_CONFIG | If true, doesn't check or fetch GKE cluster config/creds, optional |
+| FORCE_RELOAD_CLUSTER_CONFIG | If true, force to re-fetch GKE cluster config/creds, optional |
