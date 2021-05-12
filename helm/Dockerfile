@@ -3,6 +3,7 @@ FROM gcr.io/cloud-builders/gcloud
 ARG HELM_VERSION=v3.2.0
 ENV HELM_VERSION=$HELM_VERSION
 
+COPY kubectl.bash /builder/kubectl.bash
 COPY helm.bash /builder/helm.bash
 
 RUN chmod +x /builder/helm.bash && \
@@ -12,6 +13,7 @@ RUN chmod +x /builder/helm.bash && \
   curl -SL https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && \
   tar zxvf helm.tar.gz --strip-components=1 -C /builder/helm linux-amd64 && \
   rm helm.tar.gz && \
+  /builder/google-cloud-sdk/bin/gcloud -q components install kubectl && \
   apt-get --purge -y autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
