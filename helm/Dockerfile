@@ -6,7 +6,7 @@ ENV HELM_VERSION=$HELM_VERSION
 COPY kubectl.bash /builder/kubectl.bash
 COPY helm.bash /builder/helm.bash
 
-RUN chmod +x /builder/helm.bash && \
+RUN chmod +x /builder/helm.bash /builder/kubectl.bash && \
   mkdir -p /builder/helm && \
   apt-get update && \
   apt-get install -y curl && \
