@@ -1,4 +1,4 @@
-FROM alpine:3.12 AS build
+FROM alpine:3.14 AS build
 
 ARG KUSTOMIZE_VERSION
 
