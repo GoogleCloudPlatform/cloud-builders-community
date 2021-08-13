@@ -36,6 +36,9 @@ type BuilderServer struct {
 	Zone           *string
 	Labels         *string
 	MachineType    *string
+	Preemptible    *bool
+	DiskSizeGb     *int64
+	DiskType       *string
 	ServiceAccount *string
 }
 
