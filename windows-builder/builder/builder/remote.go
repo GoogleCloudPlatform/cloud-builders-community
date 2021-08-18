@@ -40,6 +40,7 @@ type BuilderServer struct {
 	DiskSizeGb     *int64
 	DiskType       *string
 	ServiceAccount *string
+	Tags           *string
 }
 
 // Wait for server to be available.
@@ -219,4 +220,12 @@ func (bs *BuilderServer) GetLabelsMap() map[string]string {
 		labelsMap[key] = value
 	}
 	return labelsMap
+}
+
+func (bs *BuilderServer) GetTags() []string {
+	var tags []string
+  for _, tag := range strings.Split(*bs.Tags, ",") {
+		tags = append(tags, strings.TrimSpace(tag))
+	}
+	return tags
 }

@@ -196,6 +196,9 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		Scheduling: &compute.Scheduling{
 			Preemptible: *bs.Preemptible,
 		},
+		Tags: &compute.Tags {
+			Items: bs.GetTags(),
+		},
 	}
 
 	op, err := s.service.Instances.Insert(s.projectID, *bs.Zone, instance).Do()
