@@ -32,6 +32,7 @@ var (
 	commandTimeout   = flag.Int("commandTimeout", 5, "The command run timeout in minutes")
 	copyTimeout      = flag.Int("copyTimeout", 5, "The workspace copy timeout in minutes")
 	serviceAccount   = flag.String("serviceAccount", "default", "The service account to use when creating the Windows server")
+	tags             = flag.String("tags", "", "List of strings eparated by comma to add when creating the Windows server")
 )
 
 func main() {
@@ -63,6 +64,7 @@ func main() {
 			DiskSizeGb:     diskSizeGb,
 			DiskType:       diskType,
 			ServiceAccount: serviceAccount,
+			Tags: 					tags,
 		}
 		s = builder.NewServer(ctx, bs)
 		r = &s.Remote
