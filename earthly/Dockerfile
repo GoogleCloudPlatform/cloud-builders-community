@@ -2,7 +2,7 @@ FROM alpine
 
 RUN apk add --no-cache wget
 
-ARG VERSION=0.4.4
+ARG VERSION=0.5.23
 ARG PLATFORM=linux
 ARG ARCH=amd64
 
