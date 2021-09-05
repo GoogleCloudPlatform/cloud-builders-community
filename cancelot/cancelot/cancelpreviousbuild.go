@@ -5,22 +5,38 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/avast/retry-go"
 	cloudbuild "google.golang.org/api/cloudbuild/v1"
 )
 
 // CancelPreviousBuild checks for previous running builds on the same branch, in order to cancel them
 func CancelPreviousBuild(ctx context.Context, currentBuildID string, branchName string, sameTriggerOnly bool) {
+	err := retry.Do(
+		func() error {
+			err := cancelPreviousBuild(ctx, currentBuildID, branchName, sameTriggerOnly)
+			if err != nil {
+				log.Printf("Will retry -- %v", err)
+			}
+			return err
+		},
+	)
+	if err != nil {
+		log.Fatalf("Failed even after retries")
+	}
+}
+
+func cancelPreviousBuild(ctx context.Context, currentBuildID string, branchName string, sameTriggerOnly bool) error {
 	svc := gcbClient(ctx)
 	project, err := getProject()
 	if err != nil {
-		log.Fatalf("Failed to get project: %v", err)
+		return fmt.Errorf("cancelPreviousBuild: Failed to get project: %v", err)
 	}
 
 	log.Printf("Going to fetch current build details for: %s", currentBuildID)
 
 	currentBuildResponse, currentBuildError := svc.Projects.Builds.Get(project, currentBuildID).Do()
 	if currentBuildError != nil {
-		log.Fatalf("Failed to get build details from Cloud Build.  Will retry in one minute.")
+		return fmt.Errorf("cancelPreviousBuild: Failed to get build details from Cloud Build: %v", currentBuildError)
 	}
 
 	log.Printf("Going to check ongoing jobs for branch: %s", branchName)
@@ -47,7 +63,7 @@ func CancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 	onGoingBuildsResponse, onGoingBuildsError := svc.Projects.Builds.List(project).Filter(onGoingJobFilter).Do()
 
 	if onGoingBuildsError != nil {
-		log.Fatalf("Failed to get builds from Cloud Build.  Will retry in one minute.")
+		return fmt.Errorf("cancelPreviousBuild: Failed to get builds from Cloud Build: %v", onGoingBuildsError)
 	}
 
 	onGoingBuilds := onGoingBuildsResponse.Builds
@@ -60,7 +76,7 @@ func CancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 	}
 
 	if numOfOnGoingBuilds == 0 {
-		return
+		return nil
 	}
 
 	for _, build := range onGoingBuilds {
@@ -70,9 +86,11 @@ func CancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 		buildCancelResponse, buildCancelError := cancelBuildCall.Do()
 
 		if buildCancelError != nil {
-			log.Fatalf("Failed to cancel build with id:%s - %v", build.Id, buildCancelError)
+			return fmt.Errorf("cancelPreviousBuild: Failed to cancel build with id:%s - %v", build.Id, buildCancelError)
 		}
 
 		log.Printf("Cancelled build with id:%s", buildCancelResponse.Id)
 	}
+
+	return nil
 }

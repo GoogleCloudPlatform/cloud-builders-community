@@ -143,6 +143,11 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		machineType = "n1-standard-1"
 	}
 
+	diskType := *bs.DiskType
+	if diskType == "" {
+		diskType = "pd-standard"
+	}
+
 	instance := &compute.Instance{
 		Name:        name,
 		MachineType: prefix + s.projectID + "/zones/" + *bs.Zone + "/machineTypes/" + machineType,
@@ -154,6 +159,8 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 				InitializeParams: &compute.AttachedDiskInitializeParams{
 					DiskName:    fmt.Sprintf("%s-pd", name),
 					SourceImage: prefix + *bs.ImageUrl,
+					DiskSizeGb:  *bs.DiskSizeGb,
+					DiskType:    prefix + s.projectID + "/zones/" + *bs.Zone + "/diskTypes/" + diskType,
 				},
 			},
 		},
@@ -186,6 +193,12 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 			},
 		},
 		Labels: bs.GetLabelsMap(),
+		Scheduling: &compute.Scheduling{
+			Preemptible: *bs.Preemptible,
+		},
+		Tags: &compute.Tags {
+			Items: bs.GetTags(),
+		},
 	}
 
 	op, err := s.service.Instances.Insert(s.projectID, *bs.Zone, instance).Do()
