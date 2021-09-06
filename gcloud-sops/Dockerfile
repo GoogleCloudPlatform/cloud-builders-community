@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ENV VER 3.5.0
+ENV VER 3.7.1
 
 COPY sops.bash /builder/sops.bash
 
