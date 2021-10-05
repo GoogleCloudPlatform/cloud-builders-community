@@ -43,7 +43,7 @@ to run Packer acting as a given service account.
 
    ```sh
    gcloud iam service-accounts add-iam-policy-binding \
-     packer@mstefaniak-foundation.iam.gserviceaccount.com \
+     packer@${PROJECT_ID}.iam.gserviceaccount.com \
      --role="roles/iam.serviceAccountTokenCreator" \
      --member="serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com"
    ```
