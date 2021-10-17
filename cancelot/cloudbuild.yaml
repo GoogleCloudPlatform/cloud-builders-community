@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tools/cancelot:1.1', '.' ]
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tools/cancelot:1.2', '.' ]
 images:
-- 'gcr.io/$PROJECT_ID/tools/cancelot:1.1'
+- 'gcr.io/$PROJECT_ID/tools/cancelot:1.2'
 tags: ['cloud-builders-community']
