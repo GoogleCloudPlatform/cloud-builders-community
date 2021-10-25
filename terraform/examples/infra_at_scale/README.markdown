@@ -1,6 +1,6 @@
 # CloudBuild with Terraform at Scale
 
-CloudBuild gives your Terraform deployment boost and scale allowing you to concurrently deploy your infrastructure across dozens of GCP regions with a single command. This is how you do it:
+CloudBuild gives your Terraform deployment a boost and scale allowing you to concurrently deploy your infrastructure across multiple GCP regions. This example uses [private Cloud Build worker pool](https://cloud.google.com/build/docs/private-pools/private-pools-overview) that enables 100+ maximum concurrent builds.
 
 1. Ensure that $PROJECT_ID environment variable is set:
 
@@ -29,5 +29,35 @@ CloudBuild gives your Terraform deployment boost and scale allowing you to concu
     --member serviceAccount:$PROJECT_NUM@cloudbuild.gserviceaccount.com \
     --role roles/owner
     ```
-1. Increase your build and operation GetRequests: https://pantheon.corp.google.com/apis/api/cloudbuild.googleapis.com/quotas?project=alexbu-test-20211022
-1. Run multi-build
+
+1. Create a private Cloud Build pool with all the default settings. Private pools allow running 100+ concurrent builds. 
+
+    ```bash
+        export WORKER_POOL_ID=${PROJECT_ID}_CB_POOL
+        export WORKER_POOL_REGION=us-central1
+        gcloud builds worker-pools create $WORKER_POOL_ID \
+        --project=$PROJECT_ID \
+        --region=$WORKER_POOL_REGION
+    ```
+
+1. (optional step) Test on one build before running multi-build
+
+    ```bash
+        REGION=asia-east1
+        ZONE=asia-east1-a
+        BUCKET_NAME=$PROJECT_ID-$ZONE-tfbucket-1
+        gsutil mb -l $REGION gs://$BUCKET_NAME
+        printf "Running in region %s, zone %s\n" "${REGION}" "${ZONE}"
+        gcloud builds submit  \
+            --worker-pool=projects/${PROJECT_ID}/locations/${WORKER_POOL_REGION}/workerPools/${WORKER_POOL_ID} . \
+            --timeout=1200s \
+            --config=cloudbuild.yaml \
+            --region=$WORKER_POOL_REGION \
+            --substitutions=_BUCKET=$BUCKET_NAME,_REGION=$REGION,_ZONE=$ZONE
+    ```
+
+1. Run multi-build to deploy to 80+ regions concurrently. NOTE: this example is intended to demonstrate the maximum possible scale. To avoid incurring infrastructure scale, we recommend that you edit multi-build.sh and only keep a coupld of regions before deploying.
+
+    ```bash
+    bash ./multi-build.sh
+    ```
