@@ -18,7 +18,8 @@ steps:
       - "PORT=8080"
     timeout: 900s
 
-  # Dump the contents of deployment.yaml.
+  # The image is now ready to be deployed. The script below prints a simulated
+  # Kubernetes Deployment resource.
   - id: deploy
     name: bash
     args: ["deployment/deploy.sh"]
