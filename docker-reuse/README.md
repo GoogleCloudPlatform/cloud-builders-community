@@ -29,12 +29,12 @@ Before using this builder in a Cloud Build config, it must be built and pushed
 to your project's container registry. Run the following command in this
 directory:
 
-    $ gcloud builds submit .
+    gcloud builds submit .
 
 ## How to use
 
-The provided example best explains how to use this builder. After the builder
-itself has been built, run the following command inside the
-`examples/hello-world` directory:
+The provided examples best explain how to use this builder. After the builder
+itself has been built, run the following command in one of the subdirectories
+under the `examples` directory:
 
-    $ gcloud builds submit .
+    gcloud builds submit .
