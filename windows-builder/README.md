@@ -34,7 +34,7 @@ To use a custom Windows image, specify the image URL using the `--image` argumen
 ```yaml
 steps:
 - name: 'gcr.io/$PROJECT_ID/windows-builder'
-  args: [ '--command', '<command goes here>'
+  args: [ '--command', '<command goes here>',
           '--image', 'projects/$PROJECT_ID/global/images/my-windows-image']
 ```
 
