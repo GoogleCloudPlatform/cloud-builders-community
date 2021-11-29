@@ -7,7 +7,7 @@ RUN apt update \
     && apt-get autoremove --yes \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-ENV CLI_VERSION=1.4.0
+ENV CLI_VERSION=2.2.0
 RUN wget -O- https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_VERSION}_linux_amd64.tar.gz | tar zx --strip-components=1
 
 ADD gh.bash /usr/bin
