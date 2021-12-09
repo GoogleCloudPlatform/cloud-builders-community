@@ -29,18 +29,20 @@ type Remote struct {
 }
 
 type BuilderServer struct {
-	ImageUrl       *string
-	VPC            *string
-	Subnet         *string
-	Region         *string
-	Zone           *string
-	Labels         *string
-	MachineType    *string
-	Preemptible    *bool
-	DiskSizeGb     *int64
-	DiskType       *string
-	ServiceAccount *string
-	Tags           *string
+	ImageUrl          *string
+	VPC               *string
+	Subnet            *string
+	Region            *string
+	Zone              *string
+	Labels            *string
+	MachineType       *string
+	Preemptible       *bool
+	DiskSizeGb        *int64
+	DiskType          *string
+	ServiceAccount    *string
+	Tags              *string
+	UseInternalNet    *bool
+	CreateExternalIP  *bool
 }
 
 // Wait for server to be available.

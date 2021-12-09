@@ -33,6 +33,8 @@ var (
 	copyTimeout      = flag.Int("copyTimeout", 5, "The workspace copy timeout in minutes")
 	serviceAccount   = flag.String("serviceAccount", "default", "The service account to use when creating the Windows server")
 	tags             = flag.String("tags", "", "List of strings eparated by comma to add when creating the Windows server")
+	useInternalNet   = flag.Bool("use-internal-network", false, "Communicate with Windows server over the internal network")
+	createExternalIP = flag.Bool("create-external-ip", false, "Create an external IP address when using internal network")
 )
 
 func main() {
@@ -53,18 +55,20 @@ func main() {
 	} else {
 		ctx := context.Background()
 		bs = &builder.BuilderServer{
-			ImageUrl:       image,
-			VPC:            network,
-			Subnet:         subnetwork,
-			Region:         region,
-			Zone:           zone,
-			Labels:         labels,
-			MachineType:    machineType,
-			Preemptible:	preemptible,
-			DiskSizeGb:     diskSizeGb,
-			DiskType:       diskType,
-			ServiceAccount: serviceAccount,
-			Tags: 					tags,
+			ImageUrl:         image,
+			VPC:              network,
+			Subnet:           subnetwork,
+			Region:           region,
+			Zone:             zone,
+			Labels:           labels,
+			MachineType:      machineType,
+			Preemptible:      preemptible,
+			DiskSizeGb:       diskSizeGb,
+			DiskType:         diskType,
+			ServiceAccount:   serviceAccount,
+			Tags:             tags,
+			UseInternalNet:   useInternalNet,
+			CreateExternalIP: createExternalIP,
 		}
 		s = builder.NewServer(ctx, bs)
 		r = &s.Remote
