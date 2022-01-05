@@ -4,9 +4,13 @@
 
 steps:
 # Build all supported versions.
+# Lookup what are available alpine versions for a given node version at https://hub.docker.com/_/node?tab=tags
+# Lookup what is the available chrome version in an alpine branch at https://pkgs.alpinelinux.org/packages?name=chromium
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
+  - '--build-arg=ALPINE_VERSION=3.11'
+  - '--build-arg=CHROME_VERSION=81'
   - '--build-arg=NODE_VERSION=12.14.1'
   - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-12.14.1'
   - '--tag=gcr.io/$PROJECT_ID/nodejs/yarn-puppeteer'
@@ -14,12 +18,16 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
+  - '--build-arg=ALPINE_VERSION=3.11'
+  - '--build-arg=CHROME_VERSION=81'
   - '--build-arg=NODE_VERSION=13.6.0'
   - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-13.6.0'
   - '.'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
+  - '--build-arg=ALPINE_VERSION=3.12'
+  - '--build-arg=CHROME_VERSION=86'
   - '--build-arg=NODE_VERSION=14.15.4'
   - '--tag=gcr.io/$PROJECT_ID/yarn-puppeteer:node-14.15.4'
   # 14.15.4 is tagged :current and :latest
