@@ -160,7 +160,7 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 	}
 
 	accessConfigs := []*compute.AccessConfig{}
-	if *bs.CreateExternalIP {
+	if !*bs.UseInternalNet || *bs.CreateExternalIP {
 		accessConfigs = []*compute.AccessConfig{
 			&compute.AccessConfig{
 				Type: "ONE_TO_ONE_NAT",
