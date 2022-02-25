@@ -55,7 +55,7 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
 else
     gcloud beta container binauthz attestations sign-and-create \
         --attestor="${args[attestor]}" \
-        --artifact-url="$IMAGE_AND_DIGEST" \
+        --artifact-url "$IMAGE_AND_DIGEST" \
         --keyversion="${args[keyversion]}"
 fi
 echo "Successfully created attestation"
