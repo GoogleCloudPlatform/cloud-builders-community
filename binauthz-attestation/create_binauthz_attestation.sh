@@ -48,7 +48,7 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
     echo -n "$PGP_SECRET_KEY" | gpg2 $COMMON_FLAGS --import
     gpg2 $COMMON_FLAGS --output generated_signature.pgp --local-user "${args[pgp_key_fingerprint]}" --armor --sign binauthz_signature_payload.json
     gcloud container binauthz attestations create \
-        --artifact-url="$IMAGE_AND_DIGEST" \
+        --artifact-url "$IMAGE_AND_DIGEST" \
         --attestor="${args[attestor]}" \
         --signature-file=./generated_signature.pgp \
         --public-key-id="${args[pgp_key_fingerprint]}"
