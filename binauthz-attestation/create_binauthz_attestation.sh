@@ -49,13 +49,13 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
     gpg2 $COMMON_FLAGS --output generated_signature.pgp --local-user "${args[pgp_key_fingerprint]}" --armor --sign binauthz_signature_payload.json
     gcloud container binauthz attestations create \
         --artifact-url "$IMAGE_AND_DIGEST" \
-        --attestor="${args[attestor]}" \
-        --signature-file=./generated_signature.pgp \
-        --public-key-id="${args[pgp_key_fingerprint]}"
+        --attestor "${args[attestor]}" \
+        --signature-file ./generated_signature.pgp \
+        --public-key-id "${args[pgp_key_fingerprint]}"
 else
     gcloud beta container binauthz attestations sign-and-create \
-        --attestor="${args[attestor]}" \
+        --attestor "${args[attestor]}" \
         --artifact-url "$IMAGE_AND_DIGEST" \
-        --keyversion="${args[keyversion]}"
+        --keyversion "${args[keyversion]}"
 fi
 echo "Successfully created attestation"
