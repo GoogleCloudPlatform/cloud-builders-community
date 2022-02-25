@@ -35,7 +35,7 @@ if [ -n "${args[pgp_key_fingerprint]}" ]; then
     fi
 
     gcloud container binauthz create-signature-payload \
-        --artifact-url="$IMAGE_AND_DIGEST" > binauthz_signature_payload.json
+        --artifact-url "$IMAGE_AND_DIGEST" > binauthz_signature_payload.json
 
     mkdir -p ~/.gnupg
     echo allow-loopback-pinentry > ~/.gnupg/gpg-agent.conf
