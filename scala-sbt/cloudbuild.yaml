@@ -6,18 +6,9 @@ steps:
   args:
   - 'build'
   - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/javac:8'
-  - '--build-arg=SBT_VERSION=1.3.4'
-  - '--build-arg=SHA=04d49d6e535b3586e40910ccd7396034ca7a7bab7d31bfd265fddca7cccc95eb'
-  - '--tag=gcr.io/$PROJECT_ID/scala-sbt:1.3.4-jdk-8'
-  - '.'
-  waitFor: ['-']
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'build'
-  - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/javac:8'
-  - '--build-arg=SBT_VERSION=0.13.15'
-  - '--build-arg=SHA=18b106d09b2874f2a538c6e1f6b20c565885b2a8051428bd6d630fb92c1c0f96'
-  - '--tag=gcr.io/$PROJECT_ID/scala-sbt:0.13.15-jdk-8'
+  - '--build-arg=SBT_VERSION=1.6.2'
+  - '--build-arg=SHA=5eafd8d9de2c7fcac6e58674b640b97ad3dfc0fe06013a814456a2108048bdac'
+  - '--tag=gcr.io/$PROJECT_ID/scala-sbt:1.6.2-jdk-8'
   - '.'
   waitFor: ['-']
 
@@ -25,11 +16,10 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'tag'
-  - 'gcr.io/$PROJECT_ID/scala-sbt:1.3.4-jdk-8'
+  - 'gcr.io/$PROJECT_ID/scala-sbt:1.6.2-jdk-8'
   - 'gcr.io/$PROJECT_ID/scala-sbt'
 
 images:
 - 'gcr.io/$PROJECT_ID/scala-sbt'
-- 'gcr.io/$PROJECT_ID/scala-sbt:1.3.4-jdk-8'
-- 'gcr.io/$PROJECT_ID/scala-sbt:0.13.15-jdk-8'
+- 'gcr.io/$PROJECT_ID/scala-sbt:1.6.2-jdk-8'
 tags: ['cloud-builders-community']
