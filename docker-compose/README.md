@@ -1,5 +1,7 @@
 # Docker-compose
 
+Note: as of https://github.com/GoogleCloudPlatform/cloud-builders/pull/837, GCB's [`docker` build step](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/docker) includes `docker-compose`.
+
 This build step invokes `docker-compose` commands in [Google Cloud Build](http://cloud.google.com/cloud-build/).
 
 Arguments passed to this builder will be passed to `docker-compose` directly,
