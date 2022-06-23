@@ -1,9 +1,7 @@
-FROM golang:1.16 AS kosource
+FROM golang:1.17 AS kosource
 ARG KO_GIT_TAG
 
-RUN git clone --depth=1 -b "${KO_GIT_TAG}" https://github.com/google/ko
-WORKDIR ko
-RUN GOOS=linux go build -mod=vendor -o /bin/ko ./cmd/ko
+RUN GOBIN="/bin/" go install github.com/google/ko@${KO_GIT_TAG}
 
 FROM gcr.io/cloud-builders/kubectl
 
