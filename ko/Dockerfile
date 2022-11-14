@@ -1,4 +1,4 @@
-FROM golang:1.17 AS kosource
+FROM golang:1.18 AS kosource
 ARG KO_GIT_TAG
 
 RUN GOBIN="/bin/" go install github.com/google/ko@${KO_GIT_TAG}
