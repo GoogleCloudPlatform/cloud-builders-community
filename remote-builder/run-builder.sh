@@ -30,7 +30,7 @@ KEYNAME=builder-key
 ssh-keygen -t rsa -N "" -f ${KEYNAME} -C ${USERNAME} || true
 chmod 400 ${KEYNAME}*
 
-cat > ssh-keys <<EOF
+cat<< EOF | perl -pe 'chomp if eof'  >ssh-keys
 ${USERNAME}:$(cat ${KEYNAME}.pub)
 EOF
 
