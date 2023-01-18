@@ -23,7 +23,7 @@ gcloud builds submit .
 > **Advanced builder building:** To specify a particular version of packer, provide the packer version
 > number, and the checksum of that version's zip archive, as Cloud Build [substitutions][substitutions]:
 > ```
-> gcloud builds submit --substitutions=_PACKER_VERSION=1.7.8,_PACKER_VERSION_SHA256SUM=8a94b84542d21b8785847f4cccc8a6da4c7be5e16d4b1a2d0a5f7ec5532faec0 .
+> gcloud builds submit --substitutions=_PACKER_VERSION=1.8.5,_PACKER_VERSION_SHA256SUM=1f17a724e5ccc696010c842e6d2bb2c2749ab18ce7bf06482012d3ddb9edeef2 .
 > ```
 
 [substitutions]: https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values#using_user-defined_substitutions
