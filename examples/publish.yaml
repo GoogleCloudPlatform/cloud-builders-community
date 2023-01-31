@@ -1,0 +1,5 @@
+---
+steps:
+  - name: 'gcr.io/${PROJECT_ID}/poetry'
+    id: 'publish package'
+    args: ['publish', '-r', 'pypi', '--build']
