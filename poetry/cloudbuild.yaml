@@ -1,0 +1,7 @@
+---
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/poetry', '.']
+
+images: ['gcr.io/$PROJECT_ID/poetry']
+tags: ['cloud-builders-community']
