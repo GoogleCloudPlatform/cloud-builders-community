@@ -32,7 +32,7 @@ fi
 
 # if HELM_VERSION starts with v2, initialize Helm
 if [[ $HELM_VERSION =~ ^v2 ]]; then
-  echo "Running: helm init --client-only"
+  echo "Running: helm init --stable-repo-url https://charts.helm.sh/stable --client-only"
   helm init --client-only
 else
   echo "Skipped 'helm init --client-only' because not v2"
