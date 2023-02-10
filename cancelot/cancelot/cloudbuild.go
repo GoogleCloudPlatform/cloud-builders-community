@@ -9,7 +9,7 @@ import (
 
 	"cloud.google.com/go/compute/metadata"
 	"golang.org/x/oauth2/google"
-	cloudbuild "google.golang.org/api/cloudbuild/v1"
+	"google.golang.org/api/cloudbuild/v1"
 )
 
 // getProject gets the project ID.

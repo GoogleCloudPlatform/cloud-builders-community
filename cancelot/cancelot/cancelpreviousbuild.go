@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/avast/retry-go"
-	cloudbuild "google.golang.org/api/cloudbuild/v1"
+	"google.golang.org/api/cloudbuild/v1"
 )
 
 // CancelPreviousBuild checks for previous running builds on the same branch, in order to cancel them

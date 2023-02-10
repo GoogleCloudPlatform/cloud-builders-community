@@ -1,15 +1,15 @@
-FROM gcr.io/cloud-builders/go AS build-env
+FROM gcr.io/cloud-builders/go:1.18 AS build-env
 
-ADD ./ /go/src/
+WORKDIR /build
+COPY . .
 
-ENV GOBIN=/go/bin
-RUN go get -d -v ./...
-RUN go install /go/src/main.go
+RUN go mod download
+RUN go build -v -o ./main .
 
 FROM alpine:latest
 
 RUN apk add --no-cache ca-certificates
 
-COPY --from=build-env /go/bin/main /go/bin/main
+COPY --from=build-env /build/main /cancelot
 
-ENTRYPOINT [ "/go/bin/main" ]
+ENTRYPOINT [ "/cancelot" ]

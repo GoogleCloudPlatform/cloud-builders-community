@@ -7,7 +7,7 @@ import (
 	"flag"
 	"log"
 
-	"./cancelot"
+	"github.com/GoogleCloudPlatform/cloud-builders-community/cancelot/cancelot"
 )
 
 var (
