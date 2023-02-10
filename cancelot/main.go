@@ -19,7 +19,6 @@ var (
 func main() {
 	log.Print("Starting cancelot")
 	flag.Parse()
-	ctx := context.Background()
 
 	if *currentBuildID == "" {
 		log.Fatalf("currentBuildID must be provided.")
@@ -29,6 +28,5 @@ func main() {
 		log.Fatalf("BranchName must be provided.")
 	}
 
-	cancelot.CancelPreviousBuild(ctx, *currentBuildID, *branchName, *sameTriggerOnly)
-	return
+	cancelot.CancelPreviousBuild(context.Background(), *currentBuildID, *branchName, *sameTriggerOnly)
 }

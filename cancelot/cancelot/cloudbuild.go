@@ -7,9 +7,8 @@ import (
 	"os/exec"
 	"strings"
 
+	cloudbuild "cloud.google.com/go/cloudbuild/apiv1/v2"
 	"cloud.google.com/go/compute/metadata"
-	"golang.org/x/oauth2/google"
-	"google.golang.org/api/cloudbuild/v1"
 )
 
 // getProject gets the project ID.
@@ -22,10 +21,12 @@ func getProject() (string, error) {
 			log.Printf("Failed to get project ID from instance metadata")
 			return "", err
 		}
+
 		return projectID, nil
 	}
+
 	// Shell out to gcloud.
-	cmd := exec.Command("gcloud", "config", "get-value", "project")
+	cmd := exec.Command("gcloud", "config", "get", "project")
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
@@ -34,17 +35,16 @@ func getProject() (string, error) {
 		return "", err
 	}
 	projectID := strings.TrimSuffix(out.String(), "\n")
+	projectID = strings.TrimSuffix(projectID, "\r")
+
 	return projectID, nil
 }
 
-func gcbClient(ctx context.Context) *cloudbuild.Service {
-	client, err := google.DefaultClient(ctx, cloudbuild.CloudPlatformScope)
+func gcbClient(ctx context.Context) *cloudbuild.Client {
+	client, err := cloudbuild.NewClient(ctx)
 	if err != nil {
-		log.Fatalf("Caught error creating client: %v", err)
+		log.Fatalf("Failed to create cloudbuild client: %v", err)
 	}
-	svc, err := cloudbuild.New(client)
-	if err != nil {
-		log.Fatalf("Caught error creating service: %v", err)
-	}
-	return svc
+
+	return client
 }
