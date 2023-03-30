@@ -7,7 +7,7 @@
     "@google-cloud/secret-manager": "^3.2.3",
     "@octokit/app": "^10.0.2",
     "@octokit/auth-app": "^2.10.5",
-    "@octokit/auth-token": "^2.4.4",
+    "@octokit/auth-token": "^2.5.0",
     "@octokit/rest": "^18.0.12"
   },
   "devDependencies": {
