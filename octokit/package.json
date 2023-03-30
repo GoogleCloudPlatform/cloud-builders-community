@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.16",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.22",
     "rimraf": "^3.0.2",
     "rollup": "^2.35.1",
     "ts-node": "^9.1.1",
