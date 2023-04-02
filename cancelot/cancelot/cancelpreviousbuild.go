@@ -38,12 +38,9 @@ func cancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 
 	log.Printf("Going to fetch current build details for: %s", currentBuildID)
 
-	currentBuild, err := client.GetBuild(ctx, &cloudbuildpb.GetBuildRequest{
-		ProjectId: project,
-		Id:        currentBuildID,
-	})
+	currentBuild, err := client.GetBuild(ctx, &cloudbuildpb.GetBuildRequest{ProjectId: project, Id: currentBuildID})
 	if err != nil {
-		return fmt.Errorf("GetBuild: %w", err)
+		return fmt.Errorf("client.GetBuild: %w", err)
 	}
 
 	filter := fmt.Sprintf(
@@ -67,16 +64,13 @@ func cancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 		filter = fmt.Sprintf(`%s AND source.repo_source.repo_name = "%s" AND source.repo_source.branch_name = "%s"`, filter, repoName, branchName)
 	}
 
-	log.Printf("Builds filter: %s", filter)
+	log.Printf("Using builds filter: %s", filter)
 	if filterRepoLocally {
-		log.Println("using local repo and branch filtering as this the trigger is configured with a connected source")
+		log.Println("Using local repo and branch filtering as this trigger is configured with a connected source")
 	}
 
-	var cancells errgroup.Group
-	iter := client.ListBuilds(ctx, &cloudbuildpb.ListBuildsRequest{
-		ProjectId: project,
-		Filter:    filter,
-	})
+	var cancels errgroup.Group
+	iter := client.ListBuilds(ctx, &cloudbuildpb.ListBuildsRequest{ProjectId: project, Filter: filter})
 	for {
 		build, err := iter.Next()
 		if err != nil {
@@ -84,22 +78,20 @@ func cancelPreviousBuild(ctx context.Context, currentBuildID string, branchName 
 				break
 			}
 
-			return fmt.Errorf("ListBuilds iter.Next: %w", err)
+			return fmt.Errorf("client.ListBuilds iter.Next: %w", err)
 		}
 
-		if filterRepoLocally {
-			if build.Substitutions["REPO_NAME"] != repoName || build.Substitutions["BRANCH_NAME"] != branchName {
-				continue
-			}
+		if filterRepoLocally && (build.Substitutions["REPO_NAME"] != repoName || build.Substitutions["BRANCH_NAME"] != branchName) {
+			continue
 		}
 
-		cancells.Go(func() error {
-			log.Printf("cancelling build %s (startet at %s)", build.Id, build.CreateTime.AsTime().Format(time.RFC3339))
+		cancels.Go(func() error {
+			log.Printf("Canceling build %s (started at %s)", build.Id, build.CreateTime.AsTime().Format(time.RFC3339))
 
 			_, err := client.CancelBuild(ctx, &cloudbuildpb.CancelBuildRequest{ProjectId: build.ProjectId, Id: build.Id})
 			return err
 		})
 	}
 
-	return cancells.Wait()
+	return cancels.Wait()
 }
