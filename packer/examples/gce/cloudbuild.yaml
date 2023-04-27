@@ -1,21 +1,12 @@
-# Perform a Packer build based on the `packer.json` configuration. This Packer
+# Perform a Packer build based on the `build.pkr.hcl` configuration
+# and user variables from variables.pkrvars.hcl file. This Packer
 # build creates a GCE image.
 #
 # See README.md for invocation instructions.
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - kms
-  - decrypt
-  - --ciphertext-file=secrets.enc
-  - --plaintext-file=secrets.json
-  - --location=global
-  - --keyring=packer
-  - --key=key
 - name: 'gcr.io/$PROJECT_ID/packer'
   args:
   - build
-  - -var
-  - project_id=$PROJECT_ID
-  - packer.json
+  - -var-file=variables.pkrvars.hcl
+  - build.pkr.hcl
 tags: ['cloud-builders-community']

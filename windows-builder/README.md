@@ -34,7 +34,7 @@ To use a custom Windows image, specify the image URL using the `--image` argumen
 ```yaml
 steps:
 - name: 'gcr.io/$PROJECT_ID/windows-builder'
-  args: [ '--command', '<command goes here>'
+  args: [ '--command', '<command goes here>',
           '--image', 'projects/$PROJECT_ID/global/images/my-windows-image']
 ```
 
@@ -114,6 +114,15 @@ Downloading and expanding archives is a common build step.  While Powershell off
 For ephemeral VMs on Compute Engine, the initial password reset is performed [using public key cryptography](https://cloud.google.com/compute/docs/instances/windows/automate-pw-generation).  The cleartext password is never sent over an unencrypted connection, and is stored in memory for the duration of the build.
 
 The latest version of Windows Server 2019 DC Core for Containers (patched 2019-12-10) is currently used.
+
+By default, windows-builder creates an ingress firewall rule to open tcp:5986.  This allows windows-builder to communicate
+with windows GCE instance over WinRM.  It's possible to avoid an external access by using a [private worker pool](https://cloud.google.com/build/docs/private-pools/private-pools-overview) and peering
+it with your private VPC network.  With such set up windows-builder can communicate with GCE instance(s) over an internal network.  To do that you will need to [set up](https://cloud.google.com/build/docs/private-pools/set-up-private-pool-environment) your GCP network, create a [private worker pool](https://cloud.google.com/build/docs/private-pools/create-manage-private-pools), configure [Private Google Access](https://cloud.google.com/vpc/docs/configure-private-google-access), [configure](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) your builder to use a private worker pool, and use --use-internal-network windows-builder option in your cloudbuild.yaml.
+
+Using internal network option precludes windows-builder from creating an external ip address for windows GCE instance.
+You can use --create-external-ip (can only be used in conjunction with --use-internal-network) which would override the
+default behavior and create an external IP address.  This can be useful in case you want to be able to RDP to your
+GCE instance(s).
 
 ## Docker builds
 

@@ -93,18 +93,29 @@ func NewServer(ctx context.Context, bs *BuilderServer) *Server {
 		log.Fatalf("Failed to reset Windows password: %+v", err)
 	}
 
-	// Set firewall rule.
-	err = s.setFirewallRule(bs)
-	if err != nil {
-		log.Fatalf("Failed to set ingress firewall rule: %v", err)
-	}
-	log.Printf("Set ingress firewall rule successfully")
+	var ip string
 
-	// Get IP address.
-	ip, err := s.getExternalIP(bs)
-	if err != nil {
-		log.Fatalf("Failed to get external IP address: %v", err)
-		return nil
+	if *bs.UseInternalNet {
+		// Get internal IP address.
+		ip, err = s.getInternalIP(bs)
+		if err != nil {
+			log.Fatalf("Failed to get internal IP address: %v", err)
+			return nil
+		}
+	} else {
+		// Set firewall rule.
+		err = s.setFirewallRule(bs)
+		if err != nil {
+			log.Fatalf("Failed to set ingress firewall rule: %v", err)
+		}
+		log.Printf("Set ingress firewall rule successfully")
+
+		// Get IP address.
+		ip, err = s.getExternalIP(bs)
+		if err != nil {
+			log.Fatalf("Failed to get external IP address: %v", err)
+			return nil
+		}
 	}
 
 	// Set and return Remote.
@@ -143,6 +154,21 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		machineType = "n1-standard-1"
 	}
 
+	diskType := *bs.DiskType
+	if diskType == "" {
+		diskType = "pd-standard"
+	}
+
+	accessConfigs := []*compute.AccessConfig{}
+	if !*bs.UseInternalNet || *bs.CreateExternalIP {
+		accessConfigs = []*compute.AccessConfig{
+			&compute.AccessConfig{
+				Type: "ONE_TO_ONE_NAT",
+				Name: "External NAT",
+			},
+		}
+	}
+
 	instance := &compute.Instance{
 		Name:        name,
 		MachineType: prefix + s.projectID + "/zones/" + *bs.Zone + "/machineTypes/" + machineType,
@@ -154,6 +180,8 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 				InitializeParams: &compute.AttachedDiskInitializeParams{
 					DiskName:    fmt.Sprintf("%s-pd", name),
 					SourceImage: prefix + *bs.ImageUrl,
+					DiskSizeGb:  *bs.DiskSizeGb,
+					DiskType:    prefix + s.projectID + "/zones/" + *bs.Zone + "/diskTypes/" + diskType,
 				},
 			},
 		},
@@ -167,12 +195,7 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		},
 		NetworkInterfaces: []*compute.NetworkInterface{
 			&compute.NetworkInterface{
-				AccessConfigs: []*compute.AccessConfig{
-					&compute.AccessConfig{
-						Type: "ONE_TO_ONE_NAT",
-						Name: "External NAT",
-					},
-				},
+				AccessConfigs: accessConfigs,
 				Network:    prefix + s.projectID + "/global/networks/" + *bs.VPC,
 				Subnetwork: prefix + s.projectID + "/regions/" + *bs.Region + "/subnetworks/" + *bs.Subnet,
 			},
@@ -186,6 +209,12 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 			},
 		},
 		Labels: bs.GetLabelsMap(),
+		Scheduling: &compute.Scheduling{
+			Preemptible: *bs.Preemptible,
+		},
+		Tags: &compute.Tags {
+			Items: bs.GetTags(),
+		},
 	}
 
 	op, err := s.service.Instances.Insert(s.projectID, *bs.Zone, instance).Do()
@@ -229,6 +258,19 @@ func (s *Server) DeleteInstance(bs *BuilderServer) error {
 		return err
 	}
 	return nil
+}
+
+// getInternalIP gets an internal IP for an instance.
+func(s *Server) getInternalIP(bs *BuilderServer) (string, error) {
+	err := s.refreshInstance(bs)
+	if err != nil {
+		log.Printf("Error refreshing instance: %+v", err)
+	}
+	internalIP := s.instance.NetworkInterfaces[0].NetworkIP
+	if internalIP == "" {
+		return "", errors.New("Could not get internal IP from list")
+	}
+	return internalIP, nil
 }
 
 // getExternalIP gets the external IP for an instance.

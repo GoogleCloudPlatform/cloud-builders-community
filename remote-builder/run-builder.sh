@@ -1,16 +1,5 @@
 #!/bin/bash -xe
 
-# Always delete instance after attempting build
-function cleanup {
-    ${GCLOUD} compute instances delete ${INSTANCE_NAME} --quiet
-}
-
-# Run command on the instance via ssh
-function ssh {
-    ${GCLOUD} compute ssh --ssh-key-file=${KEYNAME} \
-         ${USERNAME}@${INSTANCE_NAME} -- $1
-}
-
 # Configurable parameters
 [ -z "$COMMAND" ] && echo "Need to set COMMAND" && exit 1;
 
@@ -19,8 +8,20 @@ REMOTE_WORKSPACE=${REMOTE_WORKSPACE:-/home/${USERNAME}/workspace/}
 INSTANCE_NAME=${INSTANCE_NAME:-builder-$(cat /proc/sys/kernel/random/uuid)}
 ZONE=${ZONE:-us-central1-f}
 INSTANCE_ARGS=${INSTANCE_ARGS:---preemptible}
+SSH_ARGS=${SSH_ARGS:-}
 GCLOUD=${GCLOUD:-gcloud}
-RETRIES=10
+RETRIES=${RETRIES:-10}
+
+# Always delete instance after attempting build
+function cleanup {
+    ${GCLOUD} compute instances delete ${INSTANCE_NAME} --quiet
+}
+
+# Run command on the instance via ssh
+function ssh {
+    ${GCLOUD} compute ssh ${SSH_ARGS} --ssh-key-file=${KEYNAME} \
+         ${USERNAME}@${INSTANCE_NAME} -- $1
+}
 
 ${GCLOUD} config set compute/zone ${ZONE}
 
@@ -38,6 +39,8 @@ ${GCLOUD} compute instances create \
        --metadata block-project-ssh-keys=TRUE \
        --metadata-from-file ssh-keys=ssh-keys
 
+trap cleanup EXIT
+
 RETRY_COUNT=1
 while [ "$(ssh 'printf pass')" != "pass" ]; do
   echo "[Try $RETRY_COUNT of $RETRIES] Waiting for instance to start accepting SSH connections..."
@@ -49,14 +52,12 @@ while [ "$(ssh 'printf pass')" != "pass" ]; do
   RETRY_COUNT=$(($RETRY_COUNT+1))
 done
 
-trap cleanup EXIT
-
-${GCLOUD} compute scp --compress --recurse \
+${GCLOUD} compute scp ${SSH_ARGS} --compress --recurse \
        $(pwd) ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
        --ssh-key-file=${KEYNAME}
 
 ssh "${COMMAND}"
 
-${GCLOUD} compute scp --compress --recurse \
+${GCLOUD} compute scp ${SSH_ARGS} --compress --recurse \
        ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE}* $(pwd) \
        --ssh-key-file=${KEYNAME}
