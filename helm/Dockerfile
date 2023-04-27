@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ARG HELM_VERSION=v3.6.0
+ARG HELM_VERSION=v3.7.0
 ENV HELM_VERSION=$HELM_VERSION
 
 COPY kubectl.bash /builder/kubectl.bash

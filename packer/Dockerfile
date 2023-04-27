@@ -1,4 +1,4 @@
-FROM alpine:3.11 AS build
+FROM alpine:3.14 AS build
 
 ARG PACKER_VERSION
 ARG PACKER_VERSION_SHA256SUM
@@ -9,7 +9,7 @@ RUN echo "${PACKER_VERSION_SHA256SUM}  packer_${PACKER_VERSION}_linux_amd64.zip"
 RUN /usr/bin/unzip packer_${PACKER_VERSION}_linux_amd64.zip
 
 
-FROM ubuntu
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim
 RUN apt-get -y update && apt-get -y install ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY --from=build packer /usr/bin/packer
 ENTRYPOINT ["/usr/bin/packer"]
