@@ -22,7 +22,7 @@ ENV LANG=C.UTF-8
 
 ARG sdk_version=sdk-tools-linux-4333796.zip
 ARG android_home=/opt/android/sdk
-ARG ndk_version=android-ndk-r17b
+ARG ndk_version=android-ndk-r25
 ARG android_ndk_home=/opt/android/${ndk_version}
 
 # Install Android SDK

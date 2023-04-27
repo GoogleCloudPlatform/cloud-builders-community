@@ -23,7 +23,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--tag=gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}-ndk-r17b'
+  - '--tag=gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}-ndk-r25'
   - '--build-arg'
   - 'android_version=${_ANDROID_VERSION}'
   - '--build-arg'
@@ -36,6 +36,6 @@ steps:
 images: 
   - 'gcr.io/$PROJECT_ID/android:base'
   - 'gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}'
-  - 'gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}-ndk-r17b'
+  - 'gcr.io/$PROJECT_ID/android:${_ANDROID_VERSION}-ndk-r25'
 
 timeout: 2000s
