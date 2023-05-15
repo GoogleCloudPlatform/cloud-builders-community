@@ -11,4 +11,4 @@ images:
   - 'gcr.io/$PROJECT_ID/helm:latest'
 tags: ['cloud-builders-community']
 substitutions:
-  _HELM_VERSION: 3.7.0
+  _HELM_VERSION: 3.12.0

@@ -41,7 +41,7 @@ To build this builder, run the following command in this directory.
 
 You can also build this builder setting `Helm` version via in `cloudbuild.yaml`, no need to do that in `Dockerfile` anymore.
 
-    args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v2.10.0', '.']
+    args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v3.12.0', '.']
 
 ## Using Helm
 
