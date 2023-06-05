@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17-jdk-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -19,7 +19,7 @@ RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
 RUN locale-gen C.UTF-8 || true
 ENV LANG=C.UTF-8
 
-ARG sdk_version=commandlinetools-linux-7583922_latest.zip
+ARG sdk_version=commandlinetools-linux-9477386_latest.zip
 ARG android_home=/opt/android/sdk
 ARG ndk_version=android-ndk-r17b
 ARG android_ndk_home=/opt/android/${ndk_version}
@@ -48,7 +48,7 @@ RUN yes | sdkmanager \
     "extras;android;m2repository" \
     "extras;google;m2repository" \
     "extras;google;google_play_services" \
-    "build-tools;30.0.2"
+    "build-tools;33.0.2"
 
 COPY for_branch /bin
 COPY run_build /bin
