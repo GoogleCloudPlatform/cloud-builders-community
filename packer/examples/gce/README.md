@@ -1,8 +1,8 @@
 # Packer GCE build
 
-This directory contains an example that creates a GCE image using `packer`.
+This directory contains an example that creates a GCE image using HashiCorp Packer.
 
-Example Packer build is using [HCL2 syntax](https://www.packer.io/guides/hcl) and creates
+Example Packer build is using [HCL2 syntax](https://developer.hashicorp.com/packer/guides/hcl) and creates
 GCE image basing on Ubuntu Linux.
 
 **Note**: This example assumes that you have built the `packer` build step and pushed it to
