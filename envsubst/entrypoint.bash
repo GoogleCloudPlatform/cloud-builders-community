@@ -32,7 +32,7 @@ while true; do
             ;;
         *)
             files[files_count]="${1}"
-            files_count=$((  + 1 ))
+            files_count=$(( files_count + 1 ))
             shift
             ;;
     esac

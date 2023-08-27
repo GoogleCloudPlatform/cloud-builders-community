@@ -91,6 +91,10 @@ service accounts by function. A service account that can do 'all the things' is 
 [iam-integration]: https://cloud.google.com/container-engine/docs/iam-integration
 [gcp-with-terraform]: https://cloud.google.com/community/tutorials/managing-gcp-projects-with-terraform
 
+### Concurrently deploying to multiple regions
+
+Platform teams usually attempt to complete the full set of their deployments within a certain time. [This example](./examples/infra_at_scale/) demonstrates how you can concurrently deploy your infrastructure to multiple regions with Cloud Build and Terraform.
+
 ### Using this builder image anywhere else
 This image can be run on any Docker host, without GCE. Why would you want to do this? 
 It'll let you run Terraform locally, with no environment dependencies other than a Docker host installation. 

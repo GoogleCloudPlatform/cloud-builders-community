@@ -60,7 +60,7 @@ Use the `cloudbuild-ndk.yaml` file to build docker images that also include the 
 ```bash
 gcloud builds submit --config=cloudbuild-ndk.yaml --substitutions=_ANDROID_VERSION=28
 # ...
-# Step #2: Successfully tagged gcr.io/project-id/android:28-ndk-r17b
+# Step #2: Successfully tagged gcr.io/project-id/android:28-ndk-r25
 ```
 
 ### 2. Create a cloudbuild.yaml file
