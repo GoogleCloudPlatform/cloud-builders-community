@@ -41,22 +41,13 @@ To build this builder, run the following command in this directory.
 
 You can also build this builder setting `Helm` version via in `cloudbuild.yaml`, no need to do that in `Dockerfile` anymore.
 
-    args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v2.10.0', '.']
+    args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v3.12.0', '.']
 
 ## Using Helm
 
-This builder supports three install options of Helm:
-* The default one when where Helm v3 is used and thus tiller is no longer present
-* Helm v2 where `tiller` gets installed into your GKE cluster.
-* Secure v2 `Tillerless Helm` where `tiller` runs outside the GKE cluster.
-
-Check the [examples](examples) folder for examples of using Helm in `Cloud Build` pipelines.
-
-**Note:** Do not forget to update `zone` and GKE `cluster` settings in the `cloudbuild.yaml` files.
-
 ### Helm v3
 
-The default one.
+Helm v2 (with or without Tiller) is no longer supported.
 
 You can test e.g. installing a chart via `Helm`, running the following command.
 
@@ -65,28 +56,6 @@ You can test e.g. installing a chart via `Helm`, running the following command.
 And to list Helm releases.
 
     $ gcloud builds submit . --config=examples/releases-list/cloudbuild.yaml
-
-
-### Helm v2 + Tiller setup
-
-The v2 choice when `Tillerless` is not toggled on. `tiller` will be installed into your GKE cluster (consider the security implications, `tiller` has historically had some issues).
-
-### Helm v2 + Tillerless Helm setup
-
-`Tillerless Helm` solves many `tiller` [security issues](https://docs.helm.sh/using_helm/#securing-your-helm-installation), as `tiller` runs outside the GKE cluster, locally in the container, and stores configs as secrets using the [secrets storage backend](https://docs.helm.sh/using_helm/#storage-backends).
-It is based on the [Tillerless](https://rimusz.net/tillerless-helm/) [plugin](https://github.com/rimusz/helm-tiller), and is available in the image.
-
-#### Enabling Tillerless Helm
-
-Set `TILLERLESS=true` and optionally `TILLER_NAMESPACE=<namespace>`.
-
-You can test e.g. installing a chart via `Tillerless Helm`, running the following command.
-
-    $ gcloud builds submit . --config=examples/chart-install-tillerless/cloudbuild.yaml
-
-And to list Helm releases.
-
-    $ gcloud builds submit . --config=examples/releases-list-tillerless/cloudbuild.yaml
 
 ## RBAC Considerations
 
@@ -115,6 +84,4 @@ The following options are configurable via environment variables passed to the b
 | HELM_REPO_NAME | External Helm repository name, optional |
 | HELM_REPO_URL | External Helm repo URL, optional |
 | HELMFILE_VERSION | [Helmfile](https://github.com/roboll/helmfile) version to install, optional (if using helm v3, please use the helmfile builder)
-| TILLERLESS | If true, Tillerless Helm is enabled, optional |
-| TILLER_NAMESPACE | Tiller namespace, optional |
-| FORCE_RELOAD_CLUSTER_CONFIG | If true, force to re-fetch GKE cluster config/creds, optional |
+| SKIP_CLUSTER_CONFIG | If true, doesn't check or fetch GKE cluster config/creds, optional |

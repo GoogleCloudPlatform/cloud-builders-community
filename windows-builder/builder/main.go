@@ -1,7 +1,9 @@
 package main
 
 import (
+	"os/signal"
 	"context"
+	"syscall"
 	"flag"
 	"log"
 	"os"
@@ -24,9 +26,15 @@ var (
 	zone             = flag.String("zone", "us-central1-f", "The zone name to use when creating the Windows server")
 	labels           = flag.String("labels", "", "List of label KEY=VALUE pairs separated by comma to add when creating the Windows server")
 	machineType      = flag.String("machineType", "", "The machine type to use when creating the Windows server")
+	preemptible      = flag.Bool("preemptible", false, "If instance running the Windows server should be preemptible or not")
+	diskSizeGb       = flag.Int64("diskSizeGb", 50, "The disk size to use when creating the Windows server")
+	diskType         = flag.String("diskType", "", "The disk type to use when creating the Windows server")
 	commandTimeout   = flag.Int("commandTimeout", 5, "The command run timeout in minutes")
 	copyTimeout      = flag.Int("copyTimeout", 5, "The workspace copy timeout in minutes")
 	serviceAccount   = flag.String("serviceAccount", "default", "The service account to use when creating the Windows server")
+	tags             = flag.String("tags", "", "List of strings eparated by comma to add when creating the Windows server")
+	useInternalNet   = flag.Bool("use-internal-network", false, "Communicate with Windows server over the internal network")
+	createExternalIP = flag.Bool("create-external-ip", false, "Create an external IP address when using internal network")
 )
 
 func main() {
@@ -47,18 +55,34 @@ func main() {
 	} else {
 		ctx := context.Background()
 		bs = &builder.BuilderServer{
-			ImageUrl:       image,
-			VPC:            network,
-			Subnet:         subnetwork,
-			Region:         region,
-			Zone:           zone,
-			Labels:         labels,
-			MachineType:    machineType,
-			ServiceAccount: serviceAccount,
+			ImageUrl:         image,
+			VPC:              network,
+			Subnet:           subnetwork,
+			Region:           region,
+			Zone:             zone,
+			Labels:           labels,
+			MachineType:      machineType,
+			Preemptible:      preemptible,
+			DiskSizeGb:       diskSizeGb,
+			DiskType:         diskType,
+			ServiceAccount:   serviceAccount,
+			Tags:             tags,
+			UseInternalNet:   useInternalNet,
+			CreateExternalIP: createExternalIP,
 		}
 		s = builder.NewServer(ctx, bs)
 		r = &s.Remote
+
+		log.Print("Setting up termination signal handler")
+		sigsChannel := make(chan os.Signal, 1)
+		signal.Notify(sigsChannel, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
+		go func() {
+			sig := <-sigsChannel
+			log.Printf("Signal %+v received, terminating", sig)
+			deleteInstanceAndExit(s, bs, 1)
+		}()
 	}
+
 	log.Print("Waiting for server to become available")
 	err := r.Wait()
 	if err != nil {
