@@ -1,4 +1,4 @@
-FROM python:2
+FROM python:3.12.0a5
 
 RUN virtualenv venv
 

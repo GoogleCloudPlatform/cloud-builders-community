@@ -1,5 +1,5 @@
 # Go binaries (ie. State Tool) do not run on a plain alpine image, so we use one with a proper glibc version
-FROM frolvlad/alpine-glibc
+FROM frolvlad/alpine-glibc:alpine-3.17_glibc-2.34
 
 # Install State Tool
 RUN wget https://platform.activestate.com/dl/cli/install.sh
