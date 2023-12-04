@@ -96,7 +96,7 @@ Be sure to add your plain text files to your `.gitignore` file so they aren't up
 
 If you want to store artifacts, configs, or your build cache, you'll need to create the cloud buckets to do so.
 
-To create buckets to support the [sample config](samples/build-test-deploy.yaml), run the following commands.
+To create buckets to support the [sample config](examples/build-test-deploy.yaml), run the following commands.
 
 ```bash
 gsutil mb gs://my-build-artifacts
