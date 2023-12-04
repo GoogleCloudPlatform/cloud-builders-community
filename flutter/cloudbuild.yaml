@@ -12,13 +12,6 @@ steps:
 - name: 'docker:stable'
   args: [
     'build', '.',
-    '-t', 'gcr.io/$PROJECT_ID/flutter:dev',
-    '--build-arg', 'channel=dev',
-  ]
-
-- name: 'docker:stable'
-  args: [
-    'build', '.',
     '-t', 'gcr.io/$PROJECT_ID/flutter:beta',
     '--build-arg', 'channel=beta',
   ]
