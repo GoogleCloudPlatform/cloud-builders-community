@@ -59,6 +59,9 @@ eval "KEY=\"$KEY\""
 eval "KEY_FALLBACK_PATTERN=\"$KEY_FALLBACK_PATTERN\""
 
 if [ -n "${BUCKET}" ];then
+  # Strip off trailing slash (if present)
+  BUCKET="${BUCKET%/}"
+
   REMOTE_CACHE_FILE="${BUCKET}/${KEY}.tgz"
 
   echo "Checking cache file existence for: ${REMOTE_CACHE_FILE}"
