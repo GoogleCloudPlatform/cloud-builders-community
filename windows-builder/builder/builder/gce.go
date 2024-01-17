@@ -32,10 +32,11 @@ const (
 
 // Server encapsulates a GCE Instance.
 type Server struct {
-	context   *context.Context
-	projectID string
-	service   *compute.Service
-	instance  *compute.Instance
+	context      *context.Context
+	projectID    string
+	vpcProjectID string
+	service      *compute.Service
+	instance     *compute.Instance
 	Remote
 }
 
@@ -72,7 +73,7 @@ func NewServer(ctx context.Context, bs *BuilderServer) *Server {
 		log.Fatalf("Cannot create new server without project ID: %+v", err)
 		return nil
 	}
-	s := &Server{projectID: projectID}
+	s := &Server{projectID: projectID, vpcProjectID: *bs.NetworkProjectId}
 
 	log.Printf("Starting GCE service in project %s", projectID)
 	err = s.newGCEService(ctx)
@@ -169,6 +170,13 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		}
 	}
 
+	var projectNetwork string
+	if s.vpcProjectID == "" {
+		projectNetwork = s.projectID
+	} else {
+		projectNetwork = s.vpcProjectID
+	}
+
 	instance := &compute.Instance{
 		Name:        name,
 		MachineType: prefix + s.projectID + "/zones/" + *bs.Zone + "/machineTypes/" + machineType,
@@ -196,8 +204,8 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		NetworkInterfaces: []*compute.NetworkInterface{
 			&compute.NetworkInterface{
 				AccessConfigs: accessConfigs,
-				Network:    prefix + s.projectID + "/global/networks/" + *bs.VPC,
-				Subnetwork: prefix + s.projectID + "/regions/" + *bs.Region + "/subnetworks/" + *bs.Subnet,
+				Network:       prefix + projectNetwork + "/global/networks/" + *bs.VPC,
+				Subnetwork:    prefix + projectNetwork + "/regions/" + *bs.Region + "/subnetworks/" + *bs.Subnet,
 			},
 		},
 		ServiceAccounts: []*compute.ServiceAccount{
@@ -212,7 +220,7 @@ func (s *Server) newInstance(bs *BuilderServer) error {
 		Scheduling: &compute.Scheduling{
 			Preemptible: *bs.Preemptible,
 		},
-		Tags: &compute.Tags {
+		Tags: &compute.Tags{
 			Items: bs.GetTags(),
 		},
 	}
@@ -261,7 +269,7 @@ func (s *Server) DeleteInstance(bs *BuilderServer) error {
 }
 
 // getInternalIP gets an internal IP for an instance.
-func(s *Server) getInternalIP(bs *BuilderServer) (string, error) {
+func (s *Server) getInternalIP(bs *BuilderServer) (string, error) {
 	err := s.refreshInstance(bs)
 	if err != nil {
 		log.Printf("Error refreshing instance: %+v", err)
@@ -323,7 +331,7 @@ func (s *Server) setFirewallRule(bs *BuilderServer) error {
 	return nil
 }
 
-//WindowsPasswordConfig stores metadata to be sent to GCE.
+// WindowsPasswordConfig stores metadata to be sent to GCE.
 type WindowsPasswordConfig struct {
 	key      *rsa.PrivateKey
 	password string
@@ -334,7 +342,7 @@ type WindowsPasswordConfig struct {
 	ExpireOn time.Time `json:"expireOn"`
 }
 
-//WindowsPasswordResponse stores data received from GCE.
+// WindowsPasswordResponse stores data received from GCE.
 type WindowsPasswordResponse struct {
 	UserName          string `json:"userName"`
 	PasswordFound     bool   `json:"passwordFound"`

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"os/signal"
 	"context"
-	"syscall"
 	"flag"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/GoogleCloudPlatform/cloud-builders-community/windows-builder/builder/builder"
 )
@@ -19,7 +19,7 @@ var (
 	notCopyWorkspace = flag.Bool("not-copy-workspace", false, "If copy workspace or not")
 	workspacePath    = flag.String("workspace-path", "/workspace", "The directory to copy data from")
 	workspaceBucket  = flag.String("workspace-bucket", "", "The bucket to copy the directory to. Defaults to {project-id}_cloudbuild")
-	image            = flag.String("image", "windows-cloud/global/images/windows-server-2019-dc-for-containers-v20191210", "Windows image to start the server from")
+	image            = flag.String("image", "windows-cloud/global/images/windows-2019", "Windows image to start the server from")
 	network          = flag.String("network", "default", "The VPC name to use when creating the Windows server")
 	subnetwork       = flag.String("subnetwork", "default", "The Subnetwork name to use when creating the Windows server")
 	region           = flag.String("region", "us-central1", "The region name to use when creating the Windows server")
@@ -35,6 +35,7 @@ var (
 	tags             = flag.String("tags", "", "List of strings eparated by comma to add when creating the Windows server")
 	useInternalNet   = flag.Bool("use-internal-network", false, "Communicate with Windows server over the internal network")
 	createExternalIP = flag.Bool("create-external-ip", false, "Create an external IP address when using internal network")
+	networkProjectId = flag.String("networkProjectId", "", "Use when you have a network in a different project")
 )
 
 func main() {
@@ -69,6 +70,7 @@ func main() {
 			Tags:             tags,
 			UseInternalNet:   useInternalNet,
 			CreateExternalIP: createExternalIP,
+			NetworkProjectId: networkProjectId,
 		}
 		s = builder.NewServer(ctx, bs)
 		r = &s.Remote
