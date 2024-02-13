@@ -1,3 +1,13 @@
+# About This Repository
+
+## Summary
+
+This repository is a fork of [GoogleCloudPlatform/cloud-builders-community](https://github.com/GoogleCloudPlatform/cloud-builders-community), modified to build Docker images remotely.
+
+## License
+
+I do not claim the license of this repository myself, but inherit and follow the license of the repository from which I forked. Please refer to [LICENSE](LICENSE) if you want to know specific details.
+
 # Cloud Build Remote Build Step
 
 ## Introduction
