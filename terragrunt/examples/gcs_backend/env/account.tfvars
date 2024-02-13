@@ -1,1 +1,0 @@
-tag = "terragrunt-cloudbuild-example"

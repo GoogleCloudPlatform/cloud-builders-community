@@ -1,5 +1,0 @@
-steps:
-- name: 'gcr.io/$PROJECT_ID/hugo'
-- name: busybox
-  args: ["cat", "public/index.xml"]
-tags: ['cloud-builders-community']

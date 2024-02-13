@@ -1,3 +1,0 @@
-FROM composer
-
-ENTRYPOINT ["composer"]

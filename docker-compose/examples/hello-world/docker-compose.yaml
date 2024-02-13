@@ -1,3 +1,0 @@
-helloworld:
-  image: ubuntu
-  command: /bin/echo 'Hello world'
