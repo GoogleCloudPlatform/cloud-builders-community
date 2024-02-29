@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "dependencies": {
-    "@google-cloud/secret-manager": "^3.2.3",
+    "@google-cloud/secret-manager": "^4.2.2",
     "@octokit/app": "^10.0.2",
     "@octokit/auth-app": "^2.10.5",
     "@octokit/auth-token": "^2.4.4",
