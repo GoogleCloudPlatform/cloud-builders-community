@@ -1,7 +1,7 @@
 FROM gcr.io/cloud-builders/gcloud
 
-ARG HELM_VERSION=v3.6.3
-ARG HELMFILE_VERSION=v0.140.0
+ARG HELM_VERSION=v3.14.0
+ARG HELMFILE_VERSION=v0.161.0
 
 COPY helmfile.bash /builder/helmfile.bash
 
@@ -18,7 +18,9 @@ RUN chmod +x /builder/helmfile.bash && \
   curl -SL https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && \
   tar zxvf helm.tar.gz --strip-components=1 -C /builder/helmfile linux-amd64 && \
   rm helm.tar.gz && \
-  curl -SsL https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 > /builder/helmfile/helmfile && \
+  curl -fSsL https://github.com/helmfile/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION#v}_linux_amd64.tar.gz > /tmp/helmfile.tar.gz && \
+  tar zxvf /tmp/helmfile.tar.gz -C /builder/helmfile helmfile && \
+  rm /tmp/helmfile.tar.gz && \
   chmod 700 /builder/helmfile/helmfile && \
   /builder/helmfile/helm plugin install https://github.com/databus23/helm-diff
 
