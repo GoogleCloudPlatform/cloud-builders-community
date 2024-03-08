@@ -1,0 +1,12 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud builds submit . --config=cloudbuild.yaml
+
+steps:
+- name: 'gcr.io/$PROJECT_ID/meteor'
+  args: ['meteor', 'npm', 'ci']
+
+- name: 'gcr.io/$PROJECT_ID/meteor'
+  args: ['meteor', 'deploy', "url.example.com", '--owner', 'organization_name', '--settings', 'deploy/settings.json', '--allow-superuser']
+  env:
+      - "METEOR_SESSION_FILE=./secrets/token.json"
+      - "DEPLOY_HOSTNAME=eu-west-1.galaxy-deploy.meteor.com"
