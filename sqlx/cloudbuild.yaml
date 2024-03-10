@@ -1,0 +1,9 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'sqlx'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/sqlx', '.']
+
+timeout: 2400s
+
+images: ['gcr.io/$PROJECT_ID/sqlx']
+tags: ['cloud-builders-community']
