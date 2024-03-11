@@ -6,6 +6,7 @@ RUN \
     git clone https://github.com/google/jsonnet.git && \
     cd jsonnet && \
     make && \
+    make install && \
     ./jsonnet --help
 
 ENTRYPOINT ["/jsonnet/jsonnet"]
