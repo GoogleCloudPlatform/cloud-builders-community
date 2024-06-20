@@ -1,0 +1,5 @@
+{:paths ["src"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}
+        ring/ring-jetty-adapter {:mvn/version "1.9.4"}}
+ :aliases {:jetty
+           {:main-opts ["-m" "example.main"]}}}

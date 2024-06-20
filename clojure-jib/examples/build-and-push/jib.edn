@@ -1,0 +1,5 @@
+{:aliases [:jetty]
+ ;; base-image will default to gcr.io/distroless/java
+ :target-image {:type :registry
+                :image-name "gcr.io/$PROJECT_ID/clojure-jib-example"
+                :authorizer {:fn jibbit.gcloud/authorizer}}}
