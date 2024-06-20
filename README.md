@@ -1,7 +1,7 @@
 # Google Cloud Build community images
 
 This repository contains source code for community-contributed Docker images. You can use these images as build steps for
-[Google Cloud Build](https://cloud.google.com/cloud-build/docs/).
+[Google Cloud Build](https://cloud.google.com/cloud-build/docs/) or use the [official builder images](https://github.com/GoogleCloudPlatform/cloud-builders)
 
 These are not official Google products.
 
