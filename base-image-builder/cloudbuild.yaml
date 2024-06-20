@@ -58,10 +58,10 @@ steps:
        {
          "builders": [
         {
-          "image_name": "nested-virtualization-centos-7",
+          "image_name": "nested-virtualization-centos-8",
           "type": "googlecompute",
           "project_id": "$PROJECT_ID",
-          "source_image_family": "centos-7",
+          "source_image_family": "centos-8",
           "image_family": "nested-virt",
           "ssh_username": "packer",
           "zone": "${_IMAGE_ZONE}",
@@ -94,12 +94,12 @@ steps:
        function create_packer_agent_image(){
         echo '#!/bin/bash' > packer-install-script.sh
         cat <<PACKER_INSTALL>>packer-install-script.sh
-       yum update -y && yum install git unzip wget qemu-kvm -y
+       yum update -y && yum install git unzip wget qemu-kvm edk2-ovmf -y
        echo "export PATH=$_PATH:/usr/libexec" > /etc/profile.d/libexec-path.sh
        source /etc/profile.d/libexec-path.sh
        curl -LO \
-       https://releases.hashicorp.com/packer/1.3.0/packer_1.3.0_linux_amd64.zip
-       unzip packer_1.3.0_linux_amd64.zip
+       https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
+       unzip packer_1.7.4_linux_amd64.zip
        cp packer /usr/bin/packerio
        PACKER_INSTALL
          cat <<AGENT_SPEC>agent-spec.json
@@ -110,7 +110,7 @@ steps:
              "image_name": "nested-packer-image-${_AGENT_VERSION}",
              "image_family": "nested-packer",
              "project_id": "$PROJECT_ID",
-             "source_image": "nested-virtualization-centos-7",
+             "source_image": "nested-virtualization-centos-8",
              "ssh_username": "packer",
              "zone": "${_IMAGE_ZONE}",
              "min_cpu_platform": "Intel Haswell",
