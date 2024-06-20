@@ -2,7 +2,7 @@ ARG project_id
 ARG android_version
 FROM gcr.io/${project_id}/android:${android_version}
 
-ARG ndk_version=android-ndk-r25
+ARG ndk_version=android-ndk-r25b
 ARG android_ndk_home=/opt/android/${ndk_version}
 
 # If we're using the NDK we likely want cmake
