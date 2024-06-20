@@ -1,4 +1,4 @@
-FROM gcr.io/cloud-builders/gcloud
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim 
 
 ARG HELM_VERSION=v3.12.0
 ENV HELM_VERSION=$HELM_VERSION
