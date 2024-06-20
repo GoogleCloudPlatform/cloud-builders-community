@@ -12,8 +12,11 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
 	"os/exec"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/pborman/uuid"
@@ -73,6 +76,15 @@ func NewServer(ctx context.Context, bs *BuilderServer) *Server {
 		return nil
 	}
 	s := &Server{projectID: projectID}
+
+	log.Print("Setting up termination signal handler")
+	sigsChannel := make(chan os.Signal, 1)
+	signal.Notify(sigsChannel, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
+	go func() {
+		sig := <-sigsChannel
+		log.Printf("Signal %+v received, terminating", sig)
+		DeleteInstanceAndExit(s, bs, 1)
+	}()
 
 	log.Printf("Starting GCE service in project %s", projectID)
 	err = s.newGCEService(ctx)
@@ -450,4 +462,28 @@ func (s *Server) waitForComputeOperation(op *compute.Operation, bs *BuilderServe
 	}
 	err := fmt.Errorf("Compute operation %s timed out", op.Name)
 	return err
+}
+
+func DeleteInstanceAndExit(s *Server, bs *BuilderServer, exitCode int) {
+	if s != nil {
+		err := s.DeleteInstance(bs)
+		if err != nil {
+			log.Fatalf("Failed to shut down instance: %+v", err)
+		} else {
+			log.Print("Instance shut down successfully")
+		}
+	}
+
+	os.Exit(exitCode)
+}
+
+func DeleteInstance(s *Server, bs *BuilderServer) {
+	if s != nil {
+		err := s.DeleteInstance(bs)
+		if err != nil {
+			log.Fatalf("Failed to shut down instance: %+v", err)
+		} else {
+			log.Print("Instance shut down successfully")
+		}
+	}
 }

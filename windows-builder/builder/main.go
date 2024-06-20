@@ -1,9 +1,7 @@
 package main
 
 import (
-	"os/signal"
 	"context"
-	"syscall"
 	"flag"
 	"log"
 	"os"
@@ -52,76 +50,91 @@ func main() {
 			Password: password,
 		}
 		log.Printf("Connecting to existing host %s", *r.Hostname)
-	} else {
-		ctx := context.Background()
-		bs = &builder.BuilderServer{
-			ImageUrl:         image,
-			VPC:              network,
-			Subnet:           subnetwork,
-			Region:           region,
-			Zone:             zone,
-			Labels:           labels,
-			MachineType:      machineType,
-			Preemptible:      preemptible,
-			DiskSizeGb:       diskSizeGb,
-			DiskType:         diskType,
-			ServiceAccount:   serviceAccount,
-			Tags:             tags,
-			UseInternalNet:   useInternalNet,
-			CreateExternalIP: createExternalIP,
+		log.Print("Waiting for server to become available")
+		err := r.Wait()
+		if err != nil {
+			log.Printf("Error connecting to server: %+v", err)
+			builder.DeleteInstanceAndExit(s, bs, 1)
 		}
-		s = builder.NewServer(ctx, bs)
-		r = &s.Remote
-
-		log.Print("Setting up termination signal handler")
-		sigsChannel := make(chan os.Signal, 1)
-		signal.Notify(sigsChannel, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
-		go func() {
-			sig := <-sigsChannel
-			log.Printf("Signal %+v received, terminating", sig)
-			deleteInstanceAndExit(s, bs, 1)
-		}()
-	}
-
-	log.Print("Waiting for server to become available")
-	err := r.Wait()
-	if err != nil {
-		log.Printf("Error connecting to server: %+v", err)
-		deleteInstanceAndExit(s, bs, 1)
+	} else {
+		var i int = 0
+		for {
+			ctx := context.Background()
+			bs = &builder.BuilderServer{
+				ImageUrl:         image,
+				VPC:              network,
+				Subnet:           subnetwork,
+				Region:           region,
+				Zone:             zone,
+				Labels:           labels,
+				MachineType:      machineType,
+				Preemptible:      preemptible,
+				DiskSizeGb:       diskSizeGb,
+				DiskType:         diskType,
+				ServiceAccount:   serviceAccount,
+				Tags:             tags,
+				UseInternalNet:   useInternalNet,
+				CreateExternalIP: createExternalIP,
+			}
+			s = builder.NewServer(ctx, bs)
+			r = &s.Remote
+			log.Print("Waiting for server to become available")
+			err := r.Wait()
+			if err == nil {
+				break
+			}
+			log.Printf("Error connecting to server: %+v", err)
+			if i < 3 {
+			  i++
+				builder.DeleteInstance(s, bs)
+			} else {
+				builder.DeleteInstanceAndExit(s, bs, 1)
+			}
+		}
 	}
 
 	r.BucketName = workspaceBucket
 	// Copy workspace to remote machine
 	if !*notCopyWorkspace {
 		log.Print("Copying workspace")
-		err = r.Copy(*workspacePath, *copyTimeout)
+		err := r.Copy(*workspacePath, *copyTimeout)
 		if err != nil {
 			log.Printf("Error copying workspace: %+v", err)
-			deleteInstanceAndExit(s, bs, 1)
+			builder.DeleteInstanceAndExit(s, bs, 1)
 		}
 	}
 
 	// Execute on remote
 	log.Printf("Executing command %s", *command)
-	err = r.Run(*command, *commandTimeout)
+	err := r.Run(*command, *commandTimeout)
 	if err != nil {
 		log.Printf("Error executing command: %+v", err)
-		deleteInstanceAndExit(s, bs, 1)
+		builder.DeleteInstanceAndExit(s, bs, 1)
 	}
 
 	// Shut down server if started
-	deleteInstanceAndExit(s, bs, 0)
+	builder.DeleteInstanceAndExit(s, bs, 0)
 }
 
-func deleteInstanceAndExit(s *builder.Server, bs *builder.BuilderServer, exitCode int) {
-	if s != nil {
-		err := s.DeleteInstance(bs)
-		if err != nil {
-			log.Fatalf("Failed to shut down instance: %+v", err)
-		} else {
-			log.Print("Instance shut down successfully")
-		}
+func create_server() (bs *builder.BuilderServer, s *builder.Server, r *builder.Remote) {
+	ctx := context.Background()
+	bs = &builder.BuilderServer{
+		ImageUrl:         image,
+		VPC:              network,
+		Subnet:           subnetwork,
+		Region:           region,
+		Zone:             zone,
+		Labels:           labels,
+		MachineType:      machineType,
+		Preemptible:      preemptible,
+		DiskSizeGb:       diskSizeGb,
+		DiskType:         diskType,
+		ServiceAccount:   serviceAccount,
+		Tags:             tags,
+		UseInternalNet:   useInternalNet,
+		CreateExternalIP: createExternalIP,
 	}
-
-	os.Exit(exitCode)
+	s = builder.NewServer(ctx, bs)
+	r = &s.Remote
+	return
 }
