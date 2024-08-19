@@ -41,7 +41,7 @@ To build this builder, run the following command in this directory.
 
 You can also build this builder setting `Helm` version via in `cloudbuild.yaml`, no need to do that in `Dockerfile` anymore.
 
-    args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v3.12.0', '.']
+    args: ['build', '--tag=gcr.io/$PROJECT_ID/helm', '--build-arg', 'HELM_VERSION=v3.15.4', '.']
 
 ## Using Helm
 
@@ -79,9 +79,4 @@ The following options are configurable via environment variables passed to the b
 
 | Option        | Description   |
 | ------------- | ------------- |
-| DIFF_PLUGIN_VERSION | [Diff plugin](https://github.com/databus23/helm-diff) version to install, optional |
-| GCS_PLUGIN_VERSION | [GCS plugin](https://github.com/nouney/helm-gcs) version to install, optional |
-| HELM_REPO_NAME | External Helm repository name, optional |
-| HELM_REPO_URL | External Helm repo URL, optional |
-| HELMFILE_VERSION | [Helmfile](https://github.com/roboll/helmfile) version to install, optional (if using helm v3, please use the helmfile builder)
-| SKIP_CLUSTER_CONFIG | If true, doesn't check or fetch GKE cluster config/creds, optional |
+| HELM_VERSION | [Helm](https://github.com/helm/helm) version to install, optional
