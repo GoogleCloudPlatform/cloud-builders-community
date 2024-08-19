@@ -1,7 +1,7 @@
 timeout: 900s # 15m
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tools/cancelot:1.2', '.' ]
+  args: [ 'build', '-t', 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/cancelot:1.2', '.' ]
 images:
-- 'gcr.io/$PROJECT_ID/tools/cancelot:1.2'
+- 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/cancelot:1.2'
 tags: ['cloud-builders-community']
