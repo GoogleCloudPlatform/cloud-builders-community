@@ -9,14 +9,14 @@ steps:
   - '--build-arg'
   - 'DOCKER_COMPOSE_VERSION=${_DOCKER_COMPOSE_VERSION}'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/tools/docker-compose:latest'
+  - 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/docker-compose:latest'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/tools/docker-compose:${_DOCKER_COMPOSE_VERSION}'
+  - 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/docker-compose:${_DOCKER_COMPOSE_VERSION}'
   - '.'
-- name: 'gcr.io/$PROJECT_ID/tools/docker-compose'
+- name: 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/docker-compose'
   args: ['version']
 
 images:
-- 'gcr.io/$PROJECT_ID/tools/docker-compose:latest'
-- 'gcr.io/$PROJECT_ID/tools/docker-compose:${_DOCKER_COMPOSE_VERSION}'
+- 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/docker-compose:latest'
+- 'us-docker.pkg.dev/$PROJECT_ID/internal-tools/docker-compose:${_DOCKER_COMPOSE_VERSION}'
 tags: ['cloud-builders-community']
