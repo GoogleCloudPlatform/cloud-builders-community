@@ -1,6 +1,10 @@
 steps:
-- name: gcr.io/katalon-project/executor:latest
-  args: ['--destination=gcr.io/$PROJECT_ID/built-with-katalon:latest',
-         '--destination=gcr.io/$PROJECT_ID/built-with-katalon:9.6.0',
-         '--cache=true']
+- name: 'gcr.io/kaniko-project/executor:latest'
+  args:
+    - --destination=gcr.io/$PROJECT_ID/built-with-katalon:latest
+    - --destination=gcr.io/$PROJECT_ID/built-with-katalon:9.6.0
+    - --cache=true
+  env:
+    - DOCKERFILE=Dockerfile
+    - CONTEXT=dir://workspace
 tags: ['cloud-builders-community']
