@@ -1,0 +1,6 @@
+steps:
+- name: gcr.io/katalon-project/executor:latest
+  args: ['--destination=gcr.io/$PROJECT_ID/built-with-katalon:latest',
+         '--destination=gcr.io/$PROJECT_ID/built-with-katalon:9.6.0',
+         '--cache=true']
+tags: ['cloud-builders-community']
