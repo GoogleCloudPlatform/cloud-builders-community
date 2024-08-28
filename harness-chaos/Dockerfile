@@ -1,6 +1,5 @@
 FROM redhat/ubi8-minimal:8.8
 USER root
-# For future reference, do a minimal update of microdnf to avoid extra dependencies, minimizing vulnerabilities
 RUN microdnf update --refresh --best --noplugins --setopt=install_weak_deps=0 \
  && rm -rf /var/cache/yum \
  && microdnf clean all
