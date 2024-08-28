@@ -10,14 +10,6 @@ steps:
 - name: 'gcr.io/$PROJECT_ID/harness-chaos'
   args: ['generate', '--api=run-and-monitor-experiment', '--account-id=${_ACCOUNT_ID}','--org-id=${_ORG_ID}','--project-id=${_PROJECT_ID}', '--workflow-id=${_EXPERIMENT_ID}', '--expected-resilience-score=${_EXPECTED_RES_SCORE}', '--api-key=${_X_API_KEY}' ]
 
-  env:
-    - 'ACCOUNT_ID=${_ACCOUNT_ID}'
-    - 'ORG_ID=${_ORG_ID}'
-    - 'PROJECT_ID=${_PROJECT_ID}'
-    - 'WORKFLOW_ID=${_EXPERIMENT_ID}'
-    - 'EXPECTED_RES_SCORE=${_EXPECTED_RES_SCORE}'
-    - 'X_API_KEY=${_X_API_KEY}'
-
 substitutions:
   _ACCOUNT_ID: '<ACCOUNT_ID>'
   _ORG_ID: 'ORG_ID'
@@ -26,3 +18,5 @@ substitutions:
   _EXPECTED_RES_SCORE: '100'
   _X_API_KEY: 'X_API_KEY' // required for authorization
 ```
+
+To know more about Harness Chaos Engineering visit [here](https://developer.harness.io/docs/chaos-engineering).
