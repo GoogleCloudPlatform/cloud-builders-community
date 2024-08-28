@@ -30,11 +30,11 @@ steps:
 
 substitutions:
   _ACCOUNT_ID: '<ACCOUNT_ID>'
-  _ORG_ID: 'ORG_ID'
-  _PROJECT_ID: 'PROJECT_ID'
-  _EXPERIMENT_ID: 'EXPERIMENT_ID'
+  _ORG_ID: '<ORG_ID>'
+  _PROJECT_ID: '<PROJECT_ID>'
+  _EXPERIMENT_ID: '<EXPERIMENT_ID>'
   _EXPECTED_RES_SCORE: '100'
-  _X_API_KEY: 'X_API_KEY' // required for authorization
+  _X_API_KEY: '<X_API_KEY>' // required for authorization
 ```
 
 ### Flags
