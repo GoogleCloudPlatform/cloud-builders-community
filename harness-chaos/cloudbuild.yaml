@@ -1,0 +1,9 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/harness-chaos', '.']
+
+# To ensure tool is installed correctly
+- name: 'gcr.io/$PROJECT_ID/harness-chaos'
+  args: ['generate', '--help']
+
+images: ['gcr.io/$PROJECT_ID/harness-chaos']
