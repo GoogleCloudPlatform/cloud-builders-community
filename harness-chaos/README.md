@@ -21,12 +21,19 @@ Next step is to create a chaos experiment and get the experiment ID to launch th
 ## How to run launch chaos experiment using cloud builder
 
 Once the chaos experiment is created and we have the values for the required flags, here’s an example demonstrating how to launch and validate a chaos experiment using cloud builder. Users can pass the `--workflow-id` flag(`workflow-id` is same as experiment ID) along with the `--expected-resilience-score` flag to ensure that the actual resilience score of the experiment run meets the expected threshold, along with other necessary flags.
+We recommend to store and use the API-KEY as a secret.
 
 **Example:**
 ```
 steps:
-- name: 'gcr.io/$PROJECT_ID/harness-chaos'
-  args: ['generate', '--api=run-and-monitor-experiment', '--account-id=${_ACCOUNT_ID}','--org-id=${_ORG_ID}','--project-id=${_PROJECT_ID}', '--workflow-id=${_EXPERIMENT_ID}', '--expected-resilience-score=${_EXPECTED_RES_SCORE}', '--api-key=${_X_API_KEY}' ]
+  - name: 'gcr.io/$PROJECT_ID/harness-chaos'
+    secretEnv: ['API_KEY']
+    args: ['generate', '--api=run-and-monitor-experiment', '--account-id=${_ACCOUNT_ID}','--org-id=${_ORG_ID}','--project-id=${_PROJECT_ID}', '--workflow-id=${_EXPERIMENT_ID}', '--expected-resilience-score=${_EXPECTED_RES_SCORE}', '--api-key=$$API_KEY' ]
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/x-api-key/versions/latest
+    env: API_KEY
 
 substitutions:
   _ACCOUNT_ID: '<ACCOUNT_ID>'
@@ -34,7 +41,6 @@ substitutions:
   _PROJECT_ID: '<PROJECT_ID>'
   _EXPERIMENT_ID: '<EXPERIMENT_ID>'
   _EXPECTED_RES_SCORE: '100'
-  _X_API_KEY: '<X_API_KEY>' // required for authorization
 ```
 
 ### Flags
