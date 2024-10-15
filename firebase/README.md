@@ -90,3 +90,14 @@ secrets:
 ## Examples
 
 See examples in the `examples` subdirectory.
+
+## Note for Windows Users
+
+If you're using Windows, the `firebase.bash` script might have CRLF (Carriage Return Line Feed) line endings, which can cause issues in Linux-based environments (such as Docker). Before submitting your build, you will need to convert the line endings to LF (Line Feed) to ensure compatibility.
+
+To convert the file, run the following command:
+
+```bash
+dos2unix firebase.bash
+```
+
