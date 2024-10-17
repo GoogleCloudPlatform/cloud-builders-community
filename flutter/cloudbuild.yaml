@@ -31,7 +31,6 @@ timeout: '1200s'
 
 images: [
   'gcr.io/$PROJECT_ID/flutter:master',
-  'gcr.io/$PROJECT_ID/flutter:dev',
   'gcr.io/$PROJECT_ID/flutter:beta',
   'gcr.io/$PROJECT_ID/flutter:stable',
   'gcr.io/$PROJECT_ID/flutter',
