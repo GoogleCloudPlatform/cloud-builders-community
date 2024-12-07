@@ -26,9 +26,34 @@ We recommend to store and use the API-KEY as a secret.
 **Example:**
 ```
 steps:
-  - name: 'gcr.io/$PROJECT_ID/harness-chaos'
+  - name: 'gcr.io/$_PROJECT/hce-cli'
+    id: Chaos
+    allowFailure: true
     secretEnv: ['API_KEY']
-    args: ['generate', '--api=run-and-monitor-experiment', '--account-id=${_ACCOUNT_ID}','--org-id=${_ORG_ID}','--project-id=${_PROJECT_ID}', '--workflow-id=${_EXPERIMENT_ID}', '--expected-resilience-score=${_EXPECTED_RES_SCORE}', '--api-key=$$API_KEY' ]
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        hce-cli config create  \
+        --name "my-config-1" \
+        --interactive=false 
+
+        hce-cli experiment run \
+        --account-id "${_ACCOUNT_ID}" \
+        --org-id "${_ORG_ID}" \
+        --project-id "${_PROJECT_ID}" \
+        --experiment-id "${_EXPERIMENT_ID}" \
+        --interactive=false \
+        --monitor=true \
+        --expected-res-score="$_EXPECTED_RES_SCORE" \
+        --api-key "$$API_KEY" 
+        if [ $? -ne 0 ]; then
+          echo "Chaos experiment failed. Creating chaos_failed_flag..."
+          echo "1" > /workspace/chaos_failed_flag
+        else
+          echo "Chaos experiment succeeded."
+          echo "0" > /workspace/chaos_failed_flag
+        fi
 
 availableSecrets:
   secretManager:
