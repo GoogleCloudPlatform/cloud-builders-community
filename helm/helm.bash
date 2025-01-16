@@ -7,13 +7,15 @@ if [[ $(kubectl config current-context 2> /dev/null) == "" && "$SKIP_CLUSTER_CON
     region=${CLOUDSDK_COMPUTE_REGION:-$(gcloud config get-value compute/region 2> /dev/null)}
     zone=${CLOUDSDK_COMPUTE_ZONE:-$(gcloud config get-value compute/zone 2> /dev/null)}
     project=${GCLOUD_PROJECT:-$(gcloud config get-value core/project 2> /dev/null)}
-
+    get_cred_opts=${CLOUDSDK_GET_CREDENTIALS_OPTS:+${CLOUDSDK_GET_CREDENTIALS_OPTS} }
     function var_usage() {
         cat <<EOF
 No cluster is set. To set the cluster (and the region/zone where it is found), set the environment variables
   CLOUDSDK_COMPUTE_REGION=<cluster region> (regional clusters)
   CLOUDSDK_COMPUTE_ZONE=<cluster zone> (zonal clusters)
   CLOUDSDK_CONTAINER_CLUSTER=<cluster name>
+
+  Optionally, you can specify additional parameters for the 'gcloud container clusters get-credentials' command via CLOUDSDK_GET_CREDENTIALS_OPTS, such using values as: --internal-ip, --dns-endpoint
 EOF
         exit 1
     }
@@ -22,11 +24,11 @@ EOF
     [ ! "$zone" -o "$region" ] && var_usage
 
     if [ -n "$region" ]; then
-      echo "Running: gcloud container clusters get-credentials --project=\"$project\" --region=\"$region\" \"$cluster\""
-      gcloud container clusters get-credentials --project="$project" --region="$region" "$cluster"
+      echo "Running: gcloud container clusters get-credentials --project=\"$project\" --region=\"$region\" ${get_cred_opts}\"$cluster\""
+      gcloud container clusters get-credentials --project="$project" --region="$region" ${get_cred_opts}"$cluster"
     else
-      echo "Running: gcloud container clusters get-credentials --project=\"$project\" --zone=\"$zone\" \"$cluster\""
-      gcloud container clusters get-credentials --project="$project" --zone="$zone" "$cluster"
+      echo "Running: gcloud container clusters get-credentials --project=\"$project\" --zone=\"$zone\" ${get_cred_opts}\"$cluster\""
+      gcloud container clusters get-credentials --project="$project" --zone="$zone" ${get_cred_opts}"$cluster"
     fi
 fi
 
