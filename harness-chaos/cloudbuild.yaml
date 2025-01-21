@@ -1,9 +1,9 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/harness-chaos', '.']
+  args: ['build', '--tag=us-central1-docker.pkg.dev/$PROJECT_ID/harness-chaos/harness-chaos', '.']
 
 # To ensure tool is installed correctly
-- name: 'gcr.io/$PROJECT_ID/harness-chaos'
+- name: 'us-central1-docker.pkg.dev/$PROJECT_ID/harness-chaos/harness-chaos'
   args: ['generate', '--help']
 
-images: ['gcr.io/$PROJECT_ID/harness-chaos']
+images: ['us-central1-docker.pkg.dev/$PROJECT_ID/harness-chaos/harness-chaos']
