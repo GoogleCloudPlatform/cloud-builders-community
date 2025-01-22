@@ -15,7 +15,7 @@ No cluster is set. To set the cluster (and the region/zone where it is found), s
   CLOUDSDK_COMPUTE_ZONE=<cluster zone> (zonal clusters)
   CLOUDSDK_CONTAINER_CLUSTER=<cluster name>
 
-  Optionally, you can specify additional parameters for the 'gcloud container clusters get-credentials' command via CLOUDSDK_GET_CREDENTIALS_OPTS, such using values as: --internal-ip, --dns-endpoint
+  Optionally, you can specify additional parameters for the 'gcloud container clusters get-credentials' command via CLOUDSDK_GET_CREDENTIALS_OPTS, such as: --internal-ip, --dns-endpoint
 EOF
         exit 1
     }
