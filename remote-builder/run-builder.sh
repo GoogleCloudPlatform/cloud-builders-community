@@ -11,6 +11,8 @@ INSTANCE_ARGS=${INSTANCE_ARGS:---preemptible}
 SSH_ARGS=${SSH_ARGS:-}
 GCLOUD=${GCLOUD:-gcloud}
 RETRIES=${RETRIES:-10}
+NETWORK=${NETWORK:-}
+SUBNETWORK=${SUBNETWORK:-}
 
 # Always delete instance after attempting build
 function cleanup {
@@ -36,6 +38,7 @@ EOF
 
 ${GCLOUD} compute instances create \
        ${INSTANCE_ARGS} ${INSTANCE_NAME} \
+       ${NETWORK} ${SUBNETWORK} \
        --metadata block-project-ssh-keys=TRUE \
        --metadata-from-file ssh-keys=ssh-keys
 
