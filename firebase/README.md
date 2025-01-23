@@ -27,7 +27,7 @@ Ensure you have the following APIs enabled
 **Add permission to the cloudbuilder**
 
 - Open Cloud Build service account settings
-- Give the Cloud Build service account the **Firebase Admin** role:
+- Give the Cloud Build service account the **Firebase Admin** and **Service Accounts** roles:
 
 ![service account settings](docs/service-account.png)
 
