@@ -15,7 +15,7 @@ require things like:
 1. Pre-emptibility
 
 In these cases you can leverage Container Builder to trigger your builds and
-manage their workflow but run the actual build steps on an instance with
+manage their workflow, but run the actual build steps on an instance with
 exactly the configuration you need.
 
 ## How?
@@ -23,7 +23,7 @@ exactly the configuration you need.
 When using the remote-builder image, the following will happen:
 
 1. A temporary SSH key will be created in your Container Builder workspace
-1. A instance will be launched with your configured flags
+1. An instance will be launched with your configured flags
 1. The workpace will be copied to the remote instance
 1. Your command will be run inside that instance's workspace
 1. The workspace will be copied back to your Container Builder workspace
@@ -73,8 +73,8 @@ build step in the `env` parameter:
 | REMOTE_WORKSPACE  | Location on remote host to use as workspace | `/home/${USERNAME}/workspace/` |
 | INSTANCE_NAME  | Name of the instance that is launched  | `builder-$UUID` |
 | ZONE  | Compute zone to launch the instance in | `us-central1-f` |
-| INSTANCE_ARGS| Parameters to the instance creation command. For a full list run `gcloud compute instances create --help` | `--preemptible` |
-| SSH_ARGS| Parameters to the ssh and scp commands. This can be useful to run ssh though a IAP tunnel with ```--tunnel-though-iap``` | None |
+| INSTANCE_ARGS| Parameters to the instance creation command. For a full list, run `gcloud compute instances create --help` | `--preemptible` |
+| SSH_ARGS| Parameters to the ssh and scp commands. This can be useful to run ssh though an IAP tunnel with ```--tunnel-though-iap``` | None |
 | RETRIES| The number of retries to wait for the instance to start accepting SSH connections | `10` |
 
 To give it a try, see the [examples directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/remote-builder/examples).
@@ -84,5 +84,4 @@ This is not an official Google product.
 ## Trade-offs
 
 1. Paying for builder + VM
-2. Spin up time of VM increases build time
-
+2. Spin-up time of VM increases build time
