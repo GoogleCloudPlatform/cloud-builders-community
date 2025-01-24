@@ -179,14 +179,11 @@ zones=(
 for i in "${!regions[@]}"; do
     REGION=${regions[i]}
     ZONE=${zones[i]}
-    BUCKET_NAME=$PROJECT_ID-$ZONE-tfbucket-1
-    gsutil mb -l $REGION gs://$BUCKET_NAME
-    printf "Running in region %s, zone %s\n" "${REGION}" "${ZONE}"
-    (gcloud builds submit  \
-            --worker-pool=projects/${PROJECT_ID}/locations/${WORKER_POOL_REGION}/workerPools/${WORKER_POOL_ID} . \
-            --timeout=1200s \
-            --config=cloudbuild.yaml \
-            --region=$WORKER_POOL_REGION \
-            --substitutions=_BUCKET=$BUCKET_NAME,_SOURCE_DIR=./environments/${REGION}/${ZONE} &)
+    printf "Preparing environment in region=%s, zone=%s\n" "${REGION}" "${ZONE}"
+   
+    mkdir -p ./environments/$REGION/$ZONE
+    cp ./generate_environments/main.tf ./environments/$REGION/$ZONE/main.tf
+    sed -i "s/%%REGION%%/$REGION/g" ./environments/$REGION/$ZONE/main.tf
+    sed -i "s/%%ZONE%%/$ZONE/g" ./environments/$REGION/$ZONE/main.tf
 done
 wait
