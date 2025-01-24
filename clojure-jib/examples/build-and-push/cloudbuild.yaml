@@ -1,0 +1,6 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/clojure-jib'
+  args: [ 'build' ]
+  env:
+  - 'PROJECT_ID=$PROJECT_ID'
+tags: ['cloud-builders-community']
