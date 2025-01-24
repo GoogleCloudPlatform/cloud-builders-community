@@ -47,13 +47,26 @@ type BuilderServer struct {
 
 // Wait for server to be available.
 func (r *Remote) Wait() error {
-	timeout := time.Now().Add(time.Minute * 5)
+	timeout := time.Now().Add(time.Minute * 10)
 	for time.Now().Before(timeout) {
-		err := r.RunDef("ver")
-		if err == nil {
-			return nil
+		log.Printf("Connecting to server...")
+		// Under certain circumstances RunDef() method
+		// hangs and eventually times out.
+		// To mitigate, creating a custom timeout for
+		// RunDef() function call.
+		c1 := make(chan error, 1)
+		go func() {
+			err := r.RunDef("ver")
+			c1 <- err
+		} ()
+		select {
+			case err := <-c1:
+				if err == nil {
+					return nil
+				}
+				time.Sleep(10 * time.Second)
+			case <-time.After(60 * time.Second):
 		}
-		time.Sleep(10 * time.Second)
 	}
 	return errors.New("Timed out waiting for server to be available")
 }
