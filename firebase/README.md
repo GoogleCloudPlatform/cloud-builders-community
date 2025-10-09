@@ -17,6 +17,8 @@ The Firebase CLI can be authenticated in Cloud Build by one of two methods:
 1. **IAM Roles (preferred)** - grant Firebase IAM roles to the Cloud Build service account.
 1. **Firebase CLI Token** - use a CI token to authorize the Firebase CLI to act as an admin user.
 
+You can choose which version of `firebase-tools` to use by setting the substitution variable `_FIREBASE_TOOLS_VERSION` (default is `latest`). Specify desired version the same way as in `package.json`, for example `>=11.0.1 <12.0.0`, `latest`, `11.8.1` etc.
+
 ### With IAM roles
 
 Ensure you have the following APIs enabled
