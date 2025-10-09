@@ -88,5 +88,5 @@ tar cpzf "$CACHE_FILE" ${PATHS[@]} -P
 
 if [ -n "$BUCKET" ];then
   echo "Uploading cache to Google Cloud Storage..."
-  gsutil -o GSUtil:parallel_composite_upload_threshold=${THRESHOLD} cp -R "$CACHE_FILE" "$BUCKET"
+  gsutil -o GSUtil:parallel_composite_upload_threshold=${THRESHOLD} cp -R "$CACHE_FILE" "$BUCKET/${KEY}.tgz"
 fi
