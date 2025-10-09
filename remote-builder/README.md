@@ -76,6 +76,8 @@ build step in the `env` parameter:
 | INSTANCE_ARGS| Parameters to the instance creation command. For a full list run `gcloud compute instances create --help` | `--preemptible` |
 | SSH_ARGS| Parameters to the ssh and scp commands. This can be useful to run ssh though a IAP tunnel with ```--tunnel-though-iap``` | None |
 | RETRIES| The number of retries to wait for the instance to start accepting SSH connections | `10` |
+| NETWORK | The Network for the instance | None |
+| SUBNETWORK | The Subnetwork for the instance. If network is setted, must be set | `10` |
 
 To give it a try, see the [examples directory](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/remote-builder/examples).
 
