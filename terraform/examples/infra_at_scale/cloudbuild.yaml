@@ -2,30 +2,23 @@
 # $ gcloud builds submit . --config=cloudbuild.yaml --substitutions _BUCKET='<bucket name>'
 steps:
 - name: 'gcr.io/${PROJECT_ID}/terraform'
-  args: ['init',
+  args: ['-chdir=${_SOURCE_DIR}', 'init',
     '-backend-config=bucket=${_BUCKET}', '-reconfigure']
   env:
     - "TF_VAR_project=${PROJECT_ID}"
-    - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_zone=${_ZONE}"
 - name: 'gcr.io/${PROJECT_ID}/terraform'
-  args: ['plan']
+  args: ['-chdir=${_SOURCE_DIR}', 'plan' ]
   env:
     - "TF_VAR_project=${PROJECT_ID}"
-    - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_zone=${_ZONE}"
 - name: 'gcr.io/${PROJECT_ID}/terraform'
-  args: ['apply', '-auto-approve']
+  args: ['-chdir=${_SOURCE_DIR}', 'apply', '-auto-approve']
   env:
     - "TF_VAR_project=${PROJECT_ID}"
-    - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_zone=${_ZONE}"
 - name: 'gcr.io/${PROJECT_ID}/terraform'
-  args: ['destroy', '-auto-approve']
+  args: ['-chdir=${_SOURCE_DIR}', 'destroy', '-auto-approve']
   env:
     - "TF_VAR_project=${PROJECT_ID}"
-    - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_zone=${_ZONE}"
 substitutions:
     _BUCKET: # Provide your own bucket name
+    _SOURCE_DIR:
 tags: ['cloud-builders-community']

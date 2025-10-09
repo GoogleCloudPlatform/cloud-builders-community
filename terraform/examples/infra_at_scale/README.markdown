@@ -39,12 +39,18 @@ CloudBuild gives your Terraform deployment a boost and scale allowing you to con
         --project=$PROJECT_ID \
         --region=$WORKER_POOL_REGION
     ```
+1. Generate the environments by running the following bash script. Bash is used here for simplicity, as there are better tools available to keep Terraform configurations DRY, such as [terragrunt](https://terragrunt.gruntwork.io/). 
+    
+    ```bash
+    . generate_environments/generate.sh
+    ```
 
-1. (optional step) Test on one build before running multi-build
+1. (optional step) Test the build on a single region before running multi-build
 
     ```bash
         REGION=asia-east1
         ZONE=asia-east1-a
+        cd ./environments/${REGION}/${ZONE}
         BUCKET_NAME=$PROJECT_ID-$ZONE-tfbucket-1
         gsutil mb -l $REGION gs://$BUCKET_NAME
         printf "Running in region %s, zone %s\n" "${REGION}" "${ZONE}"
@@ -53,7 +59,7 @@ CloudBuild gives your Terraform deployment a boost and scale allowing you to con
             --timeout=1200s \
             --config=cloudbuild.yaml \
             --region=$WORKER_POOL_REGION \
-            --substitutions=_BUCKET=$BUCKET_NAME,_REGION=$REGION,_ZONE=$ZONE
+            --substitutions=_BUCKET=$BUCKET_NAME,_SOURCE_DIR=./environments/${REGION}/${ZONE}
     ```
 
 1. Run multi-build to deploy to 80+ regions concurrently. NOTE: this example is intended to demonstrate the maximum possible scale. To avoid incurring infrastructure scale, we recommend that you edit multi-build.sh and only keep a coupld of regions before deploying.
