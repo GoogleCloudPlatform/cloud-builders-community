@@ -1,5 +1,7 @@
 FROM python:3.7
 
+RUN pip install virtualenv
+
 RUN virtualenv venv
 
 ENTRYPOINT bin/bash
