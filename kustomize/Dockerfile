@@ -9,6 +9,7 @@ RUN wget -nv https://github.com/kubernetes-sigs/kustomize/releases/download/kust
 
 FROM gcr.io/cloud-builders/gcloud
 
-COPY --from=build kustomize /usr/bin/kustomize
+ENV PATH=/builder/bin/:$PATH
+COPY --from=build kustomize /builder/bin/kustomize
 COPY kustomize.bash /builder/kustomize.bash
 ENTRYPOINT ["/builder/kustomize.bash"]
