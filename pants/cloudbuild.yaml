@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://json.schemastore.org/cloudbuild
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '.', '--tag=gcr.io/$PROJECT_ID/pants:${_PY_VERSION}', '--build-arg', 'PY_VERSION=${_PY_VERSION}']
+  - name: gcr.io/$PROJECT_ID/pants:${_PY_VERSION}
+    env:
+      - PANTS_BOOTSTRAP_VERSION=report
+substitutions:
+  _PY_VERSION: "3.11"
+images: ['gcr.io/$PROJECT_ID/pants:${_PY_VERSION}']
+tags: ['cloud-builders-community']
