@@ -27,6 +27,7 @@ source "googlecompute" "test-image" {
   ssh_username                = "root"
   tags                        = ["packer"]
   impersonate_service_account = var.builder_sa
+  temporary_key_pair_type     = "ed25519"
 }
 
 build {
