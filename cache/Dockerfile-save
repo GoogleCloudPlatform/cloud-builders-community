@@ -1,4 +1,9 @@
 ARG project_id
 FROM gcr.io/${project_id}/cache
 
+RUN    apt-get update \
+    && apt-get install -y pigz \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 ENTRYPOINT ["save_cache"]

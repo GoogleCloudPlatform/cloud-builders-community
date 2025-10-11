@@ -84,7 +84,7 @@ if [ "$NO_CLOBBER" = true ];then
 fi
 
 echo "Compressing cache to ${CACHE_FILE}..."
-tar cpzf "$CACHE_FILE" ${PATHS[@]} -P
+tar --use-compress-program="pigz -k " -cpf "$CACHE_FILE" ${PATHS[@]} -P
 
 if [ -n "$BUCKET" ];then
   echo "Uploading cache to Google Cloud Storage..."
