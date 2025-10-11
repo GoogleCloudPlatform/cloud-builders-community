@@ -1,0 +1,18 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud builds submit . --config=cloudbuild.yaml
+
+steps:
+- name: gcr.io/$PROJECT_ID/autoconf
+  entrypoint: aclocal
+- name: gcr.io/$PROJECT_ID/autoconf
+  entrypoint: autoheader
+- name: gcr.io/$PROJECT_ID/autoconf
+  entrypoint: autoconf
+- name: gcr.io/$PROJECT_ID/autoconf
+  entrypoint: automake
+  args: ["--add-missing", "--copy"]
+- name: gcr.io/$PROJECT_ID/autoconf
+  script: ./configure
+- name: gcr.io/$PROJECT_ID/autoconf
+  script: "make && ./hello"
+tags: ["cloud-builders-community"]
