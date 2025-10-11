@@ -57,7 +57,7 @@ gcloud compute scp --compress --recurse \
 gcloud compute ssh --ssh-key-file=${KEYNAME} ${USERNAME}@${INSTANCE_NAME} -- 'tar -xvzf workspace.tgz'
 
 gcloud compute ssh  --ssh-key-file=${KEYNAME} ${USERNAME}@${INSTANCE_NAME} -- 'ls -l'
-COMMAND="export BUILD_NUMBER="$(echo ${TAG_NAME} | sed 's/\.//')" &&  packerio build \
+COMMAND="export BUILD_NUMBER="$(echo ${TAG_NAME} | sed 's/\.//')" && PACKER_LOG=1 packerio build \
 -var \"project=${PROJECT_ID}\" \
 -var \"image_family=${IMAGE_FAMILY}\" \
 -var \"gcs_bucket=${IMAGES_BUCKET}\" \
