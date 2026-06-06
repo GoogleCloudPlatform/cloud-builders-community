@@ -1,9 +1,5 @@
-FROM python:3.7
+FROM python:3.12
 
-RUN virtualenv venv
+RUN pip install --no-cache-dir apache-beam[gcp]
 
-ENTRYPOINT bin/bash
-
-RUN /bin/bash -c "source venv/bin/activate"
-
-RUN pip install apache-beam[gcp]
+ENTRYPOINT ["/bin/bash"]
