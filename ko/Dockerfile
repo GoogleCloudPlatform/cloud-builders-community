@@ -1,9 +1,10 @@
-FROM golang:1.16 AS kosource
+ARG GO_VERSION=1.26
+FROM golang:${GO_VERSION} AS kosource
 ARG KO_GIT_TAG
 
-RUN git clone --depth=1 -b "${KO_GIT_TAG}" https://github.com/google/ko
+RUN git clone -b "${KO_GIT_TAG}" https://github.com/google/ko
 WORKDIR ko
-RUN GOOS=linux go build -mod=vendor -o /bin/ko ./cmd/ko
+RUN go mod tidy && go mod vendor && GOOS=linux go build -mod=vendor -ldflags "-s -w -X github.com/google/ko/pkg/commands.Version=${KO_GIT_TAG}" -o /bin/ko main.go
 
 FROM gcr.io/cloud-builders/kubectl
 
