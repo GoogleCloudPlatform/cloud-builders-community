@@ -2,10 +2,10 @@
 # $ gcloud builds submit . --config=cloudbuild.yaml
 
 substitutions:
-  _TERRAFORM_VERSION: 0.12.29
-  _TERRAFORM_VERSION_SHA256SUM: 872245d9c6302b24dc0d98a1e010aef1e4ef60865a2d1f60102c8ad03e9d5a1d
-  _TERRAGRUNT_VERSION: 0.26.4
-  _TERRAGRUNT_VERSION_SHA256SUM: 8459105f8f02663d44108d3240e11c6944f22f1e59b4e2f061eae3b32911ac9b
+  _TERRAFORM_VERSION: 1.13.3
+  _TERRAFORM_VERSION_SHA256SUM: 71fc43d92ea09907be5d416d2405a6a9c2d1ceaed633f5e175c0af26e8c4b365
+  _TERRAGRUNT_VERSION: 0.87.4
+  _TERRAGRUNT_VERSION_SHA256SUM: dd167600fd5e99e02cbb6e7e70ac1f8adbf7ef1c7a32e5afb647656238e1035f
 
 steps:
   - name: "gcr.io/cloud-builders/docker"
@@ -25,11 +25,11 @@ steps:
       - --build-arg
       - TERRAGRUNT_VERSION_SHA256SUM=${_TERRAGRUNT_VERSION_SHA256SUM}
       - --tag
-      - "gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
+      - "us-central1-docker.pkg.dev/${PROJECT_ID}/devops/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
       - --tag
-      - "gcr.io/${PROJECT_ID}/terragrunt:latest"
+      - "us-central1-docker.pkg.dev/${PROJECT_ID}/devops/terragrunt:latest"
       - "."
 images:
-  - "gcr.io/${PROJECT_ID}/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
-  - "gcr.io/${PROJECT_ID}/terragrunt:latest"
+  - "us-central1-docker.pkg.dev/${PROJECT_ID}/devops/terragrunt:${_TERRAFORM_VERSION}-${_TERRAGRUNT_VERSION}"
+  - "us-central1-docker.pkg.dev/${PROJECT_ID}/devops/terragrunt:latest"
 tags: ["cloud-builders-community"]
